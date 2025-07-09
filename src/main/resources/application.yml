@@ -1,8 +1,20 @@
 gg:
   jte:
     development-mode: true
+    template-location: src/main/jte
+
+server:
+  port: 80
 
 spring:
-  port: 80
   application:
     name: StudiesWebServer
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/AskJesusBotDB
+    username: root
+    password: root
+
+
+
+token: "token123"

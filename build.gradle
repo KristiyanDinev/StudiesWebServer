@@ -11,7 +11,9 @@ version = '1.0.0'
 
 java {
 	manifest {
-		attributes['Main-Class'] = 'project.kristiyan.WebServer.WebServerApplication'
+		attributes(
+				'Main-Class': 'project.kristiyan.WebServer.WebServerApplication'
+		)
 	}
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -20,9 +22,19 @@ java {
 
 jar {
 	archiveBaseName = 'studies_web_server'
+	manifest {
+		attributes(
+				'Main-Class': 'project.kristiyan.WebServer.WebServerApplication'
+		)
+	}
 }
 shadowJar {
 	archiveBaseName = 'studies_web_server'
+	manifest {
+		attributes(
+				'Main-Class': 'project.kristiyan.WebServer.WebServerApplication'
+		)
+	}
 }
 
 repositories {
@@ -36,16 +48,17 @@ repositories {
 }
 
 dependencies {
+	implementation libs.mysql
 	implementation libs.springBootStarterJPA
-	implementation libs.springBootStarterSecurity
-	implementation libs.springBootStarterWebflux
+	//implementation libs.springBootStarterSecurity
+	implementation libs.springBootStarterWeb
 	implementation libs.jte
 	implementation libs.springBootSessions
 	developmentOnly libs.springBootDevTools
 	testImplementation libs.springBootStarterTest
-	testImplementation libs.reactorTest
 	testImplementation libs.springBootSecurityTest
 	testRuntimeOnly libs.junitPlatform
+	testRuntimeOnly libs.lombok
 	implementation name: "database_lib-1.0.0-all"
 }
 

@@ -37,6 +37,5 @@ out/
 ### JTE ###
 /jte-classes/
 
-
-
 libs/
+logs/

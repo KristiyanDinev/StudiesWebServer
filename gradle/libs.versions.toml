@@ -1,14 +1,18 @@
 [versions]
 jte = "3.2.1"
+mysql = "9.3.0"
 
 [libraries]
 springBootStarterJPA = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
-springBootStarterWebflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+springBootStarterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
 jte = { module = "gg.jte:jte-spring-boot-starter-3", version.ref = "jte" }
 springBootSessions = { module = "org.springframework.session:spring-session-core" }
 springBootDevTools = { module = "org.springframework.boot:spring-boot-devtools" }
 springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
-reactorTest = { module = "io.projectreactor:reactor-test" }
 springBootSecurityTest = { module = "org.springframework.security:spring-security-test" }
 junitPlatform = { module = "org.junit.platform:junit-platform-launcher" }
+lombok = { module = "org.projectlombok:lombok" }
+
+# https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+mysql = { module = "com.mysql:mysql-connector-j", version.ref = "mysql" }
