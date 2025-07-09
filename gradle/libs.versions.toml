@@ -1,0 +1,14 @@
+[versions]
+jte = "3.2.1"
+
+[libraries]
+springBootStarterJPA = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
+springBootStarterWebflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+jte = { module = "gg.jte:jte-spring-boot-starter-3", version.ref = "jte" }
+springBootSessions = { module = "org.springframework.session:spring-session-core" }
+springBootDevTools = { module = "org.springframework.boot:spring-boot-devtools" }
+springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
+reactorTest = { module = "io.projectreactor:reactor-test" }
+springBootSecurityTest = { module = "org.springframework.security:spring-security-test" }
+junitPlatform = { module = "org.junit.platform:junit-platform-launcher" }

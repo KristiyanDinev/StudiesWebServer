@@ -1,0 +1,55 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'gg.jte.gradle' version '3.2.1'
+	id 'com.gradleup.shadow' version '8.3.8'
+}
+
+group = 'project.kristiyan.WebServer'
+version = '1.0.0'
+
+java {
+	manifest {
+		attributes['Main-Class'] = 'project.kristiyan.WebServer.WebServerApplication'
+	}
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+jar {
+	archiveBaseName = 'studies_web_server'
+}
+shadowJar {
+	archiveBaseName = 'studies_web_server'
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url = uri("https://jitpack.io")
+	}
+	flatDir {
+		dirs "libs"
+	}
+}
+
+dependencies {
+	implementation libs.springBootStarterJPA
+	implementation libs.springBootStarterSecurity
+	implementation libs.springBootStarterWebflux
+	implementation libs.jte
+	implementation libs.springBootSessions
+	developmentOnly libs.springBootDevTools
+	testImplementation libs.springBootStarterTest
+	testImplementation libs.reactorTest
+	testImplementation libs.springBootSecurityTest
+	testRuntimeOnly libs.junitPlatform
+	implementation name: "database_lib-1.0.0-all"
+}
+
+jte {
+	generate()
+	binaryStaticContent = true
+}
