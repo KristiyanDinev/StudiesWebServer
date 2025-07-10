@@ -5,16 +5,22 @@ gg:
 
 server:
   port: 80
+  servlet:
+    session:
+      cookie:
+        same-site: strict
+        secure: true
 
 spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java,src/main/resources,src/main/jte
+    livereload:
+      enabled: true
+
   application:
     name: StudiesWebServer
-
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/AskJesusBotDB
-    username: root
-    password: root
-
 
 
 token: "token123"
