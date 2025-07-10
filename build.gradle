@@ -51,12 +51,12 @@ dependencies {
 	implementation libs.springBootStarterSecurity
 	implementation libs.springBootStarterWeb
 	implementation libs.jte
+	implementation libs.jaudiotagger
 	implementation libs.springBootSessions
 	developmentOnly libs.springBootDevTools
 	testImplementation libs.springBootStarterTest
 	testImplementation libs.springBootSecurityTest
 	testRuntimeOnly libs.junitPlatform
-	testRuntimeOnly libs.lombok
 	implementation name: "database_lib-1.0.0-all"
 }
 

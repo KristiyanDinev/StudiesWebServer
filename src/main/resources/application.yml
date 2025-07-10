@@ -1,10 +1,15 @@
 gg:
   jte:
-    development-mode: true
-    template-location: src/main/jte
+    developmentMode: true
+    templateLocation: src/main/jte
+    usePrecompiledTemplates: false
 
 server:
   port: 80
+  tomcat:
+    max-swallow-size: -1
+    max-http-form-post-size: -1
+
   servlet:
     session:
       cookie:
@@ -12,6 +17,11 @@ server:
         secure: true
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
   devtools:
     restart:
       enabled: true

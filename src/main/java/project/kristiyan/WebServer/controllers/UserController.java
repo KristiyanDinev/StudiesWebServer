@@ -20,13 +20,14 @@ public class UserController {
     @GetMapping("/")
     public String index(HttpServletRequest request) {
         if (userService.isAuthenticated(request.getSession(false))) {
-            return "redirect:/study/studies";
+            return "redirect:/studies";
         }
         return "index";
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> login(@RequestParam String token, HttpServletRequest request) {
+    public ResponseEntity<HttpStatus> login(@RequestParam String token,
+                                            HttpServletRequest request) {
         if (userService.checkTokenValidation(token)) {
             HttpSession session = request.getSession(true);
             session.setAttribute(UserService.authSession, "true");

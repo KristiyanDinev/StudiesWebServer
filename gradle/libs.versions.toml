@@ -1,9 +1,8 @@
 [versions]
 jte = "3.2.1"
-mysql = "9.3.0"
+jaudiotagger  = "3.0.1"
 
 [libraries]
-springBootStarterJPA = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
 springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
 springBootStarterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
 jte = { module = "gg.jte:jte-spring-boot-starter-3", version.ref = "jte" }
@@ -12,7 +11,7 @@ springBootDevTools = { module = "org.springframework.boot:spring-boot-devtools" 
 springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
 springBootSecurityTest = { module = "org.springframework.security:spring-security-test" }
 junitPlatform = { module = "org.junit.platform:junit-platform-launcher" }
-lombok = { module = "org.projectlombok:lombok" }
 
-# https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-mysql = { module = "com.mysql:mysql-connector-j", version.ref = "mysql" }
+# https://mvnrepository.com/artifact/net.jthink/jaudiotagger/3.0.1
+jaudiotagger  = { module = "net.jthink:jaudiotagger", version.ref = "jaudiotagger" }
+
