@@ -21,6 +21,8 @@
 @template.layouts._pagination(page = studies.getCurrentPage(),
                             totalPages = studies.getTotalPages())
 
+<p class="alert d-none" id="error"></p>
+
 <div class="table-responsive">
     <table class="table table-bordered table-striped text-center">
         <thead class="thead-dark">
@@ -49,10 +51,10 @@
             <tr class="page-row">
                 <td>${study.getName()}</td>
                 <td>${uploadDate}</td>
-                <td>${String.format("%.3f", study.length() / (1024.0 * 1024.0))}</td>
+                <td>${String.format("%.3f", study.length() / (1024.0 * 1024.0))}MB</td>
                 <td>
-                    <a href="/file/study/${study.getName()}" class="btn btn-primary mb-2 mx-2">Download</a>
-                    <button type="button" id="delete" class="btn btn-sm btn-danger mb-2 mx-2">Delete</button>
+                    <a href="/file/study/${study.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <button type="button" id="${study.getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
                 </td>
             </tr>
         @endfor
@@ -61,4 +63,6 @@
 </div>
 
 @template.layouts._footer()
+
+<script src="/assets/js/studies.js"></script>
 </body>

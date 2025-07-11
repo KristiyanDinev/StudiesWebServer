@@ -83,6 +83,9 @@ public class SongController {
             }
 
             for (String category : songUploadDto.getCategories().split(";")) {
+                if (category.isEmpty()) {
+                    continue;
+                }
                 WebServerApplication.database.songCategoryDao.addCategoryToSong(songEntity.id, category);
             }
             return ResponseEntity.status(HttpStatus.OK).build();

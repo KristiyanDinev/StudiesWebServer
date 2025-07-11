@@ -22,6 +22,8 @@
 @template.layouts._pagination(page = songs.getCurrentPage(),
                             totalPages = songs.getTotalPages())
 
+<p class="alert d-none" id="error"></p>
+
 <div class="table-responsive">
     <table class="table table-bordered table-striped text-center">
         <thead class="thead-dark">
@@ -53,18 +55,27 @@
                 <td>${song.getFile().getName()}</td>
                 <td>${song.getSongEntity().duration}s</td>
                 <td class="mb-3">
-                    @if(song.getSongCategoryEntities().isEmpty())
-                        <span class="text-muted">No categories added</span>
-                    @endif
-                    @for(SongCategoryEntity songCategoryEntity : song.getSongCategoryEntities())
-                        <span class="badge bg-primary me-2 mb-2">${songCategoryEntity.name.trim()}</span>
-                    @endfor
+                    <div id="category_display_${song.getSongEntity().id}" class="border rounded p-2 bg-light">
+                        @if(song.getSongCategoryEntities().isEmpty())
+                            <span class="text-muted">No categories added</span>
+                        @endif
+                        @for(SongCategoryEntity songCategoryEntity : song.getSongCategoryEntities())
+                            <span class="badge bg-primary me-2 mb-2">${songCategoryEntity.name.trim()}</span>
+                        @endfor
+                    </div>
+                    <div class="input-group d-none" id="edit_cat_${song.getSongEntity().id}">
+                        <input type="text" id="category_input_${song.getSongEntity().id}" class="form-control" placeholder="Enter category name">
+                        <button type="button" id="add_category_${song.getSongEntity().id}" class="btn btn-outline-primary">Add</button>
+                        <button type="button" id="remove_category_${song.getSongEntity().id}" class="btn btn-outline-danger">Remove</button>
+                    </div>
                 </td>
                 <td>${uploadDate}</td>
-                <td>${String.format("%.2f", song.getFile().length() / (1024.0 * 1024.0))}</td>
+                <td>${String.format("%.2f", song.getFile().length() / (1024.0 * 1024.0))}MB</td>
                 <td>
-                    <a href="/file/song/${song.getFile().getName()}" class="btn btn-primary mb-2 mx-2">Download</a>
-                    <button type="button" id="delete" class="btn btn-sm btn-danger mb-2 mx-2">Delete</button>
+                    <a href="/file/song/${song.getFile().getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <button type="button" id="${song.getSongEntity().id}" name="${song.getFile().getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
+                    <button type="button" id="toggle_${song.getSongEntity().id}" class="btn btn-sm btn-primary mb-2 mx-2"><i class="bi bi-pencil-square me-1"></i> Edit Categories</button>
+                    <button type="button" id="submit_${song.getSongEntity().id}" name="${song.getFile().getName()}" class="edit btn btn-sm btn-success mb-2 mx-2 d-none"><i class="bi bi-bookmark-check-fill me-1"></i> Submit</button>
                 </td>
             </tr>
         @endfor
@@ -73,4 +84,5 @@
 </div>
 
 @template.layouts._footer()
+<script src="/assets/js/songs.js"></script>
 </body>
