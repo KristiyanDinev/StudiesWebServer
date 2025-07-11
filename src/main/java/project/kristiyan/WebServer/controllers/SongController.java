@@ -8,23 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
-import project.kristiyan.WebServer.dto.SongDto;
 import project.kristiyan.WebServer.dto.SongUploadDto;
 import project.kristiyan.WebServer.services.SongService;
-import project.kristiyan.WebServer.services.StudyService;
-import project.kristiyan.WebServer.utilities.FileUtility;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.SongEntity;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class SongController {
@@ -32,41 +24,41 @@ public class SongController {
     @Autowired
     public SongService songService;
 
-    @Autowired
-    public FileUtility fileUtility;
-
     @GetMapping("/songs")
-    public String getSongs(Model model) {
-        // get all audio files from that folder
-        // set them to model
-
-        File songsUploadFolder = new File(SongService.UPLOAD_DIR);
-        List<SongDto> songs = new ArrayList<>();
-        if (!songsUploadFolder.exists() && !songsUploadFolder.mkdirs()) {
-            model.addAttribute("songs", songs);
-            return "song/songs";
-        }
-
-        File[] files = songsUploadFolder.listFiles(
-                f -> songService.isAudioFile(f) && f.isFile()
-        );
-        if (files != null) {
-            for (File file : files) {
-                SongEntity songEntity = WebServerApplication.database
-                        .songDao.getSong(file.getName());
-                if (songEntity == null) {
-                    continue;
-                }
-                songs.add(new SongDto(file, songEntity));
-            }
-        }
-        model.addAttribute("songs", songs);
+    public String getSongs(Model model,
+                           @RequestParam(defaultValue = "1")
+                           int page) {
+        model.addAttribute("songs", songService.getPage(page));
         return "song/songs";
     }
 
     @GetMapping("/songs/upload")
     public String songsUpload() {
         return "song/song_upload";
+    }
+
+    @PostMapping("/songs/delete")
+    public ResponseEntity<HttpStatus> deleteSong(@RequestParam() String song) {
+        File file = new File(songService.UPLOAD_DIR, song);
+        if (!file.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        try {
+            file.delete();
+
+            SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
+            if (songEntity == null) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+            WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
+            WebServerApplication.database.songPlaylistDao.deleteSongFromAllPlaylists(songEntity.id);
+            WebServerApplication.database.songDao.deleteSong(songEntity.id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+
+        } catch (Exception ignore) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PostMapping("/songs/upload")
@@ -79,17 +71,14 @@ public class SongController {
         String name = fileUploadDto.getFilename();
         File uploadedFile = null;
         try {
-            fileUtility.uploadFile(fileUploadDto, SongService.UPLOAD_DIR);
-            uploadedFile  = new File(SongService.UPLOAD_DIR+"/"+name);
+            GeneralUtility.uploadFile(fileUploadDto, songService.UPLOAD_DIR);
+            uploadedFile  = new File(songService.UPLOAD_DIR, name);
 
             boolean savedSong = WebServerApplication.database
                     .songDao.saveSong(name,
                             songService.calculateDuration(uploadedFile));
             SongEntity songEntity = WebServerApplication.database.songDao.getSong(name);
             if (songEntity == null || !savedSong) {
-                if (uploadedFile.exists()) {
-                    uploadedFile.delete();
-                }
                 throw new Exception();
             }
 
@@ -100,11 +89,10 @@ public class SongController {
 
         } catch (Exception ignore) {
            try {
-               if (uploadedFile != null && uploadedFile.exists()) {
-                   uploadedFile.delete();
-               }
+               uploadedFile.delete();
            } catch (Exception ignored) {}
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }
+

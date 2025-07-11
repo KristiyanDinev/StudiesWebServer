@@ -19,18 +19,24 @@ server:
 spring:
   servlet:
     multipart:
-      max-file-size: -1
-      max-request-size: -1
+      max-file-size: 5GB
+      max-request-size: 5GB
 
   devtools:
     restart:
       enabled: true
       additional-paths: src/main/java,src/main/resources,src/main/jte
     livereload:
-      enabled: true
+      enabled: false
 
   application:
     name: StudiesWebServer
 
 
 token: "token123"
+
+study_upload_path: "study_uploads/"
+study_items_per_page: 10
+
+song_upload_path: "song_uploads/"
+song_items_per_page: 10

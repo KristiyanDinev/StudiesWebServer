@@ -1,6 +1,5 @@
 package project.kristiyan.WebServer.utilities;
 
-import org.springframework.stereotype.Service;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 
 import java.io.IOException;
@@ -9,10 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Service
-public class FileUtility {
+public class GeneralUtility {
 
-    public void uploadFile(FileUploadDto fileUploadDto, String upload_dir) throws IOException {
+    public static void uploadFile(FileUploadDto fileUploadDto, String upload_dir) throws IOException {
         Path uploadPath = Paths.get(upload_dir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);

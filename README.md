@@ -39,8 +39,3 @@ sessions in memory.
 They are stored in the cookie `JSESSIONID`, not the data, but the session ID. 
 The data to that session is in memory.
 Keeping in mind that the panel may not be used my many people, but only by few selected admins.
-
-## TODO
-
-- Add pagination for `/studies` and `/songs`.
-  `?page=1` 10 items per page.
