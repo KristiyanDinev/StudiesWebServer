@@ -55,7 +55,7 @@
                 <td>${song.getFile().getName()}</td>
                 <td>${song.getSongEntity().duration}s</td>
                 <td class="mb-3">
-                    <div id="category_display_${song.getSongEntity().id}" class="border rounded p-2 bg-light">
+                    <div id="category_display_${song.getSongEntity().id}" class="p-2">
                         @if(song.getSongCategoryEntities().isEmpty())
                             <span class="text-muted">No categories added</span>
                         @endif

@@ -61,6 +61,24 @@ public class SongController {
         }
     }
 
+    @PostMapping("/songs/edit")
+    public ResponseEntity<HttpStatus> editSong(@RequestParam() String song,
+                                                 @RequestParam() String categories) {
+        SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
+        if (songEntity == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
+        for (String category : categories.split(";")) {
+            if (category.isEmpty()) {
+                continue;
+            }
+            WebServerApplication.database.songCategoryDao.addCategoryToSong(songEntity.id, category);
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping("/songs/upload")
     public ResponseEntity<HttpStatus> upload(@ModelAttribute SongUploadDto songUploadDto) {
         FileUploadDto fileUploadDto = songUploadDto.getFileUpload();

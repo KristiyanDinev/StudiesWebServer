@@ -54,11 +54,10 @@ for (let editBtn of document.getElementsByClassName('edit')) {
      }
 
     categories[id] = categoryList
-
     function updateCategoryDisplay() {
         const categoryDisplay = document.getElementById('category_display_'+id)
         if (categories) {
-            const categoryList = categories[id].split(';').filter(cat => cat.trim() !== '');
+            const categoryList = categories[id].filter(cat => cat.trim() !== '');
             categoryDisplay.innerHTML = categoryList.map(cat =>
                 `<span class="badge bg-primary me-1">${cat.trim()}</span>`
             ).join('');
@@ -73,10 +72,10 @@ for (let editBtn of document.getElementsByClassName('edit')) {
             const newCategory = categoryInput.value.trim();
                 if (newCategory === '') return;
 
-                let categoryList = categories ? categories[id].split(';') : [];
+                let categoryList = categories ? categories[id] : [];
             if (!categoryList.includes(newCategory)) {
                     categoryList.push(newCategory);
-                    categories[id] = categoryList.join(';');
+                    categories[id] = categoryList;
                     updateCategoryDisplay();
             }
             categoryInput.value = '';
@@ -88,11 +87,11 @@ for (let editBtn of document.getElementsByClassName('edit')) {
         const categoryToRemove = categoryInput.value.trim();
             if (categoryToRemove === '') return;
 
-            let categoryList = categories ? categories[id].split(';') : [];
+            let categoryList = categories ? categories[id] : [];
 
             // Filter out the category
             categoryList = categoryList.filter(cat => cat.trim() !== categoryToRemove);
-            categories[id] = categoryList.join(';');
+            categories[id] = categoryList;
             updateCategoryDisplay();
 
             categoryInput.value = ''; // Clear input
@@ -126,7 +125,7 @@ for (let editBtn of document.getElementsByClassName('edit')) {
 
         let formData = new FormData()
         formData.append('song', songName)
-        formData.append('categories', categories[id])
+        formData.append('categories', categories[id].join(';'))
 
         try {
             const res = await fetch('/songs/edit', {
