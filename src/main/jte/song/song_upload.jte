@@ -24,10 +24,12 @@
 
     <div class="mb-3">
         <label for="category_input" class="form-label">Song Categories</label>
-        <div class="input-group">
+        <div class="input-group mb-2">
             <input type="text" id="category_input" class="form-control" placeholder="Enter category name">
-            <button type="button" id="add_category" class="btn btn-outline-primary">Add</button>
-            <button type="button" id="remove_category" class="btn btn-outline-danger">Remove</button>
+        </div>
+        <div class="mb-2">
+            <button type="button" id="add_category" class="btn btn-outline-primary mr-2">Add</button>
+            <button type="button" id="remove_category" class="btn btn-outline-danger mx-2">Remove</button>
         </div>
     </div>
 

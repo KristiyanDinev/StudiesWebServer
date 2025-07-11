@@ -63,10 +63,12 @@
                             <span class="badge bg-primary me-2 mb-2">${songCategoryEntity.name.trim()}</span>
                         @endfor
                     </div>
-                    <div class="input-group d-none" id="edit_cat_${song.getSongEntity().id}">
-                        <input type="text" id="category_input_${song.getSongEntity().id}" class="form-control" placeholder="Enter category name">
-                        <button type="button" id="add_category_${song.getSongEntity().id}" class="btn btn-outline-primary">Add</button>
-                        <button type="button" id="remove_category_${song.getSongEntity().id}" class="btn btn-outline-danger">Remove</button>
+                    <div class="d-none" id="edit_cat_${song.getSongEntity().id}">
+                        <input type="text" id="category_input_${song.getSongEntity().id}" class="form-control mb-2" placeholder="Enter category name">
+                        <div class="mb-2">
+                            <button type="button" id="add_category_${song.getSongEntity().id}" class="btn btn-outline-primary mr-2">Add</button>
+                            <button type="button" id="remove_category_${song.getSongEntity().id}" class="btn btn-outline-danger mx-2">Remove</button>
+                        </div>
                     </div>
                 </td>
                 <td>${uploadDate}</td>
