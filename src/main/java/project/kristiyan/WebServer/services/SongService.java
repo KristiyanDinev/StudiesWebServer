@@ -120,7 +120,9 @@ public class SongService {
             }
             songModels.add(new SongModel(file, songEntity,
                     WebServerApplication.database.songCategoryDao
-                            .getSongCategories(songEntity.id)));
+                            .getSongCategories(songEntity.id),
+                    WebServerApplication.database.songPlaylistDao
+                            .getPlaylistsWhereThatSongIs(songEntity.id)));
         }
         paginationModel.setTotalPages((int) Math.ceil((double) allFiles.length / itemsPerPage));
         paginationModel.setCurrentPage(page);

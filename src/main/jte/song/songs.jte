@@ -1,6 +1,7 @@
 @import project.kristiyan.WebServer.models.PaginationModel
 @import project.kristiyan.WebServer.models.SongModel
 @import project.kristiyan.database.entities.SongCategoryEntity
+@import project.kristiyan.database.entities.SongPlaylistEntity
 @import java.io.IOException
 @import java.nio.file.Files
 @import java.nio.file.attribute.BasicFileAttributes
@@ -31,6 +32,7 @@
             <th>Name</th>
             <th>Duration (seconds)</th>
             <th>Categories</th>
+            <th>Playlists</th>
             <th>Uploaded Date</th>
             <th>Size (MB)</th>
             <th>Actions</th>
@@ -70,6 +72,11 @@
                             <button type="button" id="remove_category_${song.getSongEntity().id}" class="btn btn-outline-danger mx-2">Remove</button>
                         </div>
                     </div>
+                </td>
+                <td class="mb-3">
+                    @for(SongPlaylistEntity songPlaylistEntity : song.getSongPlaylistEntities())
+                        <span class="badge bg-success me-2 mb-2">${songPlaylistEntity.name.trim()}</span>
+                    @endfor
                 </td>
                 <td>${uploadDate}</td>
                 <td>${String.format("%.2f", song.getFile().length() / (1024.0 * 1024.0))}MB</td>
