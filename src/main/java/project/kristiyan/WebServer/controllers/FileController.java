@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import project.kristiyan.WebServer.services.SermonService;
 import project.kristiyan.WebServer.services.SongService;
 import project.kristiyan.WebServer.services.StudyService;
 
@@ -28,6 +29,9 @@ public class FileController {
 
     @Autowired
     public SongService songService;
+
+    @Autowired
+    public SermonService sermonService;
 
     /**
      * Serves PDF files for inline viewing in browser
@@ -117,6 +121,59 @@ public class FileController {
             }
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType(songService.getAudioContentType(name)));
+            headers.setContentLength(songFile.length());
+            // Enable range requests for audio streaming
+            headers.set("Accept-Ranges", "bytes");
+            headers.setContentDispositionFormData("attachment", name);
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(new FileSystemResource(songFile));
+
+        } catch (Exception ignore) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+
+
+    /**
+     * Serves audio files for streaming and download
+     * Add ?download=true to force download
+     */
+    @GetMapping("/file/sermon/{name}")
+    public String getSermon(@PathVariable String name, Model model) {
+        try {
+            Path filePath = Paths.get(sermonService.UPLOAD_DIR, name);
+            if (!filePath.toFile().exists()) {
+                return "error";
+            }
+            // Security check - ensure file is within upload directory
+            if (!filePath.normalize().startsWith(Paths.get(sermonService.UPLOAD_DIR).normalize())) {
+                return "error";
+            }
+            model.addAttribute("sermon", name);
+            model.addAttribute("type", sermonService.getAudioContentType(name));
+            return "sermon/sermon_download";
+
+        } catch (Exception ignore) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/file/sermon/download/{name}")
+    public ResponseEntity<Resource> downloadSermon(@PathVariable String name) {
+        try {
+            Path filePath = Paths.get(sermonService.UPLOAD_DIR, name);
+            File songFile = filePath.toFile();
+            if (!songFile.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            // Security check - ensure file is within upload directory
+            if (!filePath.normalize().startsWith(Paths.get(sermonService.UPLOAD_DIR).normalize())) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType(sermonService.getAudioContentType(name)));
             headers.setContentLength(songFile.length());
             // Enable range requests for audio streaming
             headers.set("Accept-Ranges", "bytes");

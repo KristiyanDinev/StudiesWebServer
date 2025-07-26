@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.dto.SongUploadDto;
-import project.kristiyan.WebServer.services.SongService;
+import project.kristiyan.WebServer.services.SermonService;
 import project.kristiyan.WebServer.utilities.GeneralUtility;
-import project.kristiyan.database.entities.SongEntity;
+import project.kristiyan.database.entities.SermonEntity;
 
 import java.io.File;
 
 @Controller
-public class SongController {
+public class SermonController {
 
     @Autowired
-    public SongService songService;
+    public SermonService sermonService;
 
-    @GetMapping("/songs")
-    public String getSongs(Model model,
+    @GetMapping("/sermons")
+    public String getSermons(Model model,
                            @RequestParam(defaultValue = "1")
                            int page) {
-        model.addAttribute("songs", songService.getPage(page));
-        return "song/songs";
+        model.addAttribute("sermons", sermonService.getPage(page));
+        return "sermon/sermons";
     }
 
-    @GetMapping("/songs/upload")
-    public String songsUpload() {
-        return "song/song_upload";
+    @GetMapping("/sermons/upload")
+    public String sermonsUpload() {
+        return "sermon/sermon_upload";
     }
 
-    @PostMapping("/songs/delete")
-    public ResponseEntity<HttpStatus> deleteSong(@RequestParam() String song) {
-        File file = new File(songService.UPLOAD_DIR, song);
+    @PostMapping("/sermons/delete")
+    public ResponseEntity<HttpStatus> deleteSermon(@RequestParam() String sermon) {
+        File file = new File(sermonService.UPLOAD_DIR, sermon);
         if (!file.exists()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -47,13 +47,13 @@ public class SongController {
         try {
             file.delete();
 
-            SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
-            if (songEntity == null) {
+            SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
+            if (sermonEntity == null) {
                 return ResponseEntity.status(HttpStatus.OK).build();
             }
-            WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
-            WebServerApplication.database.songPlaylistDao.deleteSongFromAllPlaylists(songEntity.id);
-            WebServerApplication.database.songDao.deleteSong(songEntity.id);
+            WebServerApplication.database.sermonCategoryDao.deleteAllCategoriesFromSermon(sermonEntity.id);
+            WebServerApplication.database.sermonPlaylistDao.deleteSermonFromAllPlaylists(sermonEntity.id);
+            WebServerApplication.database.sermonDao.deleteSermon(sermonEntity.id);
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
@@ -61,43 +61,43 @@ public class SongController {
         }
     }
 
-    @PostMapping("/songs/edit")
-    public ResponseEntity<HttpStatus> editSong(@RequestParam() String song,
+    @PostMapping("/sermons/edit")
+    public ResponseEntity<HttpStatus> editSermon(@RequestParam() String sermon,
                                                  @RequestParam() String categories) {
-        SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
-        if (songEntity == null) {
+        SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
+        if (sermonEntity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
+        WebServerApplication.database.sermonCategoryDao.deleteAllCategoriesFromSermon(sermonEntity.id);
         for (String category : categories.split(";")) {
             if (category.isEmpty()) {
                 continue;
             }
-            WebServerApplication.database.songCategoryDao
-                    .addCategoryToSong(songEntity.id, category.replace(" ", "-"));
+            WebServerApplication.database.sermonCategoryDao
+                    .addCategoryToSermon(sermonEntity.id, category.replace(" ", "-"));
         }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/songs/upload")
-    public ResponseEntity<HttpStatus> uploadSong(@ModelAttribute SongUploadDto songUploadDto) {
+    @PostMapping("/sermons/upload")
+    public ResponseEntity<HttpStatus> uploadSermon(@ModelAttribute SongUploadDto songUploadDto) {
         FileUploadDto fileUploadDto = songUploadDto.getFileUpload();
-        if (!songService.isValidFile(fileUploadDto)) {
+        if (!sermonService.isValidFile(fileUploadDto)) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
         }
-        fileUploadDto.setFilename(songService.sanitizeFileName(fileUploadDto.getFilename()));
+        fileUploadDto.setFilename(sermonService.sanitizeFileName(fileUploadDto.getFilename()));
         String name = fileUploadDto.getFilename();
         File uploadedFile = null;
         try {
-            GeneralUtility.uploadFile(fileUploadDto, songService.UPLOAD_DIR);
-            uploadedFile  = new File(songService.UPLOAD_DIR, name);
+            GeneralUtility.uploadFile(fileUploadDto, sermonService.UPLOAD_DIR);
+            uploadedFile  = new File(sermonService.UPLOAD_DIR, name);
 
             boolean savedSong = WebServerApplication.database
-                    .songDao.saveSong(name,
-                            songService.calculateDuration(uploadedFile));
-            SongEntity songEntity = WebServerApplication.database.songDao.getSong(name);
-            if (songEntity == null || !savedSong) {
+                    .sermonDao.saveSermon(name,
+                            sermonService.calculateDuration(uploadedFile));
+            SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(name);
+            if (sermonEntity == null || !savedSong) {
                 throw new Exception();
             }
 
@@ -105,8 +105,8 @@ public class SongController {
                 if (category.isEmpty()) {
                     continue;
                 }
-                WebServerApplication.database.songCategoryDao
-                        .addCategoryToSong(songEntity.id, category.replace(" ", "-"));
+                WebServerApplication.database.sermonCategoryDao
+                        .addCategoryToSermon(sermonEntity.id, category.replace(" ", "-"));
             }
             return ResponseEntity.status(HttpStatus.OK).build();
 

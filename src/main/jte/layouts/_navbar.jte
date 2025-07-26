@@ -14,5 +14,11 @@
         <a class="btn btn-primary mb-2 mx-2" href="/songs/upload">
             <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Song
         </a>
+        <a class="btn btn-primary mb-2 mx-2" href="/sermons">
+            <i class="bi bi-music-note-beamed me-1"></i> Manage Sermons
+        </a>
+        <a class="btn btn-primary mb-2 mx-2" href="/sermons/upload">
+            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Sermon
+        </a>
     </div>
 </nav>

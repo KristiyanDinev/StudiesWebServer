@@ -40,3 +40,7 @@ study_items_per_page: 10
 
 song_upload_path: "song_uploads/"
 song_items_per_page: 10
+
+sermon_upload_path: "sermon_uploads/"
+sermon_items_per_page: 10
+
