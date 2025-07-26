@@ -3,6 +3,8 @@ A website in Spring Boot and MySQL made for a specific discord server purpose.
 
 You can share access to this panel by giving the **TOKEN** away to your friends.
 
+To set that token. Set an environment variable called `WEBAUTH_TOKEN` to that token.
+
 ## Studies
 
 There a page for uploading a study in **PDF** format.
@@ -31,6 +33,10 @@ You can:
   *(You can also give them a new name if you want).*
 
 - **Edit** - You can modify the categories of that specific song.
+
+## Sermons
+
+*The same as songs*
 
 ## Sessions
 
