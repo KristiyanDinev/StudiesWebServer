@@ -11,8 +11,6 @@ public class UserService {
 
     public UserService() {
         _token = System.getenv("WEBAUTH_TOKEN");
-        System.out.println("Token from env: " + _token);
-
     }
 
 
