@@ -18,7 +18,7 @@ import java.util.List;
 public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
     // REGEX
-    public static List<String> allowedPaths = List.of("/assets/**", "/", "/fonts/**", "/file/**");
+    public static List<String> allowedPaths = List.of("/assets/**", "/admin_login", "/fonts/**", "/file/**");
 
     private static final AntPathMatcher matcher = new AntPathMatcher();
 
@@ -50,7 +50,7 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
         } else {
             // Redirect to Login for GET requests
-            response.sendRedirect("/");
+            response.sendRedirect("/admin_login");
             return;
         }
 

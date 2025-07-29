@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.services.UserService;
 
 @Controller
-public class UserController {
+public class AdminLoginController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    @GetMapping("/admin_login")
+    public String adminLoginPage(HttpServletRequest request) {
         if (userService.isAuthenticated(request.getSession(false))) {
             return "redirect:/studies";
         }
-        return "index";
+        return "admin_login";
     }
 
-    @PostMapping("/")
+    @PostMapping("/admin_login")
     public ResponseEntity<HttpStatus> login(@RequestParam String token,
                                             HttpServletRequest request) {
         if (userService.checkTokenValidation(token)) {
