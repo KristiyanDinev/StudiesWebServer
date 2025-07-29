@@ -20,6 +20,10 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Songs</h1>
 
+<a class="btn btn-primary mb-2 mx-2" href="/songs/upload">
+    <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Song
+</a>
+
 @template.layouts._pagination(page = songs.getCurrentPage(),
                             totalPages = songs.getTotalPages())
 

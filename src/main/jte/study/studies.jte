@@ -18,6 +18,10 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Studies</h1>
 
+<a class="btn btn-primary mb-2 mx-2" href="/studies/upload">
+    <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Study
+</a>
+
 @template.layouts._pagination(page = studies.getCurrentPage(),
                             totalPages = studies.getTotalPages())
 
