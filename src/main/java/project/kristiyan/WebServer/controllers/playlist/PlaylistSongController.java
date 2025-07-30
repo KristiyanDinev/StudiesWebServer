@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.database.entities.SongEntity;
@@ -37,6 +36,12 @@ public class PlaylistSongController {
     public ResponseEntity<List<SongEntity>> getAlikeSongs(@RequestParam String alike_song) {
         return ResponseEntity.ok(WebServerApplication.database.songDao.getAllSongsAlike(alike_song));
     }
+
+    @PostMapping("/playlists/song")
+    public ResponseEntity<List<SongEntity>> getAllPlaylistSongs(@RequestParam String playlist) {
+        return ResponseEntity.ok(WebServerApplication.database.songPlaylistDao.getAllPlaylistSongs(playlist));
+    }
+
 
     @PostMapping("/playlists/song/add")
     public ResponseEntity<HttpStatus> addSongToPlaylistDB(@RequestParam String song,

@@ -36,6 +36,12 @@ public class PlaylistSermonController {
         return ResponseEntity.ok(WebServerApplication.database.sermonDao.getAllSermonsAlike(alike_sermon));
     }
 
+
+    @PostMapping("/playlists/sermon")
+    public ResponseEntity<List<SermonEntity>> getAllSermonsByPlaylist(@RequestParam String playlist) {
+        return ResponseEntity.ok(WebServerApplication.database.sermonPlaylistDao.getAllPlaylistSermons(playlist));
+    }
+
     @PostMapping("/playlists/sermon/add")
     public ResponseEntity<HttpStatus> addSermonToPlaylistDB(@RequestParam String sermon,
                                                           @RequestParam String playlist) {
