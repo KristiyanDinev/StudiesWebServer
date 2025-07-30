@@ -50,7 +50,6 @@ async function searchSongs(query) {
 
 // Function to display suggestions in dropdown
 function displaySuggestions(songs) {
-    console.log('displaySuggestions called with:', songs);
     dropdown.innerHTML = '';
 
     if (!songs || songs.length === 0) {
@@ -60,9 +59,7 @@ function displaySuggestions(songs) {
                 <div>No songs found</div>
                 <small class="text-muted">Try a different search term</small>
             </div>`;
-        console.log('No songs found, showing empty message');
     } else {
-        console.log(`Displaying ${songs.length} songs`);
         songs.forEach((song, index) => {
             const item = document.createElement('div');
             item.className = 'song-item';
@@ -389,16 +386,33 @@ document.addEventListener('mouseover', function(event) {
 });
 
 // Upload button handler
-uploadBtn.addEventListener('click', function() {
+uploadBtn.addEventListener('click', async function() {
+    const playlist = document.getElementById('playlist').value;
     if (!selectedSong) {
-        showError('Please select a song from the dropdown.');
+        showError('Please select a song from the dropdown');
+        return;
+    }
+    if (!playlist) {
+        showError('Please specify the name of the playlist');
         return;
     }
 
-    // Here you can add your upload logic
-    // The selected song data is available in selectedSong variable
-    console.log('Selected song:', selectedSong);
+    let formData = new FormData()
+    formData.append('song', selectedSong.name)
+    formData.append('playlist', playlist)
 
-    // Example: You might want to send this to your backend
-    // You can access the selected song data and process it as needed
+    try {
+        const res = await fetch('/playlists/song/add', {
+            method: 'POST',
+            body: formData
+        })
+
+        if (res.ok) {
+            window.location.pathname = '/songs'
+            return
+        }
+        throw new Exception()
+    } catch {
+        showError("Couldn't add this song to the playlist. Please try again later.");
+    }
 });

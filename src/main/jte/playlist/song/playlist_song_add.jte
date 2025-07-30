@@ -41,12 +41,16 @@
                         </div>
                     </div>
 
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-dark mb-3" for="playlist">
+                            <i class="bi bi-tag me-2"></i>Name of Playlist
+                        </label>
+                        <input type="text" id="playlist" placeholder="My Playlist"
+                               class="form-control form-control-lg border-2 rounded p-3">
+                    </div>
+
                     <!-- Search Section -->
                     <div class="mb-4">
-                        <label class="form-label fw-semibold text-dark mb-3">
-                            <i class="bi bi-search me-2"></i>Search for a song
-                        </label>
-
                         <div class="position-relative">
                             <div class="form-floating">
                                 <input type="text"
@@ -175,5 +179,5 @@
     }
 </style>
 
-<script src="/assets/js/playlist/playlist_add.js"></script>
+<script src="/assets/js/playlist/song/playlist_add.js"></script>
 </body>

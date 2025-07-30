@@ -1,5 +1,6 @@
 package project.kristiyan.WebServer.controllers.playlist;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +36,41 @@ public class PlaylistSongController {
     @PostMapping("/playlists/song/alike")
     public ResponseEntity<List<SongEntity>> getAlikeSongs(@RequestParam String alike_song) {
         return ResponseEntity.ok(WebServerApplication.database.songDao.getAllSongsAlike(alike_song));
+    }
+
+    @PostMapping("/playlists/song/add")
+    public ResponseEntity<HttpStatus> addSongToPlaylistDB(@RequestParam String song,
+                                                          @RequestParam String playlist) {
+        SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
+        if (songEntity == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (WebServerApplication.database.songPlaylistDao.addSongToPlaylist(
+                songEntity.id, playlist)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/playlists/song/remove")
+    public ResponseEntity<HttpStatus> removeSongFromPlaylistDB(@RequestParam String song,
+                                                          @RequestParam String playlist) {
+        SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
+        if (songEntity == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (WebServerApplication.database.songPlaylistDao.deleteSongFromPlaylist(
+                songEntity.id, playlist)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/playlists/song/delete")
+    public ResponseEntity<HttpStatus> deletePlaylistDB(@RequestParam String playlist) {
+        if (WebServerApplication.database.songPlaylistDao.deletePlaylist(playlist)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 }
