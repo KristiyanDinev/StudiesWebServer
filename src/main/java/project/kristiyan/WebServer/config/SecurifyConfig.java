@@ -27,7 +27,7 @@ public class SecurifyConfig {
                                 "script-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com;"+
                                 "style-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com 'unsafe-inline';"+
                                 "font-src 'self' https://cdn.jsdelivr.net;"+
-                                "connect-src 'self' ws://127.0.0.1:35729;"
+                                "connect-src 'self';"
                             ))
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
 

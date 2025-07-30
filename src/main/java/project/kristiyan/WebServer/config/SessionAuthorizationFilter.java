@@ -36,8 +36,7 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
         HttpSession session = request.getSession(false);
         if (session != null &&
-                session.getAttribute(UserService.authSession)
-                        .equals("true")) {
+                "true".equals(session.getAttribute(UserService.authSession))) {
             // Mark user as authenticated
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(
