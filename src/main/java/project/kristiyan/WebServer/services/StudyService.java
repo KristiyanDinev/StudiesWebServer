@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
+import project.kristiyan.WebServer.models.StudyModel;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class StudyService {
@@ -33,9 +38,9 @@ public class StudyService {
         return !cleanName.toLowerCase().endsWith(".pdf") ? cleanName + ".pdf" : cleanName;
     }
 
-    public PaginationModel<File> getPage(int page) {
+    public PaginationModel<StudyModel> getPage(int page) {
         File studiesUploadFolder = new File(UPLOAD_DIR);
-        PaginationModel<File> paginationModel = new PaginationModel<>();
+        PaginationModel<StudyModel> paginationModel = new PaginationModel<>();
         if (!studiesUploadFolder.exists() && !studiesUploadFolder.mkdirs()) {
             return paginationModel;
         }
@@ -53,7 +58,14 @@ public class StudyService {
         if (startIndex >= allFiles.length) {
             return paginationModel;
         }
-        paginationModel.setItems(Arrays.asList(Arrays.copyOfRange(allFiles, startIndex, endIndex)));
+
+        List<StudyModel> studyModels = new ArrayList<>();
+        for (File study : Arrays.copyOfRange(allFiles, startIndex, endIndex)) {
+            studyModels.add(new StudyModel(study,
+                    WebServerApplication.database.studySeriesDao
+                            .getSeriesFromStudy(study.getName())));
+        }
+        paginationModel.setItems(studyModels);
         paginationModel.setCurrentPage(page);
         paginationModel.setTotalPages((int) Math.ceil((double) allFiles.length / itemsPerPage));
         return paginationModel;

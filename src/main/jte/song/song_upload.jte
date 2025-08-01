@@ -23,7 +23,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="category_input" class="form-label">Song Categories</label>
+        <label for="category_input" class="form-label">Song Categories (optional) - Don't use <span class="fw-semibold text-danger">;</span> for the categories</label>
         <div class="input-group mb-2">
             <input type="text" id="category_input" class="form-control" placeholder="Enter category name">
         </div>

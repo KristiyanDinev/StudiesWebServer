@@ -47,6 +47,27 @@
                 </a>
             </div>
         </div>
+
+        <div class="container m-4">
+            <h3 class="fw-bold">Study Series</h3>
+            <div>
+                <a class="btn btn-primary mb-2 mx-2" href="/playlists/series/add">
+                    <i class="bi bi-plus-circle-fill me-1"></i> Add Study to Series
+                </a>
+            </div>
+
+            <div>
+                <a class="btn btn-danger btn-sm mb-2 mx-2" href="/playlists/series/remove">
+                    <i class="bi bi-dash-circle-fill me-1"></i> Remove Study from Series
+                </a>
+            </div>
+
+            <div>
+                <a class="btn btn-danger btn-sm mb-2 mx-2" href="/playlists/series/delete">
+                    <i class="bi bi-trash3-fill me-1"></i> Delete Series
+                </a>
+            </div>
+        </div>
     </div>
 
 

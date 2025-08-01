@@ -5,8 +5,7 @@
 <body>
 @template.layouts._navbar()
 
-<div class="p-4 border rounded shadow-sm bg-light"
-      style="max-width: 600px; margin: auto;">
+<div class="p-4 border rounded shadow-sm">
     <h4 class="mb-4">Upload PDF Study</h4>
 
     <!-- File input -->

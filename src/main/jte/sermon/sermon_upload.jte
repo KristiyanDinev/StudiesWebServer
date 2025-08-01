@@ -5,7 +5,7 @@
 <body>
 @template.layouts._navbar()
 
-<div class="p-4 border rounded shadow-sm bg-light" style="max-width: 600px; margin: auto;">
+<div class="p-4 border rounded shadow-sm bg-light">
     <h4 class="mb-4">Upload a Sermon</h4>
 
     <!-- File input -->
@@ -23,7 +23,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="category_input" class="form-label">Song Categories</label>
+        <label for="category_input" class="form-label">Sermon Categories (optional) - Don't use <span class="fw-semibold text-danger">;</span> for the categories</label>
         <div class="input-group mb-2">
             <input type="text" id="category_input" class="form-control" placeholder="Enter category name">
         </div>
@@ -35,7 +35,7 @@
 
     <div class="mb-3">
         <label class="form-label">Categories:</label>
-        <div id="category_display" class="border rounded p-2 bg-light">
+        <div id="category_display" class="border rounded p-2">
             <span class="text-muted">No categories added</span>
         </div>
     </div>

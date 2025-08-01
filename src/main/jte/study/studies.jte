@@ -1,4 +1,6 @@
 @import project.kristiyan.WebServer.models.PaginationModel
+@import project.kristiyan.WebServer.models.StudyModel
+@import project.kristiyan.database.entities.StudySeriesEntity
 @import java.nio.file.Files
 @import java.nio.file.attribute.BasicFileAttributes
 @import java.io.File
@@ -6,7 +8,7 @@
 @import java.time.format.DateTimeFormatter
 @import java.io.IOException
 
-@param PaginationModel<File> studies
+@param PaginationModel<StudyModel> studies
 
 !{var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");}
 
@@ -32,18 +34,20 @@
         <thead class="thead-dark">
         <tr>
             <th>Name</th>
+            <th>Series</th>
             <th>Uploaded Date</th>
             <th>Size (MB)</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        @for(File study : studies.getItems())
+        @for(StudyModel study : studies.getItems())
             !{
+                File file = study.getFile();
                 BasicFileAttributes attrs = null;
                 String uploadDate = "Unknown";
                 try {
-                    uploadDate = Files.readAttributes(study.toPath(), BasicFileAttributes.class)
+                    uploadDate = Files.readAttributes(file.toPath(), BasicFileAttributes.class)
                         .creationTime()
                         .toInstant()
                         .atZone(ZoneId.systemDefault())
@@ -53,12 +57,20 @@
                 }
             }
             <tr class="page-row">
-                <td>${study.getName()}</td>
+                <td>${file.getName()}</td>
+                <td class="p-2">
+                    @if(study.getStudySeriesEntities().isEmpty())
+                        <span class="text-muted">Not in any series yet</span>
+                    @endif
+                    @for(StudySeriesEntity studySeriesEntity : study.getStudySeriesEntities())
+                        <span class="badge bg-info text-muted me-2 mb-2">${studySeriesEntity.series_name.trim()}</span>
+                    @endfor
+                </td>
                 <td>${uploadDate}</td>
-                <td>${String.format("%.3f", study.length() / (1024.0 * 1024.0))}MB</td>
+                <td>${String.format("%.3f", file.length() / (1024.0 * 1024.0))}MB</td>
                 <td>
-                    <a href="/file/study/${study.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
-                    <button type="button" id="${study.getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
+                    <a href="/file/study/${file.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <button type="button" id="${file.getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
                 </td>
             </tr>
         @endfor

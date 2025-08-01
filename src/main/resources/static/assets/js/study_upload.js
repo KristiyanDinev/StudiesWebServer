@@ -4,6 +4,7 @@ let error = document.getElementById('error');
 const MAX_SIZE_BYTES = 5 * 1024 * 1024 * 1024; // 5 GB
 
 var isInvalid = 'is-invalid'
+
 fileInput.addEventListener('change', function () {
         const file = this.files[0];
         if (!file) return;
@@ -29,6 +30,7 @@ fileInput.addEventListener('change', function () {
         // Autofill filename input (without .pdf extension)
         filenameInput.value = file.name.replace(/\.pdf$/i, '');
 });
+
 
 let uploadBtn = document.getElementById('upload')
 uploadBtn.addEventListener('click', async function (e) {
