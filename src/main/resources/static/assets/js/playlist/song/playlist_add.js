@@ -45,16 +45,19 @@ function displaySuggestions(songs) {
     dropdown.innerHTML = '';
 
     if (!songs || songs.length === 0) {
-        dropdown.innerHTML = '<div class="dropdown-item-text text-muted">No songs found</div>';
+        dropdown.innerHTML = '<div class="rounded fw-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No songs found</div>';
     } else {
         songs.forEach(song => {
             const item = document.createElement('button');
             item.className = 'dropdown-item';
             item.type = 'button';
             item.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>${escapeHtml(song.name || 'Unknown Song')}</span>
-                    <small class="text-muted">${formatDuration(song.duration)}</small>
+                <div class="d-flex justify-content-between align-items-center flex-column flex-wrap border border-3 border-dark rounded p-3 mt-3 mb-3 me-3">
+                    <span class="fw-bold fs-4">${escapeHtml(song.name || 'Unknown Song')}</span>
+                    <div>
+                        <span class="fs-5">${formatDuration(song.duration)}s</span>
+                        <i class="bi bi-plus-circle fs-4 text-success"></i>
+                    </div>
                 </div>
             `;
 

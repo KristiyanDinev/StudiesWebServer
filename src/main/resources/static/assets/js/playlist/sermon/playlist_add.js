@@ -45,16 +45,19 @@ function displaySuggestions(sermons) {
     dropdown.innerHTML = '';
 
     if (!sermons || sermons.length === 0) {
-        dropdown.innerHTML = '<div class="dropdown-item-text text-muted">No sermons found</div>';
+        dropdown.innerHTML = '<div class="rounded fs-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No sermons found</div>';
     } else {
         sermons.forEach(sermon => {
             const item = document.createElement('button');
             item.className = 'dropdown-item';
             item.type = 'button';
             item.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>${escapeHtml(sermon.name || 'Unknown Sermon')}</span>
-                    <small class="text-muted">${formatDuration(sermon.duration)}</small>
+                <div class="d-flex justify-content-between align-items-center flex-column flex-wrap border border-3 border-dark rounded p-3 mt-3 mb-3 me-3">
+                    <span class="fw-bold fs-4">${escapeHtml(sermon.name || 'Unknown Sermon')}</span>
+                    <div class="flex-row">
+                        <span class="fs-5">${formatDuration(sermon.duration)}s</span>
+                        <i class="bi bi-plus-circle fs-4 text-success"></i>
+                    </div>
                 </div>
             `;
 

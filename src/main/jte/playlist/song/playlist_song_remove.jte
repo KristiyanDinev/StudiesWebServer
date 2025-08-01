@@ -4,7 +4,7 @@
 <body>
 @template.layouts._navbar()
 
-<div class="container-fluid py-5" style="min-height: calc(100vh - 140px);">
+<div class="container-fluid py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
             <!-- Main Card -->
@@ -64,14 +64,9 @@
                                 </label>
                             </div>
 
-                            <!-- Search Icon -->
-                            <div class="position-absolute top-50 end-0 translate-middle-y pe-4">
-                                <i class="bi bi-search text-muted fs-5"></i>
-                            </div>
-
                             <!-- Dropdown for recommendations -->
                             <div id="song-dropdown"
-                                 class="position-absolute w-100 d-none"
+                                 class="position-relative w-100 d-none"
                                  style="z-index: var(--bs-zindex-dropdown);">
                                 <!-- Recommendations will be populated here -->
                             </div>
@@ -82,7 +77,7 @@
                     <div class="alert d-none border-0" id="error" role="alert"></div>
 
                     <!-- Action Buttons -->
-                    <div class="d-grid gap-3 mt-4">
+                    <div class="d-grid gap-3 mt-4 position-relative">
                         <button id="remove"
                                 type="button"
                                 class="btn btn-danger btn-lg py-3 border-0 rounded-3 fw-semibold">
@@ -103,77 +98,5 @@
 </div>
 
 @template.layouts._footer()
-
-<!-- Custom Bootstrap CSS Variables and Enhancements -->
-<style>
-    :root {
-        --bs-primary-rgb: 13, 110, 253;
-        --bs-danger-rgb: 220, 53, 69;
-        --bs-warning-rgb: 255, 193, 7;
-        --bs-spacer-5: 3rem;
-        --bs-zindex-dropdown: 1000;
-    }
-
-    .card {
-        transition: transform var(--bs-transition-base);
-        border-radius: var(--bs-border-radius-xl) !important;
-    }
-
-    .card:hover {
-        transform: translateY(-2px);
-    }
-
-    .card-header {
-        background: linear-gradient(135deg, rgb(var(--bs-danger-rgb)) 0%, rgb(180, 40, 55) 100%) !important;
-        border-radius: var(--bs-border-radius-xl) var(--bs-border-radius-xl) 0 0 !important;
-    }
-
-    .form-control:focus {
-        border-color: rgb(var(--bs-primary-rgb));
-        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
-    }
-
-    .btn-danger {
-        background: linear-gradient(135deg, rgb(var(--bs-danger-rgb)) 0%, rgb(180, 40, 55) 100%);
-        transition: all var(--bs-transition-base);
-    }
-
-    .btn-danger:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 0.5rem 1rem rgba(var(--bs-danger-rgb), 0.3);
-        background: linear-gradient(135deg, rgb(180, 40, 55) 0%, rgb(var(--bs-danger-rgb)) 100%);
-    }
-
-    .alert-warning {
-        background: linear-gradient(135deg, rgba(var(--bs-warning-rgb), 0.1) 0%, rgba(var(--bs-warning-rgb), 0.05) 100%);
-        border-left: 4px solid rgb(var(--bs-warning-rgb));
-    }
-
-    /* Responsive Typography */
-    @media (max-width: 576px) {
-        .card-header h3 {
-            font-size: 1.25rem;
-        }
-        .card-body {
-            padding: var(--bs-spacer-3) !important;
-        }
-    }
-
-    /* Custom scrollbar for dropdown */
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: var(--bs-gray-100);
-        border-radius: var(--bs-border-radius);
-    }
-
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: linear-gradient(45deg, rgb(var(--bs-danger-rgb)), rgb(var(--bs-warning-rgb)));
-        border-radius: var(--bs-border-radius);
-    }
-</style>
-
 <script src="/assets/js/playlist/song/playlist_remove.js"></script>
 </body>

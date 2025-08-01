@@ -7,7 +7,7 @@
 
     <div class="d-flex flex-row">
         <div class="container m-4">
-            <h3>Songs</h3>
+            <h3 class="fw-bold">Songs</h3>
             <div>
                 <a class="btn btn-primary mb-2 mx-2" href="/playlists/song/add">
                     <i class="bi bi-plus-circle-fill me-1"></i> Add Song to Playlist
@@ -28,7 +28,7 @@
         </div>
 
         <div class="container m-4">
-            <h3>Sermons</h3>
+            <h3 class="fw-bold">Sermons</h3>
             <div>
                 <a class="btn btn-primary mb-2 mx-2" href="/playlists/sermon/add">
                     <i class="bi bi-plus-circle-fill me-1"></i> Add Sermon to Playlist

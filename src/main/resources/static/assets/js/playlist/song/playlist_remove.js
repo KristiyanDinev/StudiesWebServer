@@ -56,34 +56,26 @@ function displaySuggestions(songs) {
     dropdown.innerHTML = '';
 
     if (!songs || songs.length === 0) {
-        dropdown.innerHTML = '<div class="dropdown-item-text text-muted">No songs found</div>';
+        dropdown.innerHTML = '<div class="rounded fw-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No songs found</div>';
     } else {
         songs.forEach(song => {
             const item = document.createElement('button');
-            item.className = 'dropdown-item d-flex justify-content-between align-items-center';
+            item.className = 'dropdown-item';
             item.type = 'button';
 
-            const songName = escapeHtml(song.name || 'Unknown Song');
-            const duration = formatDuration(song.duration);
-
             item.innerHTML = `
-                <span>${songName}</span>
-                <div>
-                    <small class="text-muted me-2">${duration}</small>
-                    <i class="bi bi-dash-circle text-danger"></i>
+            <div class="d-flex justify-content-between align-items-center flex-column flex-wrap border border-3 border-dark rounded p-3 mt-3 mb-3 me-3">
+                <span class="fw-bold fs-4">${escapeHtml(song.name || 'Unknown Song')}</span>
+                <div class="flex-row">
+                    <span class="fs-5">${formatDuration(song.duration)}s</span>
+                    <i class="bi bi-dash-circle fs-4 text-danger"></i>
                 </div>
+            </div>
             `;
 
             item.addEventListener('click', () => selectSong(song));
             dropdown.appendChild(item);
         });
-
-        if (songs.length >= 10) {
-            const indicator = document.createElement('div');
-            indicator.className = 'dropdown-item-text text-muted small text-center';
-            indicator.textContent = 'Showing first 10 results - keep typing to refine';
-            dropdown.appendChild(indicator);
-        }
     }
 
     dropdown.classList.remove('d-none');
@@ -96,8 +88,8 @@ function selectSong(song) {
     hideError();
 
     // Visual feedback for removal selection
-    searchInput.classList.add('border-danger');
-    setTimeout(() => searchInput.classList.remove('border-danger'), 3000);
+    searchInput.classList.add('is-valid');
+    setTimeout(() => searchInput.classList.remove('is-valid'), 3000);
 }
 
 function formatDuration(seconds) {

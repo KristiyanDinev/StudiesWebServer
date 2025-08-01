@@ -4,7 +4,7 @@
 <body>
 @template.layouts._navbar()
 
-<div class="container-fluid py-5" style="min-height: calc(100vh - 140px);">
+<div class="container-fluid py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
             <!-- Main Card -->
@@ -57,22 +57,15 @@
                                        class="form-control form-control-lg border-2 rounded-3"
                                        id="sermon-search"
                                        placeholder="Start typing to search for a sermon..."
-                                       autocomplete="off"
-                                       style="padding-right: var(--bs-spacer-5);">
+                                       autocomplete="off">
                                 <label for="sermon-search" class="text-muted">
                                     <i class="bi bi-dash-circle me-2"></i>Choose a sermon to remove
                                 </label>
                             </div>
 
-                            <!-- Search Icon -->
-                            <div class="position-absolute top-50 end-0 translate-middle-y pe-4">
-                                <i class="bi bi-search text-muted fs-5"></i>
-                            </div>
-
                             <!-- Dropdown for recommendations -->
                             <div id="sermon-dropdown"
-                                 class="position-absolute w-100 d-none"
-                                 style="z-index: var(--bs-zindex-dropdown);">
+                                 class="position-relative w-100 d-none">
                                 <!-- Recommendations will be populated here -->
                             </div>
                         </div>
@@ -85,7 +78,7 @@
                     <div class="d-grid gap-3 mt-4">
                         <button id="remove"
                                 type="button"
-                                class="btn btn-danger btn-lg py-3 border-0 rounded-3 fw-semibold">
+                                class="btn btn-danger btn-lg py-3 border-0 rounded-3 fw-semibold position-relative">
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-auto">
                                     <i class="bi bi-dash-circle-fill fs-4"></i>
