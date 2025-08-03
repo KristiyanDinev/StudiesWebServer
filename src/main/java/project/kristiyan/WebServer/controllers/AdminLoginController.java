@@ -20,7 +20,7 @@ public class AdminLoginController {
     @GetMapping("/admin_login")
     public String adminLoginPage(HttpServletRequest request) {
         if (userService.isAuthenticated(request.getSession(false))) {
-            return "redirect:/studies";
+            return "redirect:/admin/studies";
         }
         return "admin_login";
     }

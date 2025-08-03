@@ -8,6 +8,7 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.StudyModel;
+import project.kristiyan.database.entities.StudySeriesEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,30 +45,20 @@ public class StudyService {
         if (!studiesUploadFolder.exists() && !studiesUploadFolder.mkdirs()) {
             return paginationModel;
         }
-        File[] allFiles = studiesUploadFolder.listFiles(
-                f -> f.getName().endsWith(".pdf") && f.isFile()
-        );
-        if (allFiles == null || allFiles.length == 0) {
-            return paginationModel;
-        }
-
-        Arrays.sort(allFiles, (a, b) -> a.getName().compareTo(b.getName()));
-        int startIndex = (page - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, allFiles.length);
-
-        if (startIndex >= allFiles.length) {
-            return paginationModel;
-        }
 
         List<StudyModel> studyModels = new ArrayList<>();
-        for (File study : Arrays.copyOfRange(allFiles, startIndex, endIndex)) {
+        for (StudySeriesEntity studySeriesEntity :
+                WebServerApplication.database.studySeriesDao.getStudies(page)) {
+            File study = new File(studiesUploadFolder, studySeriesEntity.study_name);
+            if (!study.exists()) {
+                continue;
+            }
             studyModels.add(new StudyModel(study,
                     WebServerApplication.database.studySeriesDao
-                            .getSeriesFromStudy(study.getName())));
+                            .getSeriesFromStudy(studySeriesEntity.study_name)));
         }
         paginationModel.setItems(studyModels);
         paginationModel.setCurrentPage(page);
-        paginationModel.setTotalPages((int) Math.ceil((double) allFiles.length / itemsPerPage));
         return paginationModel;
     }
 }

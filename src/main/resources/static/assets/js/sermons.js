@@ -16,7 +16,7 @@ for (let deleteBtn of document.getElementsByClassName('delete')) {
         formData.append('sermon', songName)
 
         try {
-            const res = await fetch('/sermons/delete', {
+            const res = await fetch('/admin/sermons/delete', {
                 method: 'POST',
                 body: formData
             })
@@ -128,7 +128,7 @@ for (let editBtn of document.getElementsByClassName('edit')) {
         formData.append('categories', categories[id].join(';'))
 
         try {
-            const res = await fetch('/sermons/edit', {
+            const res = await fetch('/admin/sermons/edit', {
                 method: 'POST',
                 body: formData
             })

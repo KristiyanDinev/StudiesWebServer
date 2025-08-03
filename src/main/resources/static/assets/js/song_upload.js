@@ -109,7 +109,7 @@ uploadBtn.addEventListener('click', async function (e) {
                 formData.append("categories", categories)
 
                 try {
-                    const res = await fetch('/songs/upload', {
+                    const res = await fetch('/admin/songs/upload', {
                         method: 'POST',
                         body: formData
                     })
@@ -117,7 +117,7 @@ uploadBtn.addEventListener('click', async function (e) {
                     if (res.ok) {
                         error.innerHTML = ""
                         error.className = ""
-                        window.location.pathname = '/songs'
+                        window.location.pathname = '/admin/songs'
                         return
                     }
 

@@ -2,8 +2,8 @@ const searchInput = document.getElementById('song-search');
 const dropdown = document.getElementById('song-dropdown');
 const errorDiv = document.getElementById('error');
 const uploadBtn = document.getElementById('upload');
+const playlistElement = document.getElementById('playlist')
 
-let searchTimeout;
 let selectedSong = null;
 
 function showError(message) {
@@ -22,11 +22,16 @@ async function searchSongs(query) {
         return;
     }
 
+    const playlist = playlistElement.value
+    if (!playlist) {
+        return
+    }
+
     const formData = new FormData();
     formData.append('alike_song', query);
 
     try {
-        const response = await fetch('/playlists/song/alike', {
+        const response = await fetch('/admin/playlists/song/alike', {
             method: 'POST',
             body: formData
         });
@@ -96,15 +101,14 @@ function escapeHtml(text) {
 }
 
 // Event listeners
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', async function() {
     selectedSong = null;
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => searchSongs(this.value), 300);
+    await searchSongs(this.value);
 });
 
-searchInput.addEventListener('focus', function() {
+searchInput.addEventListener('focus', async function() {
     if (this.value.trim().length >= 2) {
-        searchSongs(this.value);
+        await searchSongs(this.value);
     }
 });
 
@@ -115,7 +119,7 @@ document.addEventListener('click', function(event) {
 });
 
 uploadBtn.addEventListener('click', async function() {
-    const playlist = document.getElementById('playlist').value;
+    const playlist = playlistElement.value;
 
     if (!selectedSong) {
         showError('Please select a song from the dropdown');
@@ -126,18 +130,22 @@ uploadBtn.addEventListener('click', async function() {
         return;
     }
 
+    if (!confirm(`Add "${selectedSong.name}" to "${playlist}"?`)) {
+        return;
+    }
+
     const formData = new FormData();
     formData.append('song', selectedSong.name);
     formData.append('playlist', playlist);
 
     try {
-        const response = await fetch('/playlists/song/add', {
+        const response = await fetch('/admin/playlists/song/add', {
             method: 'POST',
             body: formData
         });
 
         if (response.ok) {
-            window.location.pathname = '/songs';
+            window.location.pathname = '/admin/songs';
         } else {
             throw new Error('Upload failed');
         }

@@ -96,26 +96,11 @@ public class SongService {
             return paginationModel;
         }
 
-        File[] allFiles = songsUploadFolder.listFiles(
-                f -> isAudioFile(f) && f.isFile()
-        );
-        if (allFiles == null || allFiles.length == 0) {
-            return paginationModel;
-        }
-
-        Arrays.sort(allFiles, (a, b) -> a.getName().compareTo(b.getName()));
-        int startIndex = (page - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, allFiles.length);
-
         List<SongModel> songModels = new ArrayList<>();
-        if (startIndex >= allFiles.length) {
-            return paginationModel;
-        }
-        for (int i = startIndex; i < endIndex; i++) {
-            File file = allFiles[i];
-            SongEntity songEntity = WebServerApplication.database
-                    .songDao.getSong(file.getName());
-            if (songEntity == null) {
+        for (SongEntity songEntity : WebServerApplication.database
+                .songDao.getSongsByPage(page)) {
+            File file = new File(songsUploadFolder, songEntity.name);
+            if (!file.exists()) {
                 continue;
             }
             songModels.add(new SongModel(file, songEntity,
@@ -124,7 +109,6 @@ public class SongService {
                     WebServerApplication.database.songPlaylistDao
                             .getPlaylistsWhereThatSongIs(songEntity.id)));
         }
-        paginationModel.setTotalPages((int) Math.ceil((double) allFiles.length / itemsPerPage));
         paginationModel.setCurrentPage(page);
         paginationModel.setItems(songModels);
         return paginationModel;

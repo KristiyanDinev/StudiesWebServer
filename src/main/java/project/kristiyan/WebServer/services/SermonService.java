@@ -13,7 +13,6 @@ import project.kristiyan.database.entities.SermonEntity;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -62,22 +61,15 @@ public class SermonService {
      */
     public String getAudioContentType(String filename) {
         String extension = filename.toLowerCase().substring(filename.lastIndexOf('.') + 1);
-        switch (extension) {
-            case "mp3":
-                return "audio/mpeg";
-            case "wav":
-                return "audio/wav";
-            case "ogg":
-                return "audio/ogg";
-            case "m4a":
-                return "audio/mp4";
-            case "flac":
-                return "audio/flac";
-            case "aac":
-                return "audio/aac";
-            default:
-                return "audio/mpeg"; // Default fallback
-        }
+        return switch (extension) {
+            case "mp3" -> "audio/mpeg";
+            case "wav" -> "audio/wav";
+            case "ogg" -> "audio/ogg";
+            case "m4a" -> "audio/mp4";
+            case "flac" -> "audio/flac";
+            case "aac" -> "audio/aac";
+            default -> "audio/mpeg"; // Default fallback
+        };
     }
 
     public long calculateDuration(File file) {
@@ -96,26 +88,11 @@ public class SermonService {
             return paginationModel;
         }
 
-        File[] allFiles = sermonUploadFolder.listFiles(
-                f -> isAudioFile(f) && f.isFile()
-        );
-        if (allFiles == null || allFiles.length == 0) {
-            return paginationModel;
-        }
-
-        Arrays.sort(allFiles, (a, b) -> a.getName().compareTo(b.getName()));
-        int startIndex = (page - 1) * itemsPerPage;
-        int endIndex = Math.min(startIndex + itemsPerPage, allFiles.length);
-
         List<SermonModel> sermonModels = new ArrayList<>();
-        if (startIndex >= allFiles.length) {
-            return paginationModel;
-        }
-        for (int i = startIndex; i < endIndex; i++) {
-            File file = allFiles[i];
-            SermonEntity sermonEntity = WebServerApplication.database
-                    .sermonDao.getSermon(file.getName());
-            if (sermonEntity == null) {
+        for (SermonEntity sermonEntity : WebServerApplication.database
+                .sermonDao.getSermonsByPage(page)) {
+            File file = new File(sermonUploadFolder, sermonEntity.name);
+            if (!file.exists()) {
                 continue;
             }
             sermonModels.add(new SermonModel(file, sermonEntity,
@@ -124,7 +101,6 @@ public class SermonService {
                     WebServerApplication.database.sermonPlaylistDao
                             .getPlaylistsWhereThatSermonIs(sermonEntity.id)));
         }
-        paginationModel.setTotalPages((int) Math.ceil((double) allFiles.length / itemsPerPage));
         paginationModel.setCurrentPage(page);
         paginationModel.setItems(sermonModels);
         return paginationModel;

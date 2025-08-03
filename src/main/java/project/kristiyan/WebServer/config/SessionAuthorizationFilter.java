@@ -18,7 +18,16 @@ import java.util.List;
 public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
     // REGEX
-    public static List<String> allowedPaths = List.of("/assets/**", "/admin_login", "/fonts/**", "/file/**");
+    public static List<String> allowedPaths = List.of(
+            "/assets/**",
+            "/favicon.ico",
+            "/admin_login",  // admin login page
+            "/studies/**",   // user studies
+            "/songs/**",     // user songs
+            "/sermons/**",   // user sermons
+            "/fonts/**",
+            "/file/**"
+    );
 
     private static final AntPathMatcher matcher = new AntPathMatcher();
 

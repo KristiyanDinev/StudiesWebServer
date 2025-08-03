@@ -2,8 +2,8 @@ const searchInput = document.getElementById('sermon-search');
 const dropdown = document.getElementById('sermon-dropdown');
 const errorDiv = document.getElementById('error');
 const uploadBtn = document.getElementById('upload');
+const playlistElement = document.getElementById('playlist')
 
-let searchTimeout;
 let selectedSermon = null;
 
 function showError(message) {
@@ -22,11 +22,16 @@ async function searchSermons(query) {
         return;
     }
 
+    const playlist = playlistElement.value
+    if (!playlist) {
+        return
+    }
+
     const formData = new FormData();
     formData.append('alike_sermon', query);
 
     try {
-        const response = await fetch('/playlists/sermon/alike', {
+        const response = await fetch('/admin/playlists/sermon/alike', {
             method: 'POST',
             body: formData
         });
@@ -96,13 +101,12 @@ function escapeHtml(text) {
 }
 
 // Event listeners
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', async function() {
     selectedSermon = null;
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => searchSermons(this.value), 300);
+    searchSermons(this.value);
 });
 
-searchInput.addEventListener('focus', function() {
+searchInput.addEventListener('focus', async function() {
     if (this.value.trim().length >= 2) {
         searchSermons(this.value);
     }
@@ -115,7 +119,7 @@ document.addEventListener('click', function(event) {
 });
 
 uploadBtn.addEventListener('click', async function() {
-    const playlist = document.getElementById('playlist').value;
+    const playlist = playlistElement.value;
 
     if (!selectedSermon) {
         showError('Please select a sermon from the dropdown');
@@ -126,18 +130,22 @@ uploadBtn.addEventListener('click', async function() {
         return;
     }
 
+    if (!confirm(`Add "${selectedSermon.name}" to "${playlist}"?`)) {
+        return;
+    }
+
     const formData = new FormData();
     formData.append('sermon', selectedSermon.name);
     formData.append('playlist', playlist);
 
     try {
-        const response = await fetch('/playlists/sermon/add', {
+        const response = await fetch('/admin/playlists/sermon/add', {
             method: 'POST',
             body: formData
         });
 
         if (response.ok) {
-            window.location.pathname = '/sermons';
+            window.location.pathname = '/admin/sermons';
         } else {
             throw new Error('Upload failed');
         }

@@ -21,10 +21,6 @@ deleteBtn.addEventListener('click', async function() {
         return
     }
 
-    if (!confirm(`Delete"${playlistValue}"?`)) {
-        return;
-    }
-
     let formData = new FormData()
     formData.append('playlist', playlistValue)
 

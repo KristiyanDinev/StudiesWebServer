@@ -5,7 +5,6 @@ const removeBtn = document.getElementById('remove');
 const playlistInput = document.getElementById('playlist');
 
 let selectedSong = null;
-let allSongs = [];
 
 function showError(message) {
     errorDiv.textContent = message;
@@ -16,40 +15,36 @@ function hideError() {
     errorDiv.className = 'alert d-none';
 }
 
-async function loadPlaylistSongs(playlist) {
-    if (!playlist) {
-        allSongs = [];
-        dropdown.classList.add('d-none');
-        return;
-    }
 
-    try {
-        const formData = new FormData();
-        formData.append('playlist', playlist);
-
-        const response = await fetch('/playlists/song', {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            allSongs = await response.json();
-        } else {
-            allSongs = [];
-        }
-    } catch (error) {
-        allSongs = [];
-        showError('Failed to load playlist songs');
-    }
-}
-
-function filterSongs(query) {
+async function getSongsAlike(query) {
     query = query.trim().toLowerCase();
     if (query.length < 1) return [];
 
-    return allSongs.filter(song =>
-        song.name.toLowerCase().includes(query)
-    ).slice(0, 10);
+    const playlistValue = playlistInput.value
+    if (!playlistValue) {
+        return []
+    }
+
+    let formData = new FormData()
+    formData.append('playlist', playlistValue)
+    formData.append('alike_song', query)
+
+    try {
+        const res = await fetch('/admin/playlists/song/alike', {
+            method: 'POST',
+            body: formData
+        })
+
+        if (!res.ok) {
+            showError("Can't get songs")
+            return []
+        }
+
+        return await res.json()
+    } catch {
+        showError("Can't get songs")
+        return []
+    }
 }
 
 function displaySuggestions(songs) {
@@ -107,34 +102,20 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// Event listeners
-playlistInput.addEventListener('input', function() {
-    const playlist = this.value.trim();
-    allSongs = [];
-    selectedSong = null;
-    searchInput.value = '';
-    dropdown.classList.add('d-none');
 
-    if (playlist) {
-        loadPlaylistSongs(playlist);
-    }
-});
-
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', async function() {
     const query = this.value;
-
     if (selectedSong && selectedSong.name !== query) {
         selectedSong = null;
     }
-
-    const filteredSongs = filterSongs(query);
-    displaySuggestions(filteredSongs);
+    const songs_alike = await getSongsAlike(query)
+    displaySuggestions(songs_alike);
 });
 
-searchInput.addEventListener('focus', function() {
+searchInput.addEventListener('focus', async function() {
     if (this.value.trim().length >= 1) {
-        const filteredSongs = filterSongs(this.value);
-        displaySuggestions(filteredSongs);
+        const songs_alike = await getSongsAlike(this.value)
+        displaySuggestions(songs_alike);
     }
 });
 
@@ -165,13 +146,13 @@ removeBtn.addEventListener('click', async function() {
     formData.append('playlist', playlist);
 
     try {
-        const response = await fetch('/playlists/song/remove', {
+        const response = await fetch('/admin/playlists/song/remove', {
             method: 'POST',
             body: formData
         });
 
         if (response.ok) {
-            window.location.pathname = '/songs';
+            window.location.pathname = '/admin/songs';
         } else {
             throw new Error('Remove failed');
         }

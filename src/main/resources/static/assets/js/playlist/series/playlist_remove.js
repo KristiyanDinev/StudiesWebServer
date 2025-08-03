@@ -1,10 +1,10 @@
-const searchInput = document.getElementById("sermon-search")
-const dropdown = document.getElementById('sermon-dropdown')
+const searchInput = document.getElementById("study-search")
+const dropdown = document.getElementById('study-dropdown')
 const errorDiv = document.getElementById('error')
 const removeBtn = document.getElementById("remove")
-const playlistInput = document.getElementById('playlist')
+const series = document.getElementById('series')
 
-selectedSermon = null
+selectedStudy = null
 
 function hideError() {
     errorDiv.className = 'alert d-none'
@@ -21,35 +21,11 @@ function showSuccess(message) {
 }
 
 
-async function getSermonsAlike(query) {
+function filterSermons(query) {
     query = query.trim().toLowerCase();
     if (query.length < 1) return [];
 
-    const playlist = playlistInput.value
-    if (!playlist) {
-        return []
-    }
-
-    let formData = new FormData()
-    formData.append('alike_sermon', query)
-    formData.append('playlist', playlist)
-
-    try {
-        const res = await fetch('/admin/playlists/sermon/alike', {
-            method: "POST",
-            body: formData
-        })
-        
-        if (!res.ok) {
-            showError("Can't get sermons")
-            return []
-        }
-        
-        return await res.json()
-    } catch {
-        showError("Can't get sermons")
-        return []
-    }
+    return
 }
 
 function displaySuggestions(sermons) {
@@ -65,11 +41,7 @@ function displaySuggestions(sermons) {
 
             item.innerHTML = `
             <div class="d-flex justify-content-between align-items-center flex-column flex-wrap border border-3 border-dark rounded p-3 mt-3 mb-3 me-3">
-                <span class="fw-bold fs-4">${escapeHtml(sermon.name || 'Unknown Sermon')}</span>
-                <div class="flex-row">
-                    <span class="fs-5">${formatDuration(sermon.duration)}s</span>
-                    <i class="bi bi-dash-circle fs-4 text-danger"></i>
-                </div>
+                <span class="fw-bold fs-4">${escapeHtml(sermon.study_name || 'Unknown Sermon')}</span>
             </div>
             `;
 
@@ -82,7 +54,7 @@ function displaySuggestions(sermons) {
 }
 
 function selectSermon(sermon) {
-    selectedSermon = sermon;
+    selectedStudy = sermon;
     searchInput.value = sermon.name || 'Unknown Sermon';
     dropdown.classList.add('d-none');
     hideError();
@@ -107,22 +79,30 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// Event listeners
+playlistInput.addEventListener('input', function() {
+    const playlist = this.value.trim();
+    selectedStudy = null;
+    searchInput.value = '';
+    dropdown.classList.add('d-none');
 
-searchInput.addEventListener('input', async function() {
-    const query = this.value;
-
-    if (selectedSermon && selectedSermon.name !== query) {
-        selectedSermon = null;
+    if (playlist) {
+        loadStudies(playlist);
     }
-
-    const sermons_alike = await getSermonsAlike(query)
-    displaySuggestions(sermons_alike);
 });
 
-searchInput.addEventListener('focus', async function() {
+searchInput.addEventListener('input', function() {
+    const query = this.value;
+
+    if (selectedStudy && selectedStudy.name !== query) {
+        selectedStudy = null;
+    }
+    displaySuggestions(filterSermons(query));
+});
+
+searchInput.addEventListener('focus', function() {
     if (this.value.trim().length >= 1) {
-        const sermons_alike = await getSermonsAlike(query)
-        displaySuggestions(sermons_alike);
+        displaySuggestions(filterSermons(this.value));
     }
 });
 
@@ -135,7 +115,7 @@ document.addEventListener('click', function(event) {
 removeBtn.addEventListener('click', async function() {
     const playlist = playlistInput.value.trim();
 
-    if (!selectedSermon) {
+    if (!selectedStudy) {
         showError('Please select a sermon to remove');
         return;
     }
@@ -144,12 +124,12 @@ removeBtn.addEventListener('click', async function() {
         return;
     }
 
-    if (!confirm(`Remove "${selectedSermon.name}" from "${playlist}"?`)) {
+    if (!confirm(`Remove "${selectedStudy.name}" from "${playlist}"?`)) {
         return;
     }
 
     const formData = new FormData();
-    formData.append('sermon', selectedSermon.name);
+    formData.append('sermon', selectedStudy.name);
     formData.append('playlist', playlist);
 
     try {

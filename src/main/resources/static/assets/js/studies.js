@@ -16,7 +16,7 @@ for (let deleteBtn of document.getElementsByClassName('delete')) {
         formData.append('study', studyName)
 
         try {
-            const res = await fetch('/studies/delete', {
+            const res = await fetch('/admin/studies/delete', {
                 method: 'POST',
                 body: formData
             })

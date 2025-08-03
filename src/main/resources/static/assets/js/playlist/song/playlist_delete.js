@@ -21,18 +21,22 @@ deleteBtn.addEventListener('click', async function() {
         return
     }
 
+    if (!confirm(`Delete "${playlistValue}"?`)) {
+            return;
+     }
+
     let formData = new FormData()
     formData.append('playlist', playlistValue)
 
     hideError()
     try {
-        const res = await fetch('/playlists/song/delete', {
+        const res = await fetch('/admin/playlists/song/delete', {
             method: 'POST',
             body: formData
         })
 
         if (res.ok) {
-            window.location.pathname = '/songs'
+            window.location.pathname = '/admin/songs'
             return
         }
     } catch {}
