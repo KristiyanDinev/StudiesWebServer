@@ -55,7 +55,7 @@ public class StudyService {
             }
             studyModels.add(new StudyModel(study,
                     WebServerApplication.database.studySeriesDao
-                            .getSeriesFromStudy(studySeriesEntity.study_name)));
+                            .getSeriesFromStudy(studySeriesEntity.study_name, 1)));
         }
         paginationModel.setItems(studyModels);
         paginationModel.setCurrentPage(page);

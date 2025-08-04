@@ -30,7 +30,7 @@ public class PlaylistStudySeriesController {
     }
 
 
-    @PostMapping("/admin/playlists/study/alike")
+    @PostMapping("/admin/playlists/study/alike_by_series")
     public ResponseEntity<List<StudySeriesEntity>> getAlikeStudiesBySeries(@RequestParam String alike_study,
                                                                            @RequestParam String series) {
         return ResponseEntity.ok(WebServerApplication.database
@@ -48,10 +48,7 @@ public class PlaylistStudySeriesController {
     @PostMapping("/admin/playlists/study/add")
     public ResponseEntity<HttpStatus> addStudyToSeriesDB(@RequestParam String study,
                                                           @RequestParam String series) {
-        if (WebServerApplication.database.studySeriesDao.getSeriesFromStudy(study)
-                .stream().anyMatch(
-                        e -> e.series_name.equals(series)
-                )) {
+        if (WebServerApplication.database.studySeriesDao.isStudyInSeries(study, series)) {
             // the study already is in that series
             return ResponseEntity.ok().build();
         }
@@ -68,6 +65,15 @@ public class PlaylistStudySeriesController {
                                                          @RequestParam String series) {
         if (WebServerApplication.database.studySeriesDao
                 .deleteStudyFromSeries(study, series)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+
+    @PostMapping("/admin/playlists/study/delete")
+    public ResponseEntity<HttpStatus> removeSeriesDB(@RequestParam String series) {
+        if (WebServerApplication.database.studySeriesDao.deleteSeries(series)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();

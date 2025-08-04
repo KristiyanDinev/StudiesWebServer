@@ -30,7 +30,7 @@ public class PlaylistSermonController {
     }
 
 
-    @PostMapping("/admin/playlists/sermon/alike")
+    @PostMapping("/admin/playlists/sermon/alike_by_playlist")
     public ResponseEntity<List<SermonEntity>> getAlikeSermonsByPlaylist(@RequestParam String alike_sermon,
                                                               @RequestParam String playlist) {
         return ResponseEntity.ok(WebServerApplication.database

@@ -22,11 +22,6 @@ async function searchSongs(query) {
         return;
     }
 
-    const playlist = playlistElement.value
-    if (!playlist) {
-        return
-    }
-
     const formData = new FormData();
     formData.append('alike_song', query);
 
@@ -119,7 +114,7 @@ document.addEventListener('click', function(event) {
 });
 
 uploadBtn.addEventListener('click', async function() {
-    const playlist = playlistElement.value;
+    const playlist = playlistElement.value.trim();
 
     if (!selectedSong) {
         showError('Please select a song from the dropdown');

@@ -21,31 +21,54 @@ function showSuccess(message) {
 }
 
 
-function filterSermons(query) {
-    query = query.trim().toLowerCase();
+async function getStudiesAlike(query) {
+    query = query.trim();
     if (query.length < 1) return [];
 
-    return
+    const seriesValue = series.value.trim()
+    if (!seriesValue) {
+        return []
+    }
+
+    let formData = new FormData()
+    formData.append('alike_study', query)
+    formData.append('series', seriesValue)
+
+    try {
+        const res = await fetch('/admin/playlists/study/alike_by_series', {
+            method: 'POST',
+            body: seriesValue
+        })
+        if (!res.ok) {
+            showError("Can't get studies")
+            return []
+        }
+        return await res.json()
+
+    } catch {
+        showError("Error while getting the studies")
+        return []
+    }
 }
 
-function displaySuggestions(sermons) {
+function displaySuggestions(studies) {
     dropdown.innerHTML = '';
 
-    if (!sermons || sermons.length === 0) {
-        dropdown.innerHTML = '<div class="rounded fs-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No sermons found</div>';
+    if (!studies || studies.length === 0) {
+        dropdown.innerHTML = '<div class="rounded fs-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No studies found</div>';
     } else {
-        sermons.forEach(sermon => {
+        studies.forEach(study => {
             const item = document.createElement('button');
             item.className = 'dropdown-item';
             item.type = 'button';
 
             item.innerHTML = `
             <div class="d-flex justify-content-between align-items-center flex-column flex-wrap border border-3 border-dark rounded p-3 mt-3 mb-3 me-3">
-                <span class="fw-bold fs-4">${escapeHtml(sermon.study_name || 'Unknown Sermon')}</span>
+                <span class="fw-bold fs-4">${escapeHtml(study.study_name || 'Unknown Study')}</span>
             </div>
             `;
 
-            item.addEventListener('click', () => selectSermon(sermon));
+            item.addEventListener('click', () => selectStudy(study));
             dropdown.appendChild(item);
         });
     }
@@ -53,9 +76,9 @@ function displaySuggestions(sermons) {
     dropdown.classList.remove('d-none');
 }
 
-function selectSermon(sermon) {
-    selectedStudy = sermon;
-    searchInput.value = sermon.name || 'Unknown Sermon';
+function selectStudy(study) {
+    selectedStudy = study;
+    searchInput.value = study.study_name || 'Unknown Study';
     dropdown.classList.add('d-none');
     hideError();
 
@@ -64,45 +87,27 @@ function selectSermon(sermon) {
     setTimeout(() => searchInput.classList.remove('is-valid'), 3000);
 }
 
-function formatDuration(seconds) {
-    const totalSeconds = parseInt(seconds) || 0;
-    if (totalSeconds <= 0) return '0:00';
-
-    const minutes = Math.floor(totalSeconds / 60);
-    const remainingSeconds = totalSeconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-}
-
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Event listeners
-playlistInput.addEventListener('input', function() {
-    const playlist = this.value.trim();
-    selectedStudy = null;
-    searchInput.value = '';
-    dropdown.classList.add('d-none');
-
-    if (playlist) {
-        loadStudies(playlist);
-    }
-});
-
-searchInput.addEventListener('input', function() {
+searchInput.addEventListener('input', async function() {
     const query = this.value;
 
     if (selectedStudy && selectedStudy.name !== query) {
         selectedStudy = null;
     }
-    displaySuggestions(filterSermons(query));
+
+    const studies_alike = await getStudiesAlike(query);
+    displaySuggestions(studies_alike);
 });
 
-searchInput.addEventListener('focus', function() {
+searchInput.addEventListener('focus', async function() {
     if (this.value.trim().length >= 1) {
-        displaySuggestions(filterSermons(this.value));
+        const studies_alike = await getStudiesAlike(this.value);
+        displaySuggestions(studies_alike);
     }
 });
 
@@ -113,37 +118,37 @@ document.addEventListener('click', function(event) {
 });
 
 removeBtn.addEventListener('click', async function() {
-    const playlist = playlistInput.value.trim();
+    const seriesValue = series.value.trim();
 
     if (!selectedStudy) {
-        showError('Please select a sermon to remove');
+        showError('Please select a study to remove');
         return;
     }
-    if (!playlist) {
-        showError('Please specify the playlist name');
+    if (!seriesValue) {
+        showError('Please specify the series name');
         return;
     }
 
-    if (!confirm(`Remove "${selectedStudy.name}" from "${playlist}"?`)) {
+    if (!confirm(`Remove "${selectedStudy.study_name}" from "${seriesValue}"?`)) {
         return;
     }
 
     const formData = new FormData();
-    formData.append('sermon', selectedStudy.name);
-    formData.append('playlist', playlist);
+    formData.append('study', selectedStudy.study_name);
+    formData.append('series', seriesValue);
 
     try {
-        const response = await fetch('/admin/playlists/sermon/remove', {
+        const response = await fetch('/admin/playlists/study/remove', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok) {
-            window.location.pathname = '/admin/sermons';
-        } else {
-            throw new Error('Remove failed');
+        if (!response.ok) {
+            throw new Error()
         }
+        window.location.pathname = '/admin/studies';
+
     } catch {
-        showError("Couldn't remove sermon from playlist. Please try again.");
+        showError("Couldn't remove study from series. Please try again.");
     }
 });

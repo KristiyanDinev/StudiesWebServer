@@ -22,10 +22,10 @@ function showSuccess(message) {
 
 
 async function getSermonsAlike(query) {
-    query = query.trim().toLowerCase();
+    query = query.trim();
     if (query.length < 1) return [];
 
-    const playlist = playlistInput.value
+    const playlist = playlistInput.value.trim()
     if (!playlist) {
         return []
     }
@@ -35,7 +35,7 @@ async function getSermonsAlike(query) {
     formData.append('playlist', playlist)
 
     try {
-        const res = await fetch('/admin/playlists/sermon/alike', {
+        const res = await fetch('/admin/playlists/sermon/alike_by_playlist', {
             method: "POST",
             body: formData
         })

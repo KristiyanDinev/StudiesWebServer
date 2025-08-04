@@ -22,11 +22,6 @@ async function searchSermons(query) {
         return;
     }
 
-    const playlist = playlistElement.value
-    if (!playlist) {
-        return
-    }
-
     const formData = new FormData();
     formData.append('alike_sermon', query);
 
@@ -103,12 +98,12 @@ function escapeHtml(text) {
 // Event listeners
 searchInput.addEventListener('input', async function() {
     selectedSermon = null;
-    searchSermons(this.value);
+    await searchSermons(this.value);
 });
 
 searchInput.addEventListener('focus', async function() {
     if (this.value.trim().length >= 2) {
-        searchSermons(this.value);
+        await searchSermons(this.value);
     }
 });
 
@@ -119,7 +114,7 @@ document.addEventListener('click', function(event) {
 });
 
 uploadBtn.addEventListener('click', async function() {
-    const playlist = playlistElement.value;
+    const playlist = playlistElement.value.trim();
 
     if (!selectedSermon) {
         showError('Please select a sermon from the dropdown');

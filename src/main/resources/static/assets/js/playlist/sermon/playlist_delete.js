@@ -13,7 +13,7 @@ function showError(message) {
 
 
 deleteBtn.addEventListener('click', async function() {
-    const playlistValue = playlistElement.value
+    const playlistValue = playlistElement.value.trim()
     playlistElement.classList.remove('is-invalid')
 
     if (!playlistValue) {

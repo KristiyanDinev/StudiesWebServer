@@ -1,6 +1,6 @@
 
 <header>
-    @template.layouts._header(title = "Delete Playlist")
+    @template.layouts._header(title = "Delete Series")
 </header>
 <body>
 @template.layouts._admin_navbar()
@@ -16,7 +16,7 @@
                         <div class="col">
                             <h3 class="card-title mb-0 fw-bold">
                                 <i class="bi bi-dash-circle-fill me-3 fs-2"></i>
-                                Delete Playlist
+                                Delete Series
                             </h3>
                         </div>
                     </div>
@@ -35,18 +35,18 @@
                             <div class="col">
                                 <div class="fw-semibold mb-1">Removal Notice</div>
                                 <small class="text-muted">
-                                    This will permanently delete the playlist.
-                                    All the songs in that playlist will not be affected.
+                                    This will permanently delete the series.
+                                    All the studies in that series will not be affected.
                                 </small>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-semibold text-dark mb-3" for="playlist">
-                            <i class="bi bi-tag me-2"></i>Name of Playlist
+                        <label class="form-label fw-semibold text-dark mb-3" for="series">
+                            <i class="bi bi-tag me-2"></i>Name of Series
                         </label>
-                        <input type="text" id="playlist" placeholder="My Playlist"
+                        <input type="text" id="series" placeholder="My Series"
                                class="form-control form-control-lg border-2 rounded p-3">
                     </div>
 
@@ -63,7 +63,7 @@
                                     <i class="bi bi-dash-circle-fill fs-4"></i>
                                 </div>
                                 <div class="col-auto">
-                                        Delete Playlist
+                                        Delete Series
                                 </div>
                             </div>
                         </button>
@@ -75,5 +75,5 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/playlist/song/playlist_delete.js"></script>
+<script src="/assets/js/playlist/series/playlist_delete.js"></script>
 </body>

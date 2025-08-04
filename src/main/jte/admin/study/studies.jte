@@ -62,13 +62,13 @@
                         <span class="text-muted">Not in any series yet</span>
                     @endif
                     @for(StudySeriesEntity studySeriesEntity : study.getStudySeriesEntities())
-                        <span class="badge bg-info text-muted me-2 mb-2">${studySeriesEntity.series_name.trim()}</span>
+                        <span class="badge bg-info text-muted me-2 mb-2">${studySeriesEntity.series_name}</span>
                     @endfor
                 </td>
                 <td>${uploadDate}</td>
                 <td>${String.format("%.3f", file.length() / (1024.0 * 1024.0))}MB</td>
                 <td>
-                    <a href="/file/study/${file.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <a href="/file/study/${file.getName()}?download=false" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
                     <button type="button" id="${file.getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
                 </td>
             </tr>

@@ -34,7 +34,7 @@ public class StudyController {
 
     @GetMapping("/admin/studies/upload")
     public String studyUpload() {
-        return "study/study_upload";
+        return "admin/study/study_upload";
     }
 
 

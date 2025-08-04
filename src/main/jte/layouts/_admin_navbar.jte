@@ -12,7 +12,7 @@
             <i class="bi bi-music-note-beamed me-1"></i> Manage Sermons
         </a>
         <a class="btn btn-success mb-2 mx-2" href="/admin/playlists">
-            <i class="bi bi-music-note-list me-1"></i> Manage Playlists
+            <i class="bi bi-music-note-list me-1"></i> Manage Playlists / Series
         </a>
     </div>
 </nav>

@@ -102,7 +102,7 @@ document.addEventListener('click', function(event) {
 });
 
 uploadBtn.addEventListener('click', async function() {
-    const series = seriesElement.value;
+    const series = seriesElement.value.trim();
 
     if (!selectedStudy) {
         showError('Please select a study from the dropdown');
@@ -114,7 +114,7 @@ uploadBtn.addEventListener('click', async function() {
     }
 
     const formData = new FormData();
-    formData.append('study', selectedStudy.name);
+    formData.append('study', selectedStudy.study_name);
     formData.append('series', series);
 
     try {

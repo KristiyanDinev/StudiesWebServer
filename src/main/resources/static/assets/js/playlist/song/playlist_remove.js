@@ -17,10 +17,10 @@ function hideError() {
 
 
 async function getSongsAlike(query) {
-    query = query.trim().toLowerCase();
+    query = query.trim();
     if (query.length < 1) return [];
 
-    const playlistValue = playlistInput.value
+    const playlistValue = playlistInput.value.trim()
     if (!playlistValue) {
         return []
     }
@@ -30,7 +30,7 @@ async function getSongsAlike(query) {
     formData.append('alike_song', query)
 
     try {
-        const res = await fetch('/admin/playlists/song/alike', {
+        const res = await fetch('/admin/playlists/song/alike_by_playlist', {
             method: 'POST',
             body: formData
         })
