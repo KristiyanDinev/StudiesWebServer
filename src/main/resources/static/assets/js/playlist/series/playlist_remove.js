@@ -30,6 +30,7 @@ async function getStudiesAlike(query) {
         return []
     }
 
+
     let formData = new FormData()
     formData.append('alike_study', query)
     formData.append('series', seriesValue)
@@ -37,7 +38,7 @@ async function getStudiesAlike(query) {
     try {
         const res = await fetch('/admin/playlists/study/alike_by_series', {
             method: 'POST',
-            body: seriesValue
+            body: formData
         })
         if (!res.ok) {
             showError("Can't get studies")
@@ -55,7 +56,7 @@ function displaySuggestions(studies) {
     dropdown.innerHTML = '';
 
     if (!studies || studies.length === 0) {
-        dropdown.innerHTML = '<div class="rounded fs-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No studies found</div>';
+        dropdown.innerHTML = '<div class="rounded border border-3 border-dark p-3 mt-3 mb-3 me-3">No studies found</div>';
     } else {
         studies.forEach(study => {
             const item = document.createElement('button');

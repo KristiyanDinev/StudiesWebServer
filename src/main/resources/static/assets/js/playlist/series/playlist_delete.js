@@ -21,12 +21,16 @@ deleteBtn.addEventListener('click', async function() {
         return
     }
 
+    if (!confirm(`Delete ${series}`)) {
+            return
+        }
+
     let formData = new FormData()
     formData.append('series', series)
 
     hideError()
     try {
-        const res = await fetch('/admin/playlists/series/delete', {
+        const res = await fetch('/admin/playlists/study/delete', {
             method: 'POST',
             body: formData
         })

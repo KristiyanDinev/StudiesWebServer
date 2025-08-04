@@ -56,7 +56,7 @@ function displaySuggestions(sermons) {
     dropdown.innerHTML = '';
 
     if (!sermons || sermons.length === 0) {
-        dropdown.innerHTML = '<div class="rounded fs-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No sermons found</div>';
+        dropdown.innerHTML = '<div class="rounded border border-3 border-dark p-3 mt-3 mb-3 me-3">No sermons found</div>';
     } else {
         sermons.forEach(sermon => {
             const item = document.createElement('button');

@@ -51,7 +51,7 @@ function displaySuggestions(songs) {
     dropdown.innerHTML = '';
 
     if (!songs || songs.length === 0) {
-        dropdown.innerHTML = '<div class="rounded fw-3 border border-3 border-dark p-3 mt-3 mb-3 me-3">No songs found</div>';
+        dropdown.innerHTML = '<div class="rounded border border-3 border-dark p-3 mt-3 mb-3 me-3">No songs found</div>';
     } else {
         songs.forEach(song => {
             const item = document.createElement('button');

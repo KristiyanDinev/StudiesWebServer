@@ -113,6 +113,10 @@ uploadBtn.addEventListener('click', async function() {
         return;
     }
 
+    if (!confirm(`Add ${selectedStudy} to ${series}`)) {
+        return
+    }
+
     const formData = new FormData();
     formData.append('study', selectedStudy.study_name);
     formData.append('series', series);
