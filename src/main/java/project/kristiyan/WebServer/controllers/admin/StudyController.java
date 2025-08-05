@@ -47,7 +47,7 @@ public class StudyController {
 
         try {
             file.delete();
-            WebServerApplication.database.studySeriesDao.deleteStudyFromAllSeries(study);
+            WebServerApplication.database.studySeriesDao.deleteStudy(study);
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {

@@ -34,8 +34,7 @@ public class PlaylistSermonController {
     public ResponseEntity<List<SermonEntity>> getAlikeSermonsByPlaylist(@RequestParam String alike_sermon,
                                                               @RequestParam String playlist) {
         return ResponseEntity.ok(WebServerApplication.database
-                .sermonDao.getAllSermonsAlikeByPlaylist(alike_sermon, playlist)
-                .stream().map(s -> s.sermon).toList());
+                .sermonDao.getAllSermonsAlikeByPlaylist(alike_sermon, playlist));
     }
 
     @PostMapping("/admin/playlists/sermon/alike")

@@ -113,7 +113,7 @@ uploadBtn.addEventListener('click', async function() {
         return;
     }
 
-    if (!confirm(`Add ${selectedStudy} to ${series}`)) {
+    if (!confirm(`Add ${selectedStudy.study_name} to ${series}`)) {
         return
     }
 
