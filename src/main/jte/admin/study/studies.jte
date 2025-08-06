@@ -41,7 +41,7 @@
             <th>Actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="table_body">
         @for(StudyModel study : studies.getItems())
             !{
                 File file = study.getFile();

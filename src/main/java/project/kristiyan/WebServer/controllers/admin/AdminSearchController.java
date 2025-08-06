@@ -17,11 +17,11 @@ public class AdminSearchController {
 
 
     @PostMapping("/admin/search/studies")
-    public ResponseEntity<List<StudySeriesEntity>> searchStudies(@RequestParam
+    public ResponseEntity<List<StudySeriesEntity>> searchStudies(@RequestParam()
                                                                  String alike_study,
-
-                                                                 @RequestParam(required = false)
+                                                                 @RequestParam()
                                                                  List<String> series) {
-        return ResponseEntity.ok(new ArrayList<StudySeriesEntity>());
+        return ResponseEntity.ok(WebServerApplication.database
+                .studySeriesDao.getSearchEngineResults(alike_study, series, 1));
     }
 }
