@@ -33,21 +33,25 @@ public class PlaylistSongController {
 
 
     @PostMapping("/admin/playlists/song/alike_by_playlist")
-    public ResponseEntity<List<SongEntity>> getAlikeSongsByPlaylist(@RequestParam String alike_song,
-                                                          @RequestParam String playlist) {
+    public ResponseEntity<List<SongEntity>> getAlikeSongsByPlaylist(@RequestParam
+                                                                        String alike_song,
+                                                          @RequestParam
+                                                          String playlist) {
         return ResponseEntity.ok(WebServerApplication.database
                 .songDao.getAllSongsAlikeByPlaylist(alike_song, playlist)
                 .stream().map(s -> s.song).toList());
     }
 
     @PostMapping("/admin/playlists/song/alike")
-    public ResponseEntity<List<SongEntity>> getAlikeSongs(@RequestParam String alike_song) {
+    public ResponseEntity<List<SongEntity>> getAlikeSongs(@RequestParam
+                                                              String alike_song) {
         return ResponseEntity.ok(WebServerApplication.database
                 .songDao.getAllSongsAlike(alike_song));
     }
 
     @PostMapping("/admin/playlists/song")
-    public ResponseEntity<List<SongEntity>> getAllPlaylistSongs(@RequestParam String playlist) {
+    public ResponseEntity<List<SongEntity>> getAllPlaylistSongs(@RequestParam
+                                                                    String playlist) {
         return ResponseEntity.ok(WebServerApplication.database.songPlaylistDao.getAllPlaylistSongs(playlist));
     }
 

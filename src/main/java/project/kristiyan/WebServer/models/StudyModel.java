@@ -29,4 +29,5 @@ public class StudyModel {
     public void setStudySeriesEntities(List<StudySeriesEntity> studySeriesEntities) {
         this.studySeriesEntities = studySeriesEntities;
     }
+
 }

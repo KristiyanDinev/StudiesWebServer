@@ -31,15 +31,18 @@ public class PlaylistStudySeriesController {
 
 
     @PostMapping("/admin/playlists/study/alike_by_series")
-    public ResponseEntity<List<StudySeriesEntity>> getAlikeStudiesBySeries(@RequestParam String alike_study,
-                                                                           @RequestParam String series) {
+    public ResponseEntity<List<StudySeriesEntity>> getAlikeStudiesBySeries(@RequestParam
+                                                                               String alike_study,
+                                                                           @RequestParam
+                                                                           String series) {
         return ResponseEntity.ok(WebServerApplication.database
                 .studySeriesDao.getAllStudiesAlikeBySeries(alike_study, series));
     }
 
 
     @PostMapping("/admin/playlists/study/alike")
-    public ResponseEntity<List<StudySeriesEntity>> getAlikeStudies(@RequestParam String alike_study) {
+    public ResponseEntity<List<StudySeriesEntity>> getAlikeStudies(@RequestParam
+                                                                       String alike_study) {
         return ResponseEntity.ok(WebServerApplication.database
                 .studySeriesDao.getAllStudiesAlike(alike_study));
     }

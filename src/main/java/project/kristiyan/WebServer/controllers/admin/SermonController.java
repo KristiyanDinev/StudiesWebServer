@@ -62,7 +62,8 @@ public class SermonController {
     }
 
     @PostMapping("/admin/sermons/edit")
-    public ResponseEntity<HttpStatus> editSermon(@RequestParam() String sermon,
+    public ResponseEntity<HttpStatus> editSermon(@RequestParam()
+                                                     String sermon,
                                                  @RequestParam() String categories) {
         SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
         if (sermonEntity == null) {

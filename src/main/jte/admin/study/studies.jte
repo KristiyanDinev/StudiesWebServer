@@ -20,6 +20,8 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Studies</h1>
 
+@template.layouts.search._searchStudy()
+
 <a class="btn btn-primary mb-2 mx-2" href="/admin/studies/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Study
 </a>

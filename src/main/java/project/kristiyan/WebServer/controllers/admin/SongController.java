@@ -62,8 +62,9 @@ public class SongController {
     }
 
     @PostMapping("/admin/songs/edit")
-    public ResponseEntity<HttpStatus> editSong(@RequestParam() String song,
-                                                 @RequestParam() String categories) {
+    public ResponseEntity<HttpStatus> editSong(@RequestParam()
+                                                   String song,
+                                               @RequestParam() String categories) {
         SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
         if (songEntity == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
