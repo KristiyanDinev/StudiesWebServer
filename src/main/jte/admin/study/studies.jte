@@ -1,6 +1,6 @@
 @import project.kristiyan.WebServer.models.PaginationModel
 @import project.kristiyan.WebServer.models.StudyModel
-@import project.kristiyan.database.entities.StudySeriesEntity
+@import project.kristiyan.database.entities.study.StudySeriesEntity
 
 @param PaginationModel<StudyModel> studies
 
@@ -14,7 +14,7 @@
 
 @template.layouts.search._searchStudy()
 
-<a class="btn btn-primary mb-2 mx-2" href="/admin/studies/upload">
+<a class="btn btn-primary mb-2" href="/admin/studies/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Study
 </a>
 

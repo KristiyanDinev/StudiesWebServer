@@ -54,9 +54,6 @@ dependencies {
 	implementation libs.jaudiotagger
 	implementation libs.springBootSessions
 	developmentOnly libs.springBootDevTools
-	testImplementation libs.springBootStarterTest
-	testImplementation libs.springBootSecurityTest
-	testRuntimeOnly libs.junitPlatform
 	implementation name: "database_lib-1.0.0-all"
 }
 

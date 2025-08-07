@@ -1,13 +1,14 @@
 package project.kristiyan.WebServer.models;
 
-import project.kristiyan.database.entities.SermonCategoryEntity;
-import project.kristiyan.database.entities.SermonEntity;
-import project.kristiyan.database.entities.SermonPlaylistEntity;
+import project.kristiyan.database.entities.sermon.SermonCategoryEntity;
+import project.kristiyan.database.entities.sermon.SermonEntity;
+import project.kristiyan.database.entities.sermon.SermonPlaylistEntity;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
-public class SermonModel {
+public class SermonModel implements Serializable {
     private File file;
     private SermonEntity sermonEntity;
     private List<SermonCategoryEntity> sermonCategoryEntities;

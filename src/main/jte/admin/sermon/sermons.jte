@@ -1,7 +1,7 @@
 @import project.kristiyan.WebServer.models.PaginationModel
 @import project.kristiyan.WebServer.models.SermonModel
-@import project.kristiyan.database.entities.SermonCategoryEntity
-@import project.kristiyan.database.entities.SermonPlaylistEntity
+@import project.kristiyan.database.entities.sermon.SermonCategoryEntity
+@import project.kristiyan.database.entities.sermon.SermonPlaylistEntity
 @import java.io.IOException
 @import java.nio.file.Files
 @import java.nio.file.attribute.BasicFileAttributes
@@ -20,7 +20,7 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Sermons</h1>
 
-<a class="btn btn-primary mb-2 mx-2" href="/admin/sermons/upload">
+<a class="btn btn-primary mb-2" href="/admin/sermons/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Sermon
 </a>
 

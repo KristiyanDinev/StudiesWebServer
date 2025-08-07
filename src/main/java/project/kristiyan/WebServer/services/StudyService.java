@@ -10,7 +10,7 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.StudyModel;
-import project.kristiyan.database.entities.StudySeriesEntity;
+import project.kristiyan.database.entities.study.StudySeriesEntity;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -23,9 +23,6 @@ import java.util.List;
 @Service
 public class StudyService {
     public static final long MAX_FILE_SIZE = 5L * 1024 * 1024 * 1024; // 5 GB
-
-    @Value("${study_items_per_page}")
-    public int itemsPerPage;
 
     @Value("${study_upload_path}")
     public String UPLOAD_DIR;
@@ -56,13 +53,14 @@ public class StudyService {
 
         List<StudyModel> searchResults = searchService.getStudySessionResults(session);
         if (searchResults != null) {
-            paginationModel.setItems(searchResults);
-            paginationModel.setCurrentPage(page);
-
             List<Object> query = searchService.getStudySearchQuery(session);
-            setSearchEngineResults(String.valueOf(query.getFirst()),
-                    (List<String>) query.get(1), page, session);
-            return paginationModel;
+            if (query != null) {
+                paginationModel.setItems(searchResults);
+                paginationModel.setCurrentPage(page);
+                setSearchEngineResults(String.valueOf(query.getFirst()),
+                        (List<String>) query.get(1), page, session);
+                return paginationModel;
+            }
         }
 
         List<StudyModel> studyModels = new ArrayList<>();
@@ -103,8 +101,7 @@ public class StudyService {
     public void setSearchEngineResults(String alike_study, List<String> series,
                                        int page, HttpSession session) {
         List<String> foundStudies = WebServerApplication.database
-                .studySeriesDao.getSearchEngineResults(alike_study, series, page)
-                .stream().map(s -> s.study_name).toList();
+                .studySeriesDao.getSearchEngineResults(alike_study, series, page);
 
         List<StudyModel> studyModels = new ArrayList<>();
         for (String study : foundStudies) {

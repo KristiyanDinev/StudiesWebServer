@@ -9,7 +9,7 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.SongModel;
-import project.kristiyan.database.entities.SongEntity;
+import project.kristiyan.database.entities.song.SongEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +18,6 @@ import java.util.List;
 @Service
 public class SongService {
     public static final long MAX_FILE_SIZE = 3L * 1024 * 1024 * 1024; // 3 GB
-
-    @Value("${song_items_per_page}")
-    public int itemsPerPage;
 
     @Value("${song_upload_path}")
     public String UPLOAD_DIR;

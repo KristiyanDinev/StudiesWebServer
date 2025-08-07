@@ -1,7 +1,7 @@
 @import project.kristiyan.WebServer.models.PaginationModel
 @import project.kristiyan.WebServer.models.SongModel
-@import project.kristiyan.database.entities.SongCategoryEntity
-@import project.kristiyan.database.entities.SongPlaylistEntity
+@import project.kristiyan.database.entities.song.SongCategoryEntity
+@import project.kristiyan.database.entities.song.SongPlaylistEntity
 @import java.io.IOException
 @import java.nio.file.Files
 @import java.nio.file.attribute.BasicFileAttributes
@@ -20,7 +20,7 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Songs</h1>
 
-<a class="btn btn-primary mb-2 mx-2" href="/admin/songs/upload">
+<a class="btn btn-primary mb-2" href="/admin/songs/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Song
 </a>
 

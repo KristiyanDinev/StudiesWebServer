@@ -1,13 +1,14 @@
 package project.kristiyan.WebServer.models;
 
-import project.kristiyan.database.entities.SongCategoryEntity;
-import project.kristiyan.database.entities.SongEntity;
-import project.kristiyan.database.entities.SongPlaylistEntity;
+import project.kristiyan.database.entities.song.SongCategoryEntity;
+import project.kristiyan.database.entities.song.SongEntity;
+import project.kristiyan.database.entities.song.SongPlaylistEntity;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
-public class SongModel {
+public class SongModel implements Serializable {
     private File file;
     private SongEntity songEntity;
     private List<SongCategoryEntity> songCategoryEntities;

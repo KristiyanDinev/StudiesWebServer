@@ -1,10 +1,12 @@
 package project.kristiyan.WebServer.models;
 
-import project.kristiyan.database.entities.StudySeriesEntity;
+import project.kristiyan.database.entities.study.StudySeriesEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class StudyModel {
+
+public class StudyModel implements Serializable {
     private String study_name;
     private String uploadedDate;
     private String fileSize;

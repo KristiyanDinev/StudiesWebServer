@@ -5,6 +5,7 @@ gg:
     usePrecompiledTemplates: false
 
 server:
+  address: 127.0.0.1
   port: 80
   tomcat:
     max-swallow-size: 5GB
@@ -29,15 +30,17 @@ spring:
     livereload:
       enabled: false
 
+  session:
+    store-type: 'jdbc'
+
+  datasource:
+    url: 'jdbc:mysql://127.0.0.1:3306/AskJesusBotDB'
+    username: 'root'
+    password: 'root'
+
   application:
     name: StudiesWebServer
 
 study_upload_path: "study_uploads/"
-study_items_per_page: 10
-
 song_upload_path: "song_uploads/"
-song_items_per_page: 10
-
 sermon_upload_path: "sermon_uploads/"
-sermon_items_per_page: 10
-

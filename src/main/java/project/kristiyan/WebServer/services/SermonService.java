@@ -9,7 +9,7 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.SermonModel;
-import project.kristiyan.database.entities.SermonEntity;
+import project.kristiyan.database.entities.sermon.SermonEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +18,6 @@ import java.util.List;
 @Service
 public class SermonService {
     public static final long MAX_FILE_SIZE = 5L * 1024 * 1024 * 1024; // 5 GB
-
-    @Value("${sermon_items_per_page}")
-    public int itemsPerPage;
 
     @Value("${sermon_upload_path}")
     public String UPLOAD_DIR;

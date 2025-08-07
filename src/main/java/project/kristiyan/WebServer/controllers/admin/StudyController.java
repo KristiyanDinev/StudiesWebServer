@@ -64,10 +64,13 @@ public class StudyController {
         }
         fileUploadDto.setFilename(studyService.sanitizeFileName(fileUploadDto.getFilename()));
         String name = fileUploadDto.getFilename();
-        File uploadedFile = null;
+        File uploadedFile = new File(studyService.UPLOAD_DIR, name);;
         try {
+            boolean existedBefore = uploadedFile.exists();
             GeneralUtility.uploadFile(fileUploadDto, studyService.UPLOAD_DIR);
-            uploadedFile = new File(studyService.UPLOAD_DIR, name);
+            if (existedBefore) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
             if (!WebServerApplication.database.studySeriesDao.addStudyToSeries(name, null)) {
                 throw new Exception();
             }

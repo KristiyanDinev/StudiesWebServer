@@ -38,7 +38,7 @@ uploadBtn.addEventListener('click', async function (e) {
         const name = filenameInput.value.trim();
 
         error.innerHTML = ''
-        error.className = ''
+        error.className = 'alert d-none'
         fileInput.classList.remove(isInvalid)
         if (!file) {
             error.className = 'alert alert-danger'
@@ -75,7 +75,7 @@ uploadBtn.addEventListener('click', async function (e) {
             }
 
                 error.innerHTML = ""
-                error.className = ""
+                error.className = "alert d-none"
                 window.location.pathname = '/admin/studies'
 
         } catch {

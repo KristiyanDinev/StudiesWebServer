@@ -14,7 +14,7 @@ import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.dto.SongUploadDto;
 import project.kristiyan.WebServer.services.SongService;
 import project.kristiyan.WebServer.utilities.GeneralUtility;
-import project.kristiyan.database.entities.SongEntity;
+import project.kristiyan.database.entities.song.SongEntity;
 
 import java.io.File;
 
@@ -46,7 +46,6 @@ public class SongController {
 
         try {
             file.delete();
-
             SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
             if (songEntity == null) {
                 return ResponseEntity.status(HttpStatus.OK).build();
@@ -89,11 +88,13 @@ public class SongController {
         }
         fileUploadDto.setFilename(songService.sanitizeFileName(fileUploadDto.getFilename()));
         String name = fileUploadDto.getFilename();
-        File uploadedFile = null;
+        File uploadedFile = new File(songService.UPLOAD_DIR, name);
         try {
+            boolean existedBefore = uploadedFile.exists();
             GeneralUtility.uploadFile(fileUploadDto, songService.UPLOAD_DIR);
-            uploadedFile = new File(songService.UPLOAD_DIR, name);
-
+            if (existedBefore) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
             boolean savedSong = WebServerApplication.database
                     .songDao.saveSong(name,
                             songService.calculateDuration(uploadedFile));

@@ -14,7 +14,7 @@ import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.dto.SongUploadDto;
 import project.kristiyan.WebServer.services.SermonService;
 import project.kristiyan.WebServer.utilities.GeneralUtility;
-import project.kristiyan.database.entities.SermonEntity;
+import project.kristiyan.database.entities.sermon.SermonEntity;
 
 import java.io.File;
 
@@ -89,11 +89,13 @@ public class SermonController {
         }
         fileUploadDto.setFilename(sermonService.sanitizeFileName(fileUploadDto.getFilename()));
         String name = fileUploadDto.getFilename();
-        File uploadedFile = null;
+        File uploadedFile = new File(sermonService.UPLOAD_DIR, name);
         try {
+            boolean existedBefore = uploadedFile.exists();
             GeneralUtility.uploadFile(fileUploadDto, sermonService.UPLOAD_DIR);
-            uploadedFile = new File(sermonService.UPLOAD_DIR, name);
-
+            if (existedBefore) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
             boolean savedSong = WebServerApplication.database
                     .sermonDao.saveSermon(name,
                             sermonService.calculateDuration(uploadedFile));

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
-import project.kristiyan.database.entities.SermonEntity;
+import project.kristiyan.database.entities.sermon.SermonEntity;
 
 import java.util.List;
 

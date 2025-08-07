@@ -1,9 +1,10 @@
 package project.kristiyan.WebServer.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaginationModel<T> {
+public class PaginationModel<T> implements Serializable {
     private List<T> items;
     private int currentPage;
 
