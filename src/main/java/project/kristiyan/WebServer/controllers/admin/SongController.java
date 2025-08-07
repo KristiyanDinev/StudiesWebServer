@@ -63,7 +63,7 @@ public class SongController {
 
     @PostMapping("/admin/songs/edit")
     public ResponseEntity<HttpStatus> editSong(@RequestParam()
-                                                   String song,
+                                               String song,
                                                @RequestParam() String categories) {
         SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
         if (songEntity == null) {
@@ -92,7 +92,7 @@ public class SongController {
         File uploadedFile = null;
         try {
             GeneralUtility.uploadFile(fileUploadDto, songService.UPLOAD_DIR);
-            uploadedFile  = new File(songService.UPLOAD_DIR, name);
+            uploadedFile = new File(songService.UPLOAD_DIR, name);
 
             boolean savedSong = WebServerApplication.database
                     .songDao.saveSong(name,
@@ -112,9 +112,10 @@ public class SongController {
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
-           try {
-               uploadedFile.delete();
-           } catch (Exception ignored) {}
+            try {
+                uploadedFile.delete();
+            } catch (Exception ignored) {
+            }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

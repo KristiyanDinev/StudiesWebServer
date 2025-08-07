@@ -35,12 +35,13 @@ deleteBtn.addEventListener('click', async function() {
             body: formData
         })
 
-        if (res.ok) {
-            window.location.pathname = '/admin/songs'
-            return
+        if (!res.ok) {
+            throw new Error()
         }
-    } catch {}
 
-    showError("Couldn't delete that playlist. Please try again later.")
+        window.location.pathname = '/admin/songs'
+    } catch {
+        showError("Couldn't delete that playlist. Please try again later.")
+    }
 })
 

@@ -151,18 +151,17 @@ removeBtn.addEventListener('click', async function() {
     const formData = new FormData();
     formData.append('sermon', selectedSermon.name);
     formData.append('playlist', playlist);
-
+    hideError()
     try {
         const response = await fetch('/admin/playlists/sermon/remove', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok) {
-            window.location.pathname = '/admin/sermons';
-        } else {
-            throw new Error('Remove failed');
+        if (!response.ok) {
+            throw new Error();
         }
+        window.location.pathname = '/admin/sermons';
     } catch {
         showError("Couldn't remove sermon from playlist. Please try again.");
     }

@@ -7,8 +7,8 @@ gg:
 server:
   port: 80
   tomcat:
-    max-swallow-size: -1
-    max-http-form-post-size: -1
+    max-swallow-size: 5GB
+    max-http-form-post-size: 5GB
 
   servlet:
     session:

@@ -18,8 +18,13 @@ public class PaginationModel<T> {
     }
 
     // Getters
-    public List<T> getItems() { return items; }
-    public int getCurrentPage() { return currentPage; }
+    public List<T> getItems() {
+        return items;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
 
     // Setters
     public void setItems(List<T> items) {

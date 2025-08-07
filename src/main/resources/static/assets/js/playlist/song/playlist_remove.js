@@ -144,18 +144,18 @@ removeBtn.addEventListener('click', async function() {
     const formData = new FormData();
     formData.append('song', selectedSong.name);
     formData.append('playlist', playlist);
-
+    hideError()
     try {
         const response = await fetch('/admin/playlists/song/remove', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok) {
-            window.location.pathname = '/admin/songs';
-        } else {
+        if (!response.ok) {
             throw new Error('Remove failed');
         }
+        window.location.pathname = '/admin/songs';
+
     } catch {
         showError("Couldn't remove song from playlist. Please try again.");
     }

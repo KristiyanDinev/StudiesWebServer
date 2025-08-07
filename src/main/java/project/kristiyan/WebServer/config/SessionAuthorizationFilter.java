@@ -49,7 +49,7 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
             // Mark user as authenticated
             SecurityContextHolder.getContext().setAuthentication(
                     new UsernamePasswordAuthenticationToken(
-                    "sessionUser", null, Collections.emptyList()));
+                            "sessionUser", null, Collections.emptyList()));
 
         } else if (request.getMethod().equals("POST")) {
             // Deny access

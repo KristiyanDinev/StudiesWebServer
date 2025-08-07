@@ -32,15 +32,15 @@ public class PlaylistSermonController {
 
     @PostMapping("/admin/playlists/sermon/alike_by_playlist")
     public ResponseEntity<List<SermonEntity>> getAlikeSermonsByPlaylist(@RequestParam
-                                                                            String alike_sermon,
-                                                              @RequestParam String playlist) {
+                                                                        String alike_sermon,
+                                                                        @RequestParam String playlist) {
         return ResponseEntity.ok(WebServerApplication.database
                 .sermonDao.getAllSermonsAlikeByPlaylist(alike_sermon, playlist));
     }
 
     @PostMapping("/admin/playlists/sermon/alike")
     public ResponseEntity<List<SermonEntity>> getAlikeSermons(@RequestParam
-                                                                  String alike_sermon) {
+                                                              String alike_sermon) {
         return ResponseEntity.ok(WebServerApplication.database
                 .sermonDao.getAllSermonsAlike(alike_sermon));
     }
@@ -48,15 +48,15 @@ public class PlaylistSermonController {
 
     @PostMapping("/admin/playlists/sermon")
     public ResponseEntity<List<SermonEntity>> getAllSermonsByPlaylist(@RequestParam
-                                                                          String playlist) {
+                                                                      String playlist) {
         return ResponseEntity.ok(WebServerApplication.database.sermonPlaylistDao.getAllPlaylistSermons(playlist));
     }
 
     @PostMapping("/admin/playlists/sermon/add")
     public ResponseEntity<HttpStatus> addSermonToPlaylistDB(@RequestParam
-                                                                String sermon,
+                                                            String sermon,
                                                             @RequestParam
-                                                          String playlist) {
+                                                            String playlist) {
         SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
         if (sermonEntity == null) {
             return ResponseEntity.badRequest().build();
@@ -70,9 +70,9 @@ public class PlaylistSermonController {
 
     @PostMapping("/admin/playlists/sermon/remove")
     public ResponseEntity<HttpStatus> removeSermonFromPlaylistDB(@RequestParam
-                                                                     String sermon,
-                                                               @RequestParam
-                                                               String playlist) {
+                                                                 String sermon,
+                                                                 @RequestParam
+                                                                 String playlist) {
         SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
         if (sermonEntity == null) {
             return ResponseEntity.badRequest().build();
@@ -86,7 +86,7 @@ public class PlaylistSermonController {
 
     @PostMapping("/admin/playlists/sermon/delete")
     public ResponseEntity<HttpStatus> deletePlaylistDB(@RequestParam
-                                                           String playlist) {
+                                                       String playlist) {
         if (WebServerApplication.database.sermonPlaylistDao.deletePlaylist(playlist)) {
             return ResponseEntity.ok().build();
         }

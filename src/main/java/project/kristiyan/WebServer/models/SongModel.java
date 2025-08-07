@@ -13,7 +13,8 @@ public class SongModel {
     private List<SongCategoryEntity> songCategoryEntities;
     private List<SongPlaylistEntity> songPlaylistEntities;
 
-    public SongModel() {}
+    public SongModel() {
+    }
 
     public SongModel(File file, SongEntity songEntity,
                      List<SongCategoryEntity> songCategoryEntities,
@@ -27,12 +28,15 @@ public class SongModel {
     public File getFile() {
         return file;
     }
+
     public SongEntity getSongEntity() {
         return songEntity;
     }
+
     public List<SongCategoryEntity> getSongCategoryEntities() {
         return songCategoryEntities;
     }
+
     public List<SongPlaylistEntity> getSongPlaylistEntities() {
         return songPlaylistEntities;
     }
@@ -40,12 +44,15 @@ public class SongModel {
     public void setFile(File file) {
         this.file = file;
     }
+
     public void setSongCategoryEntities(List<SongCategoryEntity> songCategoryEntities) {
         this.songCategoryEntities = songCategoryEntities;
     }
+
     public void setSongPlaylistEntities(List<SongPlaylistEntity> songPlaylistEntities) {
         this.songPlaylistEntities = songPlaylistEntities;
     }
+
     public void setSongEntity(SongEntity songEntity) {
         this.songEntity = songEntity;
     }

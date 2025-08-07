@@ -26,7 +26,7 @@
 
 @template.layouts._pagination(page = songs.getCurrentPage())
 
-<p class="alert d-none" id="error"></p>
+<p class="alert container mx-4 d-none" id="error"></p>
 
 <div class="table-responsive">
     <table class="table table-bordered table-striped text-center">

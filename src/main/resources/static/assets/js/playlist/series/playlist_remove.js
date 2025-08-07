@@ -137,7 +137,7 @@ removeBtn.addEventListener('click', async function() {
     const formData = new FormData();
     formData.append('study', selectedStudy.study_name);
     formData.append('series', seriesValue);
-
+    hideError()
     try {
         const response = await fetch('/admin/playlists/study/remove', {
             method: 'POST',

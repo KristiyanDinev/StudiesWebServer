@@ -1,51 +1,20 @@
 
-var selectedSeries = []
-
-async function getSeries() {
-    try {
-        const res = await fetch('/studies/series', {
-            method: 'GET'
-        })
-
-        if (!res.ok) {
-           return
-        }
-            const series = await res.json()
-            let selectElement = document.getElementById('seriesSelect')
-            selectElement.innerHTML = ''
-            series.forEach(s => {
-                var _div = document.createElement('div');
-                _div.id = `search,${s.id}`;
-                _div.className = 'card mb-2 cursor-pointer shadow-sm';
-                _div.innerHTML = `
-                                    <div class="card-body">
-                                        <h5 class="card-title">${s.series_name}</h5>
-                                    </div>
-                     `;
-                _div.addEventListener('click', function () {
-                        if (selectedSeries.includes(s.series_name)) {
-                            selectedSeries.pop(s.series_name)
-                            _div.classList.remove('bg-primary','text-white')
-
-                        } else {
-                            selectedSeries.push(s.series_name)
-                            _div.classList.add('bg-primary', 'text-white')
-                        }
-                });
-                selectElement.appendChild(_div);
-            });
-
-
-
-    } catch {
-    }
-}
 
 async function searchStudy() {
-    try {
+    hideError()
+
+    let studyName = document.getElementById('studyName')
+    studyName.classList.remove('is-invalid')
+
+     try {
+        const study = studyName.value.trim()
+        if (study && selectedSeries.size == 0) {
+            studyName.classList.add('is-invalid')
+            return
+        }
 
         let formData = new FormData()
-        formData.append('alike_study', document.getElementById('studyName').value.trim())
+        formData.append('alike_study', study)
         for (let s of selectedSeries) {
             formData.append('series', s)
         }
@@ -56,36 +25,21 @@ async function searchStudy() {
         })
 
         if (!res.ok) {
-            return []
+            throw new Error()
         }
 
-        return await res.json()
+        window.location.pathname = window.location.pathname
 
     } catch {
-        return []
+         showError('<i class="bi bi-x-circle-fill me-2"></i>Can\'t get your search results.')
     }
 }
 
-function displayResults(results) {
-    let table_bodyElement = document.getElementById('table_body')
-    for (let study of results) {
-        let studyElement = document.createElement('tr');
-        studyElement.className = 'page-row'
-        studyElement.innerHTML = ``
-
-
-        table_bodyElement.appendChild(studyElement)
-    }
-}
 
 document.addEventListener('DOMContentLoaded', async function() {
-
-    await getSeries()
-
     let searchBtn = document.getElementById('search')
     searchBtn.addEventListener('click', async function() {
-        const res = await searchStudy()
-        displayResults(res)
+        await searchStudy()
     })
 
 })

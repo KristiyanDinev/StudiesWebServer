@@ -1,13 +1,14 @@
 package project.kristiyan.WebServer.controllers.admin;
 
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import project.kristiyan.WebServer.WebServerApplication;
-import project.kristiyan.database.entities.StudySeriesEntity;
+import project.kristiyan.WebServer.services.SearchService;
+import project.kristiyan.WebServer.services.StudyService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,24 @@ import java.util.List;
 @Controller
 public class AdminSearchController {
 
+    @Autowired
+    private StudyService studyService;
+
+    @Autowired
+    private SearchService searchService;
 
     @PostMapping("/admin/search/studies")
-    public ResponseEntity<List<StudySeriesEntity>> searchStudies(@RequestParam()
-                                                                 String alike_study,
-                                                                 @RequestParam()
-                                                                 List<String> series) {
-        return ResponseEntity.ok(WebServerApplication.database
-                .studySeriesDao.getSearchEngineResults(alike_study, series, 1));
+    public ResponseEntity<HttpStatus> searchStudies(@RequestParam()
+                                                    String alike_study,
+                                                    @RequestParam(required = false)
+                                                    List<String> series,
+                                                    HttpSession session) {
+        if (alike_study.isBlank() && (series == null || series.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        series = series == null ? new ArrayList<>() : series;
+        searchService.setStudySearchQuery(alike_study, series, session);
+        studyService.setSearchEngineResults(alike_study, series, 1, session);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

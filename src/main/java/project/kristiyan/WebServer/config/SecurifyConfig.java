@@ -23,22 +23,22 @@ public class SecurifyConfig {
                 .headers(headers -> headers
                         .contentSecurityPolicy(csp -> csp
                                 .policyDirectives(
-                                "default-src 'self';" +
-                                "script-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com;"+
-                                "style-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com 'unsafe-inline';"+
-                                "font-src 'self' https://cdn.jsdelivr.net;"+
-                                "connect-src 'self';"
-                            ))
+                                        "default-src 'self';" +
+                                                "script-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com;" +
+                                                "style-src 'self' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com 'unsafe-inline';" +
+                                                "font-src 'self' https://cdn.jsdelivr.net;" +
+                                                "connect-src 'self';"
+                                ))
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
 
                 )
                 .authorizeHttpRequests(auth ->
-                        {
-                            for (String path : SessionAuthorizationFilter.allowedPaths) {
-                                auth = auth.requestMatchers(path).permitAll();
-                            }
-                            auth.anyRequest().authenticated();
-                        })
+                {
+                    for (String path : SessionAuthorizationFilter.allowedPaths) {
+                        auth = auth.requestMatchers(path).permitAll();
+                    }
+                    auth.anyRequest().authenticated();
+                })
                 .addFilterBefore(new SessionAuthorizationFilter(),
                         UsernamePasswordAuthenticationFilter.class);
 

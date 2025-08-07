@@ -120,18 +120,17 @@ uploadBtn.addEventListener('click', async function() {
     const formData = new FormData();
     formData.append('study', selectedStudy.study_name);
     formData.append('series', series);
-
+    hideError()
     try {
         const response = await fetch('/admin/playlists/study/add', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok) {
-            window.location.pathname = '/admin/studies';
-        } else {
-            throw new Error('Upload failed');
+        if (!response.ok) {
+            throw new Error();
         }
+        window.location.pathname = '/admin/studies';
     } catch {
         showError("Couldn't add study to series. Please try again.");
     }

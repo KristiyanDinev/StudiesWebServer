@@ -1,12 +1,22 @@
-for (let deleteBtn of document.getElementsByClassName('delete')) {
+let error = document.getElementById('error')
 
+function showError(message) {
+    error.innerHTML = message
+    error.classList.add('alert-danger')
+    error.classList.remove('d-none')
+}
+
+function hideError() {
+    error.classList.add('d-none')
+    error.classList.remove('alert-danger')
+}
+
+for (let deleteBtn of document.getElementsByClassName('delete')) {
     deleteBtn.addEventListener('click', async function (e) {
         const studyName = deleteBtn.id
-        if (!confirm(`Are you sure you want to delete ${studyName} ?`)) return
+        if (!confirm('Are you sure you want to delete '+studyName+'?')) return
 
-        let error = document.getElementById('error')
-        error.className = 'alert d-none'
-        error.innerHTML = ''
+        hideError()
 
         const originalText = deleteBtn.innerHTML
         deleteBtn.disabled = true
@@ -21,19 +31,16 @@ for (let deleteBtn of document.getElementsByClassName('delete')) {
                 body: formData
             })
 
-            if (res.ok) {
-                window.location.reload()
-                return
+            if (!res.ok) {
+                throw new Error()
             }
 
-        } catch (error) {
-            console.error('Error while deleting study:', error)
+            window.location.reload()
+
+        } catch {
+            deleteBtn.innerHTML = originalText
+            deleteBtn.disabled = false
+            showError('<i class="bi bi-x-circle-fill me-2"></i> Error while deleting study: '+studyName)
         }
-
-        error.className = 'alert alert-danger m-2'
-        error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Error while deleting study: '+studyName
-
-        deleteBtn.innerHTML = originalText
-        deleteBtn.disabled = false
     })
 }

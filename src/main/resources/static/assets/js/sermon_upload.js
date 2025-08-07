@@ -114,20 +114,18 @@ uploadBtn.addEventListener('click', async function (e) {
                         body: formData
                     })
 
-                    if (res.ok) {
-                        error.innerHTML = ""
-                        error.className = ""
-                        window.location.pathname = '/admin/sermons'
-                        return
+                    if (!res.ok) {
+                        throw new Error()
                     }
+                    error.innerHTML = ""
+                     error.className = ""
+                      window.location.pathname = '/admin/sermons'
 
-                } catch (error) {
-                    console.error('Upload error:', error)
-                }
+                } catch {
+                    uploadBtn.innerHTML = originalText
+                                    uploadBtn.disabled = false
 
-                uploadBtn.innerHTML = originalText
-                uploadBtn.disabled = false
-
-                error.className = 'alert alert-danger'
-                error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your sermon'
+                                    error.className = 'alert alert-danger'
+                                    error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your sermon'
+                }'
 });

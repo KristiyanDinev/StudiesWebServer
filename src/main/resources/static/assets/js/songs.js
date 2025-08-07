@@ -1,12 +1,23 @@
+var error = document.getElementById('error')
+
+function showError(message) {
+    error.innerHTML = message
+    error.classList.add('alert-danger')
+    error.classList.remove('d-none')
+}
+
+function hideError() {
+    error.classList.add('d-none')
+    error.classList.remove('alert-danger')
+}
+
 for (let deleteBtn of document.getElementsByClassName('delete')) {
 
     deleteBtn.addEventListener('click', async function (e) {
         const songName = deleteBtn.name
         if (!confirm(`Are you sure you want to delete ${songName} ?`)) return
 
-        let error = document.getElementById('error')
-        error.className = 'alert d-none'
-        error.innerHTML = ''
+        hideError()
 
         const originalText = deleteBtn.innerHTML
         deleteBtn.disabled = true
@@ -21,20 +32,17 @@ for (let deleteBtn of document.getElementsByClassName('delete')) {
                 body: formData
             })
 
-            if (res.ok) {
-                window.location.reload()
-                return
+            if (!res.ok) {
+                throw new Error()
             }
+            window.location.reload()
 
-        } catch (error) {
-            console.error('Error while deleting song:', error)
+        } catch {
+            showError('<i class="bi bi-x-circle-fill me-2"></i> Error while deleting song: '+songName)
+
+            deleteBtn.innerHTML = originalText
+            deleteBtn.disabled = false
         }
-
-        error.className = 'alert alert-danger m-2'
-        error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Error while deleting song: '+songName
-
-        deleteBtn.innerHTML = originalText
-        deleteBtn.disabled = false
     })
 }
 
@@ -115,9 +123,7 @@ for (let editBtn of document.getElementsByClassName('edit')) {
         const songName = editBtn.name
         if (!confirm(`Are you sure you want to edit ${songName} ?`)) return
 
-        let error = document.getElementById('error')
-        error.className = 'alert '+displayNone
-        error.innerHTML = ''
+        hideError()
 
         const originalText = editBtn.innerHTML
         editBtn.disabled = true
@@ -133,20 +139,17 @@ for (let editBtn of document.getElementsByClassName('edit')) {
                 body: formData
             })
 
-            if (res.ok) {
-                window.location.reload()
-                return
+            if (!res.ok) {
+                throw new Error()
             }
 
-        } catch (error) {
-            console.error('Error while editing song:', error)
+            window.location.reload()
+
+        } catch {
+            showError('<i class="bi bi-x-circle-fill me-2"></i> Error while editing song: '+songName)
+                    deleteBtn.innerHTML = originalText
+                    deleteBtn.disabled = false
         }
-
-        error.className = 'alert alert-danger m-2'
-        error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Error while editing song: '+songName
-
-        deleteBtn.innerHTML = originalText
-        deleteBtn.disabled = false
     })
 }
 

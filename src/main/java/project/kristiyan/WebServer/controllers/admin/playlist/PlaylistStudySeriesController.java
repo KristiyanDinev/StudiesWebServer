@@ -32,7 +32,7 @@ public class PlaylistStudySeriesController {
 
     @PostMapping("/admin/playlists/study/alike_by_series")
     public ResponseEntity<List<StudySeriesEntity>> getAlikeStudiesBySeries(@RequestParam
-                                                                               String alike_study,
+                                                                           String alike_study,
                                                                            @RequestParam
                                                                            String series) {
         return ResponseEntity.ok(WebServerApplication.database
@@ -42,7 +42,7 @@ public class PlaylistStudySeriesController {
 
     @PostMapping("/admin/playlists/study/alike")
     public ResponseEntity<List<StudySeriesEntity>> getAlikeStudies(@RequestParam
-                                                                       String alike_study) {
+                                                                   String alike_study) {
         return ResponseEntity.ok(WebServerApplication.database
                 .studySeriesDao.getAllStudiesAlike(alike_study));
     }
@@ -50,7 +50,7 @@ public class PlaylistStudySeriesController {
 
     @PostMapping("/admin/playlists/study/add")
     public ResponseEntity<HttpStatus> addStudyToSeriesDB(@RequestParam String study,
-                                                          @RequestParam String series) {
+                                                         @RequestParam String series) {
         if (WebServerApplication.database.studySeriesDao.isStudyInSeries(study, series)) {
             // the study already is in that series
             return ResponseEntity.ok().build();
@@ -65,7 +65,7 @@ public class PlaylistStudySeriesController {
 
     @PostMapping("/admin/playlists/study/remove")
     public ResponseEntity<HttpStatus> removeStudyFromSeriesDB(@RequestParam String study,
-                                                         @RequestParam String series) {
+                                                              @RequestParam String series) {
         if (WebServerApplication.database.studySeriesDao
                 .deleteStudyFromSeries(study, series)) {
             return ResponseEntity.ok().build();

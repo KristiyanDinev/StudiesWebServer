@@ -70,20 +70,19 @@ uploadBtn.addEventListener('click', async function (e) {
                 body: formData
             })
 
-            if (res.ok) {
+            if (!res.ok) {
+                throw new Error()
+            }
+
                 error.innerHTML = ""
                 error.className = ""
                 window.location.pathname = '/admin/studies'
-                return
-            }
 
-        } catch (error) {
-            console.error('Upload error:', error)
+        } catch {
+            uploadBtn.innerHTML = originalText
+            uploadBtn.disabled = false
+
+            error.className = 'alert alert-danger'
+            error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your study'
         }
-
-        uploadBtn.innerHTML = originalText
-        uploadBtn.disabled = false
-
-        error.className = 'alert alert-danger'
-        error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your study'
 });

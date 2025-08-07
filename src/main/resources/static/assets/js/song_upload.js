@@ -114,20 +114,19 @@ uploadBtn.addEventListener('click', async function (e) {
                         body: formData
                     })
 
-                    if (res.ok) {
-                        error.innerHTML = ""
-                        error.className = ""
-                        window.location.pathname = '/admin/songs'
-                        return
+                    if (!res.ok) {
+                        throw new Error()
                     }
 
-                } catch (error) {
-                    console.error('Upload error:', error)
+                    error.innerHTML = ""
+                     error.className = ""
+                    window.location.pathname = '/admin/songs'
+
+                } catch {
+                    uploadBtn.innerHTML = originalText
+                    uploadBtn.disabled = false
+
+                    error.className = 'alert alert-danger'
+                    error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your song'
                 }
-
-                uploadBtn.innerHTML = originalText
-                uploadBtn.disabled = false
-
-                error.className = 'alert alert-danger'
-                error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your song'
 });

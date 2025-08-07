@@ -132,18 +132,17 @@ uploadBtn.addEventListener('click', async function() {
     const formData = new FormData();
     formData.append('song', selectedSong.name);
     formData.append('playlist', playlist);
-
+    hideError()
     try {
         const response = await fetch('/admin/playlists/song/add', {
             method: 'POST',
             body: formData
         });
 
-        if (response.ok) {
-            window.location.pathname = '/admin/songs';
-        } else {
-            throw new Error('Upload failed');
+        if (!response.ok) {
+            throw new Error();
         }
+        window.location.pathname = '/admin/songs';
     } catch {
         showError("Couldn't add song to playlist. Please try again.");
     }

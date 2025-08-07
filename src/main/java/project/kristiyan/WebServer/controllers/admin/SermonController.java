@@ -26,8 +26,8 @@ public class SermonController {
 
     @GetMapping("/admin/sermons")
     public String getSermons(Model model,
-                           @RequestParam(defaultValue = "1")
-                           int page) {
+                             @RequestParam(defaultValue = "1")
+                             int page) {
         model.addAttribute("sermons", sermonService.getPage(page));
         return "admin/sermon/sermons";
     }
@@ -63,7 +63,7 @@ public class SermonController {
 
     @PostMapping("/admin/sermons/edit")
     public ResponseEntity<HttpStatus> editSermon(@RequestParam()
-                                                     String sermon,
+                                                 String sermon,
                                                  @RequestParam() String categories) {
         SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermon(sermon);
         if (sermonEntity == null) {
@@ -92,7 +92,7 @@ public class SermonController {
         File uploadedFile = null;
         try {
             GeneralUtility.uploadFile(fileUploadDto, sermonService.UPLOAD_DIR);
-            uploadedFile  = new File(sermonService.UPLOAD_DIR, name);
+            uploadedFile = new File(sermonService.UPLOAD_DIR, name);
 
             boolean savedSong = WebServerApplication.database
                     .sermonDao.saveSermon(name,
@@ -112,9 +112,10 @@ public class SermonController {
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
-           try {
-               uploadedFile.delete();
-           } catch (Exception ignored) {}
+            try {
+                uploadedFile.delete();
+            } catch (Exception ignored) {
+            }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

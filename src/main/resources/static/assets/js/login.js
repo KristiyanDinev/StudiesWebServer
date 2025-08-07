@@ -30,20 +30,21 @@ document.getElementById('submitBtn').addEventListener("click", async function(ev
                 body: formData
             })
 
-            if (res.ok) {
-                errorElement.innerHTML = ''
-                tokenElement.classList.remove(invalidClass)
-                window.location.reload()
-                return
+            if (!res.ok) {
+                throw new Error()
             }
+            errorElement.innerHTML = ''
+            tokenElement.classList.remove(invalidClass)
+            window.location.reload()
 
-        } catch {}
 
+        } catch {
         errorElement.className = 'alert alert-danger'
-        errorElement.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i>Invalid Token'
-        tokenElement.classList.add(invalidClass)
-        tokenElement.value = ''
+                errorElement.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i>Invalid Token'
+                tokenElement.classList.add(invalidClass)
+                tokenElement.value = ''
 
-        submitButton.innerHTML = originalText
-        submitButton.disabled = false
+                submitButton.innerHTML = originalText
+                submitButton.disabled = false
+        }
 })

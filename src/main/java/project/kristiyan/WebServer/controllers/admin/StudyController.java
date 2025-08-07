@@ -1,5 +1,6 @@
 package project.kristiyan.WebServer.controllers.admin;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class StudyController {
     @GetMapping("/admin/studies")
     public String getStudies(Model model,
                              @RequestParam(defaultValue = "1")
-                             int page) {
-        model.addAttribute("studies", studyService.getPage(page));
+                             int page, HttpSession session) {
+        model.addAttribute("studies", studyService.getPage(page, session));
         return "admin/study/studies";
     }
 
@@ -66,7 +67,7 @@ public class StudyController {
         File uploadedFile = null;
         try {
             GeneralUtility.uploadFile(fileUploadDto, studyService.UPLOAD_DIR);
-            uploadedFile  = new File(studyService.UPLOAD_DIR, name);
+            uploadedFile = new File(studyService.UPLOAD_DIR, name);
             if (!WebServerApplication.database.studySeriesDao.addStudyToSeries(name, null)) {
                 throw new Exception();
             }
@@ -75,7 +76,8 @@ public class StudyController {
         } catch (Exception ignore) {
             try {
                 uploadedFile.delete();
-            } catch (Exception ignore2) {}
+            } catch (Exception ignore2) {
+            }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

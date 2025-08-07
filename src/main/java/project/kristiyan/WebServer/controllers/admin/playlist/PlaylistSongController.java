@@ -31,12 +31,11 @@ public class PlaylistSongController {
     }
 
 
-
     @PostMapping("/admin/playlists/song/alike_by_playlist")
     public ResponseEntity<List<SongEntity>> getAlikeSongsByPlaylist(@RequestParam
-                                                                        String alike_song,
-                                                          @RequestParam
-                                                          String playlist) {
+                                                                    String alike_song,
+                                                                    @RequestParam
+                                                                    String playlist) {
         return ResponseEntity.ok(WebServerApplication.database
                 .songDao.getAllSongsAlikeByPlaylist(alike_song, playlist)
                 .stream().map(s -> s.song).toList());
@@ -44,14 +43,14 @@ public class PlaylistSongController {
 
     @PostMapping("/admin/playlists/song/alike")
     public ResponseEntity<List<SongEntity>> getAlikeSongs(@RequestParam
-                                                              String alike_song) {
+                                                          String alike_song) {
         return ResponseEntity.ok(WebServerApplication.database
                 .songDao.getAllSongsAlike(alike_song));
     }
 
     @PostMapping("/admin/playlists/song")
     public ResponseEntity<List<SongEntity>> getAllPlaylistSongs(@RequestParam
-                                                                    String playlist) {
+                                                                String playlist) {
         return ResponseEntity.ok(WebServerApplication.database.songPlaylistDao.getAllPlaylistSongs(playlist));
     }
 
@@ -72,7 +71,7 @@ public class PlaylistSongController {
 
     @PostMapping("/admin/playlists/song/remove")
     public ResponseEntity<HttpStatus> removeSongFromPlaylistDB(@RequestParam String song,
-                                                          @RequestParam String playlist) {
+                                                               @RequestParam String playlist) {
         SongEntity songEntity = WebServerApplication.database.songDao.getSong(song);
         if (songEntity == null) {
             return ResponseEntity.badRequest().build();

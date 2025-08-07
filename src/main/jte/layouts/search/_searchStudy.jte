@@ -1,8 +1,6 @@
 
 
-<div>
 
-    <div>
         <div class="container">
             <div class="search-container">
                 <h2 class="mb-4">Study Search</h2>
@@ -16,8 +14,7 @@
                                 class="form-control"
                                 id="studyName"
                                 placeholder="Study name..."
-                                minlength="2"
-                                required>
+                                minlength="2">
                     </div>
 
                     <!-- Series Multi-Select Dropdown -->
@@ -37,10 +34,12 @@
                             <span class="search-text">Search Studies</span>
                         </button>
                     </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-secondary" id="clear-search-study">
+                            <span>Clear Search</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<script src="/assets/js/search/admin/search.js"></script>

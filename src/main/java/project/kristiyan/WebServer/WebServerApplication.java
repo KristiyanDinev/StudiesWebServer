@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import project.kristiyan.database.Database;
 
 @SpringBootApplication(exclude = {
-		UserDetailsServiceAutoConfiguration.class
+        UserDetailsServiceAutoConfiguration.class
 })
 public class WebServerApplication {
-	public static Database database;
+    public static Database database;
 
-	public static void main(String[] args) {
-		database = new Database(null);
-		SpringApplication.run(WebServerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        database = new Database(null);
+        SpringApplication.run(WebServerApplication.class, args);
+    }
 
 }
