@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.List;
 
 public class SermonModel implements Serializable {
-    private File file;
-    private SermonEntity sermonEntity;
-    private List<SermonCategoryEntity> sermonCategoryEntities;
-    private List<SermonPlaylistEntity> sermonPlaylistEntities;
+    public File file;
+    public SermonEntity sermonEntity;
+    public List<SermonCategoryEntity> sermonCategoryEntities;
+    public List<SermonPlaylistEntity> sermonPlaylistEntities;
 
     public SermonModel() {
     }
@@ -24,37 +24,5 @@ public class SermonModel implements Serializable {
         this.sermonEntity = sermonEntity;
         this.sermonCategoryEntities = sermonCategoryEntities;
         this.sermonPlaylistEntities = sermonPlaylistEntities;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public SermonEntity getSermonEntity() {
-        return sermonEntity;
-    }
-
-    public List<SermonCategoryEntity> getSermonCategoryEntities() {
-        return sermonCategoryEntities;
-    }
-
-    public List<SermonPlaylistEntity> getSermonPlaylistEntities() {
-        return sermonPlaylistEntities;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public void setSermonCategoryEntities(List<SermonCategoryEntity> sermonCategoryEntities) {
-        this.sermonCategoryEntities = sermonCategoryEntities;
-    }
-
-    public void setSermonPlaylistEntities(List<SermonPlaylistEntity> sermonPlaylistEntities) {
-        this.sermonPlaylistEntities = sermonPlaylistEntities;
-    }
-
-    public void setSermonEntity(SermonEntity sermonEntity) {
-        this.sermonEntity = sermonEntity;
     }
 }

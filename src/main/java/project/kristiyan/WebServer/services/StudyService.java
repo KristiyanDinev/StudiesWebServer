@@ -55,8 +55,8 @@ public class StudyService {
         if (searchResults != null) {
             List<Object> query = searchService.getStudySearchQuery(session);
             if (query != null) {
-                paginationModel.setItems(searchResults);
-                paginationModel.setCurrentPage(page);
+                paginationModel.items = searchResults;
+                paginationModel.currentPage = page;
                 setSearchEngineResults(String.valueOf(query.getFirst()),
                         (List<String>) query.get(1), page, session);
                 return paginationModel;
@@ -76,8 +76,8 @@ public class StudyService {
                     WebServerApplication.database.studySeriesDao
                             .getSeriesFromStudy(studySeriesEntity.study_name)));
         }
-        paginationModel.setItems(studyModels);
-        paginationModel.setCurrentPage(page);
+        paginationModel.items = studyModels;
+        paginationModel.currentPage = page;
         return paginationModel;
     }
 

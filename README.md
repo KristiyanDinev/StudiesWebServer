@@ -45,3 +45,8 @@ sessions in memory.
 They are stored in the cookie `JSESSIONID`, not the data, but the session ID. 
 The data to that session is in memory.
 Keeping in mind that the panel may not be used my many people, but only by few selected admins.
+
+Run **Redis**
+```bash
+docker run --name redis-db -itd -p 6379:6379 redis
+```

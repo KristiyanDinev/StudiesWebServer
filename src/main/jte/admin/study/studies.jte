@@ -18,7 +18,7 @@
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Study
 </a>
 
-@template.layouts._pagination(page = studies.getCurrentPage())
+@template.layouts._pagination(page = studies.currentPage)
 
 <p class="alert d-none container mx-4" id="error"></p>
 
@@ -34,22 +34,22 @@
         </tr>
         </thead>
         <tbody id="table_body">
-        @for(StudyModel study : studies.getItems())
+        @for(StudyModel study : studies.items)
             <tr class="page-row">
-                <td>${study.getStudyName()}</td>
+                <td>${study.study_name}</td>
                 <td class="p-2">
-                    @if(study.getStudySeriesEntities().isEmpty())
+                    @if(study.studySeriesEntities.isEmpty())
                         <span class="text-muted">Not in any series yet</span>
                     @endif
-                    @for(StudySeriesEntity studySeriesEntity : study.getStudySeriesEntities())
+                    @for(StudySeriesEntity studySeriesEntity : study.studySeriesEntities)
                         <span class="badge bg-info text-muted me-2 mb-2">${studySeriesEntity.series_name}</span>
                     @endfor
                 </td>
-                <td>${study.getUploadedDate()}</td>
-                <td>${study.getFileSize()}MB</td>
+                <td>${study.uploadedDate}</td>
+                <td>${study.fileSize}MB</td>
                 <td>
-                    <a href="/file/study/${study.getStudyName()}?download=false" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
-                    <button type="button" id="${study.getStudyName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
+                    <a href="/file/study/${study.study_name}?download=false" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <button type="button" id="${study.study_name}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
                 </td>
             </tr>
         @endfor

@@ -1,11 +1,7 @@
 package project.kristiyan.WebServer.services;
 
-import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.stereotype.Service;
-import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.models.SermonModel;
 import project.kristiyan.WebServer.models.SongModel;
 import project.kristiyan.WebServer.models.StudyModel;
@@ -14,9 +10,6 @@ import java.util.List;
 
 @Service
 public class SearchService {
-
-    @Autowired
-    private JdbcIndexedSessionRepository v;
 
     private final String studySessionResultsKey = "search_study_result";
     private final String songSessionResultsKey = "search_song_result";
@@ -28,7 +21,6 @@ public class SearchService {
 
     public void setStudySessionResults(List<StudyModel> studyModels, HttpSession session) {
         session.setAttribute(studySessionResultsKey, studyModels);
-        // INSERT INTO SPRING_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES) VALUES (?, ?, ?)
     }
 
     public void setStudySearchQuery(String alike_study, List<String> series, HttpSession session) {

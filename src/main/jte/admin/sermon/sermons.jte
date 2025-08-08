@@ -24,7 +24,7 @@
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Sermon
 </a>
 
-@template.layouts._pagination(page = sermons.getCurrentPage())
+@template.layouts._pagination(page = sermons.currentPage)
 
 <p class="alert d-none" id="error"></p>
 
@@ -42,12 +42,12 @@
         </tr>
         </thead>
         <tbody>
-        @for(SermonModel sermon : sermons.getItems())
+        @for(SermonModel sermon : sermons.items)
             !{
                 BasicFileAttributes attrs = null;
                 String uploadDate = "Unknown";
                 try {
-                    uploadDate = Files.readAttributes(sermon.getFile().toPath(), BasicFileAttributes.class)
+                    uploadDate = Files.readAttributes(sermon.file.toPath(), BasicFileAttributes.class)
                         .creationTime()
                         .toInstant()
                         .atZone(ZoneId.systemDefault())
@@ -57,37 +57,37 @@
                 }
             }
             <tr class="page-row">
-                <td>${sermon.getFile().getName()}</td>
-                <td>${sermon.getSermonEntity().duration}s</td>
+                <td>${sermon.file.getName()}</td>
+                <td>${sermon.sermonEntity.duration}s</td>
                 <td class="mb-3">
-                    <div id="category_display_${sermon.getSermonEntity().id}" class="p-2">
-                        @if(sermon.getSermonCategoryEntities().isEmpty())
+                    <div id="category_display_${sermon.sermonEntity.id}" class="p-2">
+                        @if(sermon.sermonCategoryEntities.isEmpty())
                             <span class="text-muted">No categories added</span>
                         @endif
-                        @for(SermonCategoryEntity sermonCategoryEntity : sermon.getSermonCategoryEntities())
+                        @for(SermonCategoryEntity sermonCategoryEntity : sermon.sermonCategoryEntities)
                             <span class="badge bg-primary me-2 mb-2">${sermonCategoryEntity.name.trim()}</span>
                         @endfor
                     </div>
-                    <div class="d-none" id="edit_cat_${sermon.getSermonEntity().id}">
-                        <input type="text" id="category_input_${sermon.getSermonEntity().id}" class="form-control mb-2" placeholder="Enter category name">
+                    <div class="d-none" id="edit_cat_${sermon.sermonEntity.id}">
+                        <input type="text" id="category_input_${sermon.sermonEntity.id}" class="form-control mb-2" placeholder="Enter category name">
                         <div class="mb-2">
-                            <button type="button" id="add_category_${sermon.getSermonEntity().id}" class="btn btn-outline-primary mr-2">Add</button>
-                            <button type="button" id="remove_category_${sermon.getSermonEntity().id}" class="btn btn-outline-danger mx-2">Remove</button>
+                            <button type="button" id="add_category_${sermon.sermonEntity.id}" class="btn btn-outline-primary mr-2">Add</button>
+                            <button type="button" id="remove_category_${sermon.sermonEntity.id}" class="btn btn-outline-danger mx-2">Remove</button>
                         </div>
                     </div>
                 </td>
                 <td class="mb-3">
-                    @for(SermonPlaylistEntity sermonPlaylistEntity : sermon.getSermonPlaylistEntities())
+                    @for(SermonPlaylistEntity sermonPlaylistEntity : sermon.sermonPlaylistEntities)
                         <span class="badge bg-success me-2 mb-2">${sermonPlaylistEntity.name.trim()}</span>
                     @endfor
                 </td>
                 <td>${uploadDate}</td>
-                <td>${String.format("%.2f", sermon.getFile().length() / (1024.0 * 1024.0))}MB</td>
+                <td>${String.format("%.2f", sermon.file.length() / (1024.0 * 1024.0))}MB</td>
                 <td>
-                    <a href="/file/sermon/${sermon.getFile().getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
-                    <button type="button" id="${sermon.getSermonEntity().id}" name="${sermon.getFile().getName()}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
-                    <button type="button" id="toggle_${sermon.getSermonEntity().id}" class="btn btn-sm btn-primary mb-2 mx-2"><i class="bi bi-pencil-square me-1"></i> Edit Categories</button>
-                    <button type="button" id="submit_${sermon.getSermonEntity().id}" name="${sermon.getFile().getName()}" class="edit btn btn-sm btn-success mb-2 mx-2 d-none"><i class="bi bi-bookmark-check-fill me-1"></i> Submit</button>
+                    <a href="/file/sermon/${sermon.file.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <button type="button" id="${sermon.sermonEntity.id}" name="${sermon.sermonEntity.name}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
+                    <button type="button" id="toggle_${sermon.sermonEntity.id}" class="btn btn-sm btn-primary mb-2 mx-2"><i class="bi bi-pencil-square me-1"></i> Edit Categories</button>
+                    <button type="button" id="submit_${sermon.sermonEntity.id}" name="${sermon.file.getName()}" class="edit btn btn-sm btn-success mb-2 mx-2 d-none"><i class="bi bi-bookmark-check-fill me-1"></i> Submit</button>
                 </td>
             </tr>
         @endfor

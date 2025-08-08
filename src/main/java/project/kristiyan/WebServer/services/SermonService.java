@@ -98,8 +98,8 @@ public class SermonService {
                     WebServerApplication.database.sermonPlaylistDao
                             .getPlaylistsWhereThatSermonIs(sermonEntity.id)));
         }
-        paginationModel.setCurrentPage(page);
-        paginationModel.setItems(sermonModels);
+        paginationModel.currentPage = page;
+        paginationModel.items = sermonModels;
         return paginationModel;
     }
 }

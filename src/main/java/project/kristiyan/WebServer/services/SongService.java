@@ -105,8 +105,8 @@ public class SongService {
                     WebServerApplication.database.songPlaylistDao
                             .getPlaylistsWhereThatSongIs(songEntity.id)));
         }
-        paginationModel.setCurrentPage(page);
-        paginationModel.setItems(songModels);
+        paginationModel.currentPage = page;
+        paginationModel.items = songModels;
         return paginationModel;
     }
 }

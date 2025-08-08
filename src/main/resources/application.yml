@@ -31,12 +31,12 @@ spring:
       enabled: false
 
   session:
-    store-type: 'jdbc'
+    store-type: 'redis'
 
-  datasource:
-    url: 'jdbc:mysql://127.0.0.1:3306/AskJesusBotDB'
-    username: 'root'
-    password: 'root'
+  redis:
+    host: '127.0.0.1'
+    port: 6379
+    password: ''
 
   application:
     name: StudiesWebServer
