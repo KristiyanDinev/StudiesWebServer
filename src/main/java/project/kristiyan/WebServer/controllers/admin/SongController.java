@@ -1,5 +1,6 @@
 package project.kristiyan.WebServer.controllers.admin;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class SongController {
     @GetMapping("/admin/songs")
     public String getSongs(Model model,
                            @RequestParam(defaultValue = "1")
-                           int page) {
-        model.addAttribute("songs", songService.getPage(page));
+                           int page, HttpSession session) {
+        model.addAttribute("songs", songService.getPage(page, session));
         return "admin/song/songs";
     }
 

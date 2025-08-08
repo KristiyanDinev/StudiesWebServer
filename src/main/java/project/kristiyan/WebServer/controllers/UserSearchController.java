@@ -40,4 +40,14 @@ public class UserSearchController {
     public ResponseEntity<List<String>> getAllSeries() {
         return ResponseEntity.ok(WebServerApplication.database.studySeriesDao.getSeries());
     }
+
+    @GetMapping("/song/categories")
+    public ResponseEntity<List<String>> getAllSongCategories() {
+        return ResponseEntity.ok(WebServerApplication.database.songCategoryDao.getCategories_SearchSelect());
+    }
+
+    @GetMapping("/song/playlists")
+    public ResponseEntity<List<String>> getAllSongPlaylists() {
+        return ResponseEntity.ok(WebServerApplication.database.songPlaylistDao.getPlaylists_SearchSelect());
+    }
 }

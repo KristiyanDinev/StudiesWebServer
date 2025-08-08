@@ -97,4 +97,6 @@
 
 @template.layouts._footer()
 <script src="/assets/js/sermons.js"></script>
+<script src="/assets/js/search/search.js"></script>
+<script src="/assets/js/search/admin/search.js"></script>
 </body>

@@ -31,8 +31,18 @@ public class SearchService {
         session.setAttribute(songSessionResultsKey, songModels);
     }
 
+    public void setSongSearchQuery(String alike_song, List<String> categories,
+                                   List<String> playlists, HttpSession session) {
+        session.setAttribute(songSessionSearchQueryKey, List.of(alike_song, categories, playlists));
+    }
+
     public void setSermonSessionResults(List<SermonModel> sermonModels, HttpSession session) {
         session.setAttribute(sermonSessionResultsKey, sermonModels);
+    }
+
+    public void setSermonSearchQuery(String alike_sermon, List<String> categories,
+                                   List<String> playlists, HttpSession session) {
+        session.setAttribute(sermonSessionSearchQueryKey, List.of(alike_sermon, categories, playlists));
     }
 
 

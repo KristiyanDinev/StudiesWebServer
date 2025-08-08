@@ -1,6 +1,8 @@
 package project.kristiyan.WebServer.services;
 
+import jakarta.servlet.http.HttpSession;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,9 @@ public class SongService {
 
     @Value("${song_upload_path}")
     public String UPLOAD_DIR;
+
+    @Autowired
+    private SearchService searchService;
 
     public boolean isValidFile(FileUploadDto fileUploadDto) {
         MultipartFile file = fileUploadDto.getFile();
@@ -85,11 +90,24 @@ public class SongService {
         }
     }
 
-    public PaginationModel<SongModel> getPage(int page) {
+    public PaginationModel<SongModel> getPage(int page, HttpSession session) {
         File songsUploadFolder = new File(UPLOAD_DIR);
         PaginationModel<SongModel> paginationModel = new PaginationModel<>();
         if (!songsUploadFolder.exists() && !songsUploadFolder.mkdirs()) {
             return paginationModel;
+        }
+
+        List<SongModel> searchResults = searchService.getSongSessionResults(session);
+        if (searchResults != null) {
+            List<Object> query = searchService.getSongSearchQuery(session);
+            if (query != null) {
+                paginationModel.items = searchResults;
+                paginationModel.currentPage = page;
+                setSearchEngineResults(String.valueOf(query.getFirst()),
+                        (List<String>) query.get(1),
+                        (List<String>) query.get(2), page, session);
+                return paginationModel;
+            }
         }
 
         List<SongModel> songModels = new ArrayList<>();
@@ -108,5 +126,32 @@ public class SongService {
         paginationModel.currentPage = page;
         paginationModel.items = songModels;
         return paginationModel;
+    }
+
+    public void setSearchEngineResults(String alike_study, List<String> categories,
+                                       List<String> playlists,
+                                       int page, HttpSession session) {
+        List<Integer> foundSongs = WebServerApplication.database
+                .songDao.getSearchEngineSongs(alike_study, categories, playlists, page);
+
+        List<SongModel> songModels = new ArrayList<>();
+        for (Integer songId : foundSongs) {
+            SongEntity songEntity = WebServerApplication.database.songDao.getSongById(songId);
+            if (songEntity == null) {
+                continue;
+            }
+            File file = new File(UPLOAD_DIR, songEntity.name);
+            if (!file.exists()) {
+                continue;
+            }
+            songModels.add(
+                    new SongModel(file, songEntity,
+                            WebServerApplication.database.songCategoryDao
+                                    .getSongCategories(songEntity.id),
+                            WebServerApplication.database.songPlaylistDao
+                                    .getPlaylistsWhereThatSongIs(songEntity.id))
+            );
+        }
+        searchService.setSongSessionResults(songModels, session);
     }
 }

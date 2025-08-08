@@ -4,6 +4,9 @@ let clearSermonBtn = document.getElementById('clear-search-sermon')
 
 var selectedSeries = []
 
+var selectedCategories = []
+var selectedPlaylists = []
+
 
 async function clearStudySearch() {
     hideError()
@@ -125,12 +128,82 @@ async function getSeries() {
     }
 }
 
+async function getSongCategories() {
+    hideError()
+    try {
+        const res = await fetch('/song/categories', {
+            method: 'GET'
+        })
+
+        if (!res.ok) {
+           throw new Error()
+        }
+            const categories = await res.json()
+            let selectElement = document.getElementById('categoriesSelect')
+            selectElement.innerHTML = ''
+            categories.forEach(s => {
+                var _div = document.createElement('div');
+                _div.className = 'mb-1 cursor-pointer shadow-sm p-1 border rounded';
+                _div.innerHTML = `<small>${s}</small>`;
+                _div.addEventListener('click', function () {
+                        if (selectedCategories.includes(s)) {
+                            selectedCategories.pop(s)
+                            _div.classList.remove('bg-primary','text-white')
+
+                        } else {
+                            selectedCategories.push(s)
+                            _div.classList.add('bg-primary', 'text-white')
+                        }
+                });
+                selectElement.appendChild(_div);
+            });
+    } catch {
+        showError('<i class="bi bi-x-circle-fill me-2"></i> Can\'t get the song categories. Please try again.')
+    }
+}
+
+async function getSongPlaylists() {
+    hideError()
+    try {
+        const res = await fetch('/song/playlists', {
+            method: 'GET'
+        })
+
+        if (!res.ok) {
+           throw new Error()
+        }
+            const playlists = await res.json()
+            let selectElement = document.getElementById('playlistSelect')
+            selectElement.innerHTML = ''
+            playlists.forEach(s => {
+                var _div = document.createElement('div');
+                _div.className = 'mb-1 cursor-pointer shadow-sm p-1 border rounded';
+                _div.innerHTML = `<small>${s}</small>`;
+                _div.addEventListener('click', function () {
+                        if (selectedPlaylists.includes(s)) {
+                            selectedPlaylists.pop(s)
+                            _div.classList.remove('bg-success','text-white')
+
+                        } else {
+                            selectedPlaylists.push(s)
+                            _div.classList.add('bg-success', 'text-white')
+                        }
+                });
+                selectElement.appendChild(_div);
+            });
+    } catch {
+        showError('<i class="bi bi-x-circle-fill me-2"></i> Can\'t get the song playlists. Please try again.')
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async function() {
-    await getSeries()
     if (clearStudyBtn) {
+        await getSeries()
         clearStudyBtn.addEventListener('click', clearStudySearch)
     }
     if (clearSongBtn) {
+        await getSongCategories()
+        await getSongPlaylists()
         clearSongBtn.addEventListener('click', clearSongSearch)
     }
     if (clearSermonBtn) {

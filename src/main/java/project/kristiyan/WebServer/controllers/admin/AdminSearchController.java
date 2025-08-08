@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.services.SearchService;
+import project.kristiyan.WebServer.services.SermonService;
+import project.kristiyan.WebServer.services.SongService;
 import project.kristiyan.WebServer.services.StudyService;
 
 import java.util.ArrayList;
@@ -18,6 +20,12 @@ public class AdminSearchController {
 
     @Autowired
     private StudyService studyService;
+
+    @Autowired
+    private SongService songService;
+
+    @Autowired
+    private SermonService sermonService;
 
     @Autowired
     private SearchService searchService;
@@ -34,6 +42,26 @@ public class AdminSearchController {
         series = series == null ? new ArrayList<>() : series;
         searchService.setStudySearchQuery(alike_study, series, session);
         studyService.setSearchEngineResults(alike_study, series, 1, session);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/admin/search/songs")
+    public ResponseEntity<HttpStatus> searchSongs(@RequestParam()
+                                                    String alike_song,
+                                                    @RequestParam(required = false)
+                                                    List<String> categories,
+                                                    @RequestParam(required = false)
+                                                    List<String> playlists,
+                                                    HttpSession session) {
+        if (alike_song.isBlank() &&
+                (categories == null || categories.isEmpty()) &&
+                (playlists == null || playlists.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        categories = categories == null ? new ArrayList<>() : categories;
+        playlists = playlists == null ? new ArrayList<>() : playlists;
+        searchService.setSongSearchQuery(alike_song, categories, playlists, session);
+        songService.setSearchEngineResults(alike_song, categories, playlists, 1, session);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

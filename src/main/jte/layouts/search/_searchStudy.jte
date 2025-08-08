@@ -5,7 +5,7 @@
             <div class="search-container">
                 <h2 class="mb-4">Study Search</h2>
 
-                <div id="studySearchForm">
+                <div>
                     <!-- Study Name Search Input -->
                     <div class="mb-3">
                         <label for="studyName" class="form-label">Study Name</label>
@@ -30,7 +30,7 @@
 
                     <!-- Search Button -->
                     <div class="mb-3">
-                        <button type="button" class="btn btn-primary" id="search">
+                        <button type="button" class="btn btn-primary" id="search-study">
                             <span class="search-text">Search Studies</span>
                         </button>
                     </div>

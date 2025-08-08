@@ -20,6 +20,8 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Songs</h1>
 
+@template.layouts.search._searchSong()
+
 <a class="btn btn-primary mb-2" href="/admin/songs/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Song
 </a>
@@ -97,4 +99,6 @@
 
 @template.layouts._footer()
 <script src="/assets/js/songs.js"></script>
+<script src="/assets/js/search/search.js"></script>
+<script src="/assets/js/search/admin/search.js"></script>
 </body>
