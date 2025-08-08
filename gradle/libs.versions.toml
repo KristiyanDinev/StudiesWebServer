@@ -2,6 +2,7 @@
 jte = "3.2.1"
 jaudiotagger = "3.0.1"
 springBootSessions = "3.5.1"
+spingStarterDataRedis = "3.5.4"
 
 [libraries]
 springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
@@ -10,7 +11,11 @@ jte = { module = "gg.jte:jte-spring-boot-starter-3", version.ref = "jte" }
 
 # https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis/3.5.1
 springBootSessions = { module = "org.springframework.session:spring-session-data-redis", version.ref = "springBootSessions" }
+
 springBootDevTools = { module = "org.springframework.boot:spring-boot-devtools" }
+
+# https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis/3.5.4
+spingStarterDataRedis = { module = "org.springframework.boot:spring-boot-starter-data-redis", version.ref = "spingStarterDataRedis" }
 
 # https://mvnrepository.com/artifact/net.jthink/jaudiotagger/3.0.1
 jaudiotagger = { module = "net.jthink:jaudiotagger", version.ref = "jaudiotagger" }
