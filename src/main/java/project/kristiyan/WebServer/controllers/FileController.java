@@ -48,17 +48,15 @@ public class FileController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
 
-            // Security check - ensure file is within upload directory
+            // Security check
             if (!filePath.normalize().startsWith(Paths.get(studyService.UPLOAD_DIR).normalize())) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
 
             Resource resource = new FileSystemResource(studyFile);
             String contentType = Files.probeContentType(filePath);
-
-            // Default to PDF if content type detection fails
             if (contentType == null) {
-                contentType = "application/pdf";
+                contentType = "application/pdf"; // fallback
             }
 
             HttpHeaders headers = new HttpHeaders();
@@ -66,11 +64,9 @@ public class FileController {
             headers.setContentLength(studyFile.length());
 
             if (download) {
-                // Force download
-                headers.setContentDispositionFormData("attachment", name);
+                headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + name + "\"");
             } else {
-                // Display inline in browser
-                headers.setContentDispositionFormData("inline", name);
+                headers.add(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + name + "\"");
             }
 
             return ResponseEntity.ok()
@@ -81,6 +77,7 @@ public class FileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 
     /**
