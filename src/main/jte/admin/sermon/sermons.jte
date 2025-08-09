@@ -20,6 +20,8 @@
 
 <h1 class="text-center text-dark fw-bold mb-4">Manage Sermons</h1>
 
+@template.layouts.search._searchSermon()
+
 <a class="btn btn-primary mb-2" href="/admin/sermons/upload">
     <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Sermon
 </a>
@@ -77,6 +79,9 @@
                     </div>
                 </td>
                 <td class="mb-3">
+                    @if(sermon.sermonPlaylistEntities.isEmpty())
+                        <span class="text-muted">Not in any playlist yet</span>
+                    @endif
                     @for(SermonPlaylistEntity sermonPlaylistEntity : sermon.sermonPlaylistEntities)
                         <span class="badge bg-success me-2 mb-2">${sermonPlaylistEntity.name.trim()}</span>
                     @endfor
@@ -98,5 +103,4 @@
 @template.layouts._footer()
 <script src="/assets/js/sermons.js"></script>
 <script src="/assets/js/search/search.js"></script>
-<script src="/assets/js/search/admin/search.js"></script>
 </body>

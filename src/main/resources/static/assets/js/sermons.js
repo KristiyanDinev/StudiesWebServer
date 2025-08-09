@@ -1,3 +1,17 @@
+var error = document.getElementById('error')
+
+function showError(message) {
+    error.innerHTML = message
+    error.classList.add('alert-danger')
+    error.classList.remove('d-none')
+}
+
+function hideError() {
+    error.classList.add('d-none')
+    error.classList.remove('alert-danger')
+}
+
+
 for (let deleteBtn of document.getElementsByClassName('delete')) {
 
     deleteBtn.addEventListener('click', async function (e) {

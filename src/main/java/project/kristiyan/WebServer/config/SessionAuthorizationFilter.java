@@ -21,11 +21,8 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
     public static List<String> allowedPaths = List.of(
             "/assets/**",
             "/favicon.ico",
-            "/admin_login",  // admin login page
-            "/studies/**",   // user studies
-            "/songs/**",     // user songs
-            "/sermons/**",   // user sermons
-            "/fonts/**",
+            "/home/**",
+           // "/fonts/**",
             "/file/**"
     );
 

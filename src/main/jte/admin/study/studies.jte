@@ -61,5 +61,4 @@
 
 <script src="/assets/js/studies.js"></script>
 <script src="/assets/js/search/search.js"></script>
-<script src="/assets/js/search/admin/search.js"></script>
 </body>

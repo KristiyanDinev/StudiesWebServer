@@ -1,6 +1,8 @@
 package project.kristiyan.WebServer.services;
 
+import jakarta.servlet.http.HttpSession;
 import org.jaudiotagger.audio.AudioFileIO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -9,7 +11,9 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.SermonModel;
+import project.kristiyan.WebServer.models.SongModel;
 import project.kristiyan.database.entities.sermon.SermonEntity;
+import project.kristiyan.database.entities.song.SongEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,6 +25,9 @@ public class SermonService {
 
     @Value("${sermon_upload_path}")
     public String UPLOAD_DIR;
+
+    @Autowired
+    private SearchService searchService;
 
     public boolean isValidFile(FileUploadDto fileUploadDto) {
         MultipartFile file = fileUploadDto.getFile();
@@ -78,11 +85,24 @@ public class SermonService {
         }
     }
 
-    public PaginationModel<SermonModel> getPage(int page) {
+    public PaginationModel<SermonModel> getPage(int page, HttpSession session) {
         File sermonUploadFolder = new File(UPLOAD_DIR);
         PaginationModel<SermonModel> paginationModel = new PaginationModel<>();
         if (!sermonUploadFolder.exists() && !sermonUploadFolder.mkdirs()) {
             return paginationModel;
+        }
+
+        List<SermonModel> searchResults = searchService.getSermonSessionResults(session);
+        if (searchResults != null) {
+            List<Object> query = searchService.getSermonSearchQuery(session);
+            if (query != null) {
+                paginationModel.items = searchResults;
+                paginationModel.currentPage = page;
+                setSearchEngineResults(String.valueOf(query.getFirst()),
+                        (List<String>) query.get(1),
+                        (List<String>) query.get(2), page, session);
+                return paginationModel;
+            }
         }
 
         List<SermonModel> sermonModels = new ArrayList<>();
@@ -101,5 +121,32 @@ public class SermonService {
         paginationModel.currentPage = page;
         paginationModel.items = sermonModels;
         return paginationModel;
+    }
+
+    public void setSearchEngineResults(String alike_sermon, List<String> categories,
+                                       List<String> playlists,
+                                       int page, HttpSession session) {
+        List<Integer> foundSermons = WebServerApplication.database
+                .sermonDao.getSearchEngineSermons(alike_sermon, categories, playlists, page);
+
+        List<SermonModel> sermonModels = new ArrayList<>();
+        for (Integer sermonId : foundSermons) {
+            SermonEntity sermonEntity = WebServerApplication.database.sermonDao.getSermonById(sermonId);
+            if (sermonEntity == null) {
+                continue;
+            }
+            File file = new File(UPLOAD_DIR, sermonEntity.name);
+            if (!file.exists()) {
+                continue;
+            }
+            sermonModels.add(
+                    new SermonModel(file, sermonEntity,
+                            WebServerApplication.database.sermonCategoryDao
+                                    .getSermonCategories(sermonEntity.id),
+                            WebServerApplication.database.sermonPlaylistDao
+                                    .getPlaylistsWhereThatSermonIs(sermonEntity.id))
+            );
+        }
+        searchService.setSermonSessionResults(sermonModels, session);
     }
 }

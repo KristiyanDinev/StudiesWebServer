@@ -1,5 +1,6 @@
 package project.kristiyan.WebServer.controllers.admin;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,9 @@ public class SermonController {
     @GetMapping("/admin/sermons")
     public String getSermons(Model model,
                              @RequestParam(defaultValue = "1")
-                             int page) {
-        model.addAttribute("sermons", sermonService.getPage(page));
+                             int page,
+                             HttpSession session) {
+        model.addAttribute("sermons", sermonService.getPage(page, session));
         return "admin/sermon/sermons";
     }
 

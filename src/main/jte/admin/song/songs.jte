@@ -79,6 +79,9 @@
                     </div>
                 </td>
                 <td class="mb-3">
+                    @if(song.songPlaylistEntities.isEmpty())
+                        <span class="text-muted">Not in any playlist yet</span>
+                    @endif
                     @for(SongPlaylistEntity songPlaylistEntity : song.songPlaylistEntities)
                         <span class="badge bg-success me-2 mb-2">${songPlaylistEntity.name.trim()}</span>
                     @endfor
@@ -100,5 +103,4 @@
 @template.layouts._footer()
 <script src="/assets/js/songs.js"></script>
 <script src="/assets/js/search/search.js"></script>
-<script src="/assets/js/search/admin/search.js"></script>
 </body>

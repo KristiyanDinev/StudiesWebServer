@@ -128,11 +128,11 @@ public class SongService {
         return paginationModel;
     }
 
-    public void setSearchEngineResults(String alike_study, List<String> categories,
+    public void setSearchEngineResults(String alike_song, List<String> categories,
                                        List<String> playlists,
                                        int page, HttpSession session) {
         List<Integer> foundSongs = WebServerApplication.database
-                .songDao.getSearchEngineSongs(alike_study, categories, playlists, page);
+                .songDao.getSearchEngineSongs(alike_song, categories, playlists, page);
 
         List<SongModel> songModels = new ArrayList<>();
         for (Integer songId : foundSongs) {
