@@ -11,9 +11,8 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.SermonModel;
-import project.kristiyan.WebServer.models.SongModel;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.sermon.SermonEntity;
-import project.kristiyan.database.entities.song.SongEntity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -112,14 +111,18 @@ public class SermonService {
             if (!file.exists()) {
                 continue;
             }
-            sermonModels.add(new SermonModel(file, sermonEntity,
+            sermonModels.add(new SermonModel(
+                    GeneralUtility.getUploadedDate(file),
+                    GeneralUtility.getFileSize(file),
+                    sermonEntity,
                     WebServerApplication.database.sermonCategoryDao
                             .getSermonCategories(sermonEntity.id),
                     WebServerApplication.database.sermonPlaylistDao
                             .getPlaylistsWhereThatSermonIs(sermonEntity.id)));
         }
+
         paginationModel.currentPage = page;
-        paginationModel.items = sermonModels;
+        paginationModel.items = GeneralUtility.sortByLatestUpload_Sermon(sermonModels.stream()).toList();
         return paginationModel;
     }
 
@@ -140,7 +143,10 @@ public class SermonService {
                 continue;
             }
             sermonModels.add(
-                    new SermonModel(file, sermonEntity,
+                    new SermonModel(
+                            GeneralUtility.getUploadedDate(file),
+                            GeneralUtility.getFileSize(file),
+                            sermonEntity,
                             WebServerApplication.database.sermonCategoryDao
                                     .getSermonCategories(sermonEntity.id),
                             WebServerApplication.database.sermonPlaylistDao

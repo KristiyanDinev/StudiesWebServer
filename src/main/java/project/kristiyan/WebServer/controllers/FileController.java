@@ -89,18 +89,18 @@ public class FileController {
         try {
             Path filePath = Paths.get(songService.UPLOAD_DIR, name);
             if (!filePath.toFile().exists()) {
-                return "error";
+                return "home/error";
             }
             // Security check - ensure file is within upload directory
             if (!filePath.normalize().startsWith(Paths.get(songService.UPLOAD_DIR).normalize())) {
-                return "error";
+                return "home/error";
             }
             model.addAttribute("song", name);
             model.addAttribute("type", songService.getAudioContentType(name));
-            return "song/song_download";
+            return "home/song/song_download";
 
         } catch (Exception ignore) {
-            return "error";
+            return "home/error";
         }
     }
 
@@ -141,18 +141,18 @@ public class FileController {
         try {
             Path filePath = Paths.get(sermonService.UPLOAD_DIR, name);
             if (!filePath.toFile().exists()) {
-                return "error";
+                return "home/error";
             }
             // Security check - ensure file is within upload directory
             if (!filePath.normalize().startsWith(Paths.get(sermonService.UPLOAD_DIR).normalize())) {
-                return "error";
+                return "home/error";
             }
             model.addAttribute("sermon", name);
             model.addAttribute("type", sermonService.getAudioContentType(name));
-            return "sermon/sermon_download";
+            return "home/sermon/sermon_download";
 
         } catch (Exception ignore) {
-            return "error";
+            return "home/error";
         }
     }
 

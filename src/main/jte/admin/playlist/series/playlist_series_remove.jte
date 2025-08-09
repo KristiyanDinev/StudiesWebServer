@@ -98,5 +98,5 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/playlist/series/playlist_remove.js"></script>
+<script src="/assets/admin/js/playlist/series/playlist_remove.js"></script>
 </body>

@@ -1,4 +1,4 @@
-package project.kristiyan.WebServer.controllers;
+package project.kristiyan.WebServer.controllers.home;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -17,15 +17,15 @@ public class AdminLoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/admin_login")
+    @GetMapping("/home/admin_login")
     public String adminLoginPage(HttpServletRequest request) {
         if (userService.isAuthenticated(request.getSession(false))) {
             return "redirect:/admin/studies";
         }
-        return "admin_login";
+        return "home/admin_login";
     }
 
-    @PostMapping("/admin_login")
+    @PostMapping("/home/admin_login")
     public ResponseEntity<HttpStatus> login(@RequestParam String token,
                                             HttpServletRequest request) {
         if (userService.checkTokenValidation(token)) {

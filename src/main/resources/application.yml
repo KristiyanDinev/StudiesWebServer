@@ -44,3 +44,8 @@ spring:
 study_upload_path: "study_uploads/"
 song_upload_path: "song_uploads/"
 sermon_upload_path: "sermon_uploads/"
+
+ratelimit:
+  time_window_ms: 1000
+  max_requests_per_time_window: 8
+  cleanup_interval_ms: 60000

@@ -97,5 +97,5 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/playlist/sermon/playlist_add.js"></script>
+<script src="/assets/admin/js/playlist/sermon/playlist_add.js"></script>
 </body>

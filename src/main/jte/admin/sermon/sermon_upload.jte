@@ -47,5 +47,5 @@
 </div>
 @template.layouts._footer()
 
-<script src="/assets/js/sermon_upload.js"></script>
+<script src="/assets/admin/js/sermon_upload.js"></script>
 </body>

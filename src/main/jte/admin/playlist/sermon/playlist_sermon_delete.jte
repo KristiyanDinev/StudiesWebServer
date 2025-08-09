@@ -75,5 +75,5 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/playlist/sermon/playlist_delete.js"></script>
+<script src="/assets/admin/js/playlist/sermon/playlist_delete.js"></script>
 </body>

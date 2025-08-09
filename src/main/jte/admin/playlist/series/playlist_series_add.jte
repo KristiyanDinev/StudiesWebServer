@@ -98,5 +98,5 @@
 
 @template.layouts._footer()
 
-<script src="/assets/js/playlist/series/playlist_add.js"></script>
+<script src="/assets/admin/js/playlist/series/playlist_add.js"></script>
 </body>

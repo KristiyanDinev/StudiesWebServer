@@ -47,5 +47,5 @@
 </div>
 @template.layouts._footer()
 
-<script src="/assets/js/song_upload.js"></script>
+<script src="/assets/admin/js/song_upload.js"></script>
 </body>

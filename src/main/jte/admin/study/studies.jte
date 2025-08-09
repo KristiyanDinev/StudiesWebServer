@@ -5,7 +5,7 @@
 @param PaginationModel<StudyModel> studies
 
 <header>
-    @template.layouts._header(title = "Studies")
+    @template.layouts._header(title = "Admin - Studies")
 </header>
 <body>
 @template.layouts._admin_navbar()
@@ -59,6 +59,6 @@
 
 @template.layouts._footer()
 
-<script src="/assets/js/studies.js"></script>
-<script src="/assets/js/search/search.js"></script>
+<script src="/assets/admin/js/studies.js"></script>
+<script src="/assets/home/js/search.js"></script>
 </body>

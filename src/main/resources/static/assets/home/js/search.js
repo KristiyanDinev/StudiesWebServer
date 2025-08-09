@@ -2,6 +2,24 @@ let clearStudyBtn = document.getElementById('clear-search-study')
 let clearSongBtn = document.getElementById('clear-search-song')
 let clearSermonBtn = document.getElementById('clear-search-sermon')
 
+if (!error) {
+    let error = document.getElementById('error')
+
+    function showError(message) {
+        error.innerHTML = message
+        error.classList.add('alert-danger')
+        error.classList.remove('d-none')
+    }
+
+    function hideError() {
+        error.classList.add('d-none')
+        error.classList.remove('alert-danger')
+    }
+}
+function hideError() {
+    error.classList.add('d-none')
+    error.classList.remove('alert-danger')
+}
 var selectedSeries = []
 var selectedCategories = []
 var selectedPlaylists = []
@@ -13,7 +31,7 @@ async function clearStudySearch() {
         clearStudyBtn.disabled = true
         clearStudyBtn.innerHTML = 'Clearing Study Search'
 
-        const res = await fetch('/search/study/clear', {
+        const res = await fetch('/home/search/study/clear', {
             method: 'POST'
         })
 
@@ -40,7 +58,7 @@ async function clearSongSearch() {
         clearSongBtn.disabled = true
         clearSongBtn.innerHTML = 'Clearing Song Search'
 
-        const res = await fetch('/search/song/clear', {
+        const res = await fetch('/home/search/song/clear', {
             method: 'POST'
         })
 
@@ -67,7 +85,7 @@ async function clearSermonSearch() {
         clearSermonBtn.disabled = true
         clearSermonBtn.innerHTML = 'Clearing Sermon Search'
 
-        const res = await fetch('/search/sermon/clear', {
+        const res = await fetch('/home/search/sermon/clear', {
             method: 'POST'
         })
 
@@ -90,7 +108,7 @@ async function clearSermonSearch() {
 async function getSeries() {
     hideError()
     try {
-        const res = await fetch('/studies/series', {
+        const res = await fetch('/home/studies/series', {
             method: 'GET'
         })
 
@@ -127,7 +145,7 @@ async function getSeries() {
 async function getSongCategories() {
     hideError()
     try {
-        const res = await fetch('/song/categories', {
+        const res = await fetch('/home/song/categories', {
             method: 'GET'
         })
 
@@ -161,7 +179,7 @@ async function getSongCategories() {
 async function getSongPlaylists() {
     hideError()
     try {
-        const res = await fetch('/song/playlists', {
+        const res = await fetch('/home/song/playlists', {
             method: 'GET'
         })
 
@@ -195,7 +213,7 @@ async function getSongPlaylists() {
 async function getSermonCategories() {
     hideError()
     try {
-        const res = await fetch('/sermon/categories', {
+        const res = await fetch('/home/sermon/categories', {
             method: 'GET'
         })
 
@@ -229,7 +247,7 @@ async function getSermonCategories() {
 async function getSermonPlaylists() {
     hideError()
     try {
-        const res = await fetch('/sermon/playlists', {
+        const res = await fetch('/home/sermon/playlists', {
             method: 'GET'
         })
 
@@ -280,7 +298,7 @@ async function searchStudy() {
             formData.append('series', s)
         }
 
-        const res = await fetch('/search/studies', {
+        const res = await fetch('/home/search/studies', {
             method: 'POST',
             body: formData
         })
@@ -318,7 +336,7 @@ async function searchSong() {
             formData.append('playlists', p)
         }
 
-        const res = await fetch('/search/songs', {
+        const res = await fetch('/home/search/songs', {
             method: 'POST',
             body: formData
         })
@@ -356,7 +374,7 @@ async function searchSermon() {
             formData.append('playlists', p)
         }
 
-        const res = await fetch('/search/sermons', {
+        const res = await fetch('/home/search/sermons', {
             method: 'POST',
             body: formData
         })

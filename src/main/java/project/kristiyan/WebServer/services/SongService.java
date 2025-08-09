@@ -11,6 +11,7 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.SongModel;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.song.SongEntity;
 
 import java.io.File;
@@ -117,14 +118,17 @@ public class SongService {
             if (!file.exists()) {
                 continue;
             }
-            songModels.add(new SongModel(file, songEntity,
+            songModels.add(new SongModel(
+                    GeneralUtility.getUploadedDate(file),
+                    GeneralUtility.getFileSize(file),
+                    songEntity,
                     WebServerApplication.database.songCategoryDao
                             .getSongCategories(songEntity.id),
                     WebServerApplication.database.songPlaylistDao
                             .getPlaylistsWhereThatSongIs(songEntity.id)));
         }
         paginationModel.currentPage = page;
-        paginationModel.items = songModels;
+        paginationModel.items = GeneralUtility.sortByLatestUpload_Song(songModels.stream()).toList();
         return paginationModel;
     }
 
@@ -145,7 +149,10 @@ public class SongService {
                 continue;
             }
             songModels.add(
-                    new SongModel(file, songEntity,
+                    new SongModel(
+                            GeneralUtility.getUploadedDate(file),
+                            GeneralUtility.getFileSize(file),
+                            songEntity,
                             WebServerApplication.database.songCategoryDao
                                     .getSongCategories(songEntity.id),
                             WebServerApplication.database.songPlaylistDao

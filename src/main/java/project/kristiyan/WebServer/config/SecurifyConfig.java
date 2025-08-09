@@ -13,6 +13,8 @@ public class SecurifyConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        SessionAuthorizationFilter sessionAuthorizationFilter = new SessionAuthorizationFilter();
+        RateLimiterFilter rateLimiterFilter = new RateLimiterFilter();
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
@@ -39,8 +41,10 @@ public class SecurifyConfig {
                     }
                     auth.anyRequest().authenticated();
                 })
-                .addFilterBefore(new SessionAuthorizationFilter(),
-                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(sessionAuthorizationFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(rateLimiterFilter,
+                        SessionAuthorizationFilter.class);
 
         return http.build();
     }

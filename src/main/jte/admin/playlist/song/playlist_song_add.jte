@@ -99,5 +99,5 @@
 @template.layouts._footer()
 
 
-<script src="/assets/js/playlist/song/playlist_add.js"></script>
+<script src="/assets/admin/js/playlist/song/playlist_add.js"></script>
 </body>

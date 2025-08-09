@@ -10,13 +10,10 @@ import project.kristiyan.WebServer.WebServerApplication;
 import project.kristiyan.WebServer.dto.FileUploadDto;
 import project.kristiyan.WebServer.models.PaginationModel;
 import project.kristiyan.WebServer.models.StudyModel;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.study.StudySeriesEntity;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,30 +68,14 @@ public class StudyService {
                 continue;
             }
             studyModels.add(new StudyModel(study.getName(),
-                    getUploadedDate(study),
-                    getStudyFileSize(study),
+                    GeneralUtility.getUploadedDate(study),
+                    GeneralUtility.getFileSize(study),
                     WebServerApplication.database.studySeriesDao
                             .getSeriesFromStudy(studySeriesEntity.study_name)));
         }
-        paginationModel.items = studyModels;
+        paginationModel.items = GeneralUtility.sortByLatestUpload_Study(studyModels.stream()).toList();
         paginationModel.currentPage = page;
         return paginationModel;
-    }
-
-    public String getStudyFileSize(File file) {
-        return String.format("%.3f", file.length() / (1024.0 * 1024.0));
-    }
-
-    public String getUploadedDate(File file) {
-        try {
-            return Files.readAttributes(file.toPath(), BasicFileAttributes.class)
-                    .creationTime()
-                    .toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        } catch (Exception e) {
-            return "Error reading date";
-        }
     }
 
 
@@ -111,8 +92,8 @@ public class StudyService {
             }
             studyModels.add(
                     new StudyModel(study,
-                            getUploadedDate(file),
-                            getStudyFileSize(file),
+                            GeneralUtility.getUploadedDate(file),
+                            GeneralUtility.getFileSize(file),
                             WebServerApplication.database.studySeriesDao
                                     .getSeriesFromStudy(study))
             );

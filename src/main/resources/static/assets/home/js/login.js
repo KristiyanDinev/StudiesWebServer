@@ -25,7 +25,7 @@ document.getElementById('submitBtn').addEventListener("click", async function(ev
         let formData = new FormData()
         formData.append('token', token)
         try {
-            const res = await fetch('/admin_login', {
+            const res = await fetch('/home/admin_login', {
                 method: 'POST',
                 body: formData
             })

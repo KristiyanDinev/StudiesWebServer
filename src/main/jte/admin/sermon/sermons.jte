@@ -2,18 +2,12 @@
 @import project.kristiyan.WebServer.models.SermonModel
 @import project.kristiyan.database.entities.sermon.SermonCategoryEntity
 @import project.kristiyan.database.entities.sermon.SermonPlaylistEntity
-@import java.io.IOException
-@import java.nio.file.Files
-@import java.nio.file.attribute.BasicFileAttributes
-@import java.time.ZoneId
-@import java.time.format.DateTimeFormatter
 
 @param PaginationModel<SermonModel> sermons
 
-!{var dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");}
 
 <header>
-    @template.layouts._header(title = "Sermons")
+    @template.layouts._header(title = "Admin - Sermons")
 </header>
 <body>
 @template.layouts._admin_navbar()
@@ -45,21 +39,8 @@
         </thead>
         <tbody>
         @for(SermonModel sermon : sermons.items)
-            !{
-                BasicFileAttributes attrs = null;
-                String uploadDate = "Unknown";
-                try {
-                    uploadDate = Files.readAttributes(sermon.file.toPath(), BasicFileAttributes.class)
-                        .creationTime()
-                        .toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .format(dateFormatter);
-                } catch (IOException e) {
-                    uploadDate = "Error reading date";
-                }
-            }
             <tr class="page-row">
-                <td>${sermon.file.getName()}</td>
+                <td>${sermon.sermonEntity.name}</td>
                 <td>${sermon.sermonEntity.duration}s</td>
                 <td class="mb-3">
                     <div id="category_display_${sermon.sermonEntity.id}" class="p-2">
@@ -86,13 +67,13 @@
                         <span class="badge bg-success me-2 mb-2">${sermonPlaylistEntity.name.trim()}</span>
                     @endfor
                 </td>
-                <td>${uploadDate}</td>
-                <td>${String.format("%.2f", sermon.file.length() / (1024.0 * 1024.0))}MB</td>
+                <td>${sermon.uploadedDate}</td>
+                <td>${sermon.fileSize}MB</td>
                 <td>
-                    <a href="/file/sermon/${sermon.file.getName()}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
+                    <a href="/file/sermon/${sermon.sermonEntity.name}" class="btn btn-success mb-2 mx-2"><i class="bi bi-cloud-arrow-down-fill me-1"></i> Download</a>
                     <button type="button" id="${sermon.sermonEntity.id}" name="${sermon.sermonEntity.name}" class="delete btn btn-sm btn-danger mb-2 mx-2"><i class="bi bi-trash3 me-1"></i> Delete</button>
                     <button type="button" id="toggle_${sermon.sermonEntity.id}" class="btn btn-sm btn-primary mb-2 mx-2"><i class="bi bi-pencil-square me-1"></i> Edit Categories</button>
-                    <button type="button" id="submit_${sermon.sermonEntity.id}" name="${sermon.file.getName()}" class="edit btn btn-sm btn-success mb-2 mx-2 d-none"><i class="bi bi-bookmark-check-fill me-1"></i> Submit</button>
+                    <button type="button" id="submit_${sermon.sermonEntity.id}" name="${sermon.sermonEntity.name}" class="edit btn btn-sm btn-success mb-2 mx-2 d-none"><i class="bi bi-bookmark-check-fill me-1"></i> Submit</button>
                 </td>
             </tr>
         @endfor
@@ -101,6 +82,6 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/sermons.js"></script>
-<script src="/assets/js/search/search.js"></script>
+<script src="/assets/admin/js/sermons.js"></script>
+<script src="/assets/home/js/search.js"></script>
 </body>

@@ -1,4 +1,4 @@
-package project.kristiyan.WebServer.controllers;
+package project.kristiyan.WebServer.controllers.home;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,50 +32,50 @@ public class UserSearchController {
     @Autowired
     private StudyService studyService;
 
-    @PostMapping("/search/study/clear")
+    @PostMapping("/home/search/study/clear")
     public ResponseEntity<HttpStatus> clearStudySearch(HttpSession session) {
         searchService.deleteStudySearchQuery(session);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/search/song/clear")
+    @PostMapping("/home/search/song/clear")
     public ResponseEntity<HttpStatus> clearSongSearch(HttpSession session) {
         searchService.deleteSongSearchQuery(session);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/search/sermon/clear")
+    @PostMapping("/home/search/sermon/clear")
     public ResponseEntity<HttpStatus> clearSermonSearch(HttpSession session) {
         searchService.deleteSermonSearchQuery(session);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/studies/series")
+    @GetMapping("/home/studies/series")
     public ResponseEntity<List<String>> getAllSeries() {
         return ResponseEntity.ok(WebServerApplication.database.studySeriesDao.getSeries());
     }
 
-    @GetMapping("/song/categories")
+    @GetMapping("/home/song/categories")
     public ResponseEntity<List<String>> getAllSongCategories() {
         return ResponseEntity.ok(WebServerApplication.database.songCategoryDao.getCategories_SearchSelect());
     }
 
-    @GetMapping("/song/playlists")
+    @GetMapping("/home/song/playlists")
     public ResponseEntity<List<String>> getAllSongPlaylists() {
         return ResponseEntity.ok(WebServerApplication.database.songPlaylistDao.getPlaylists_SearchSelect());
     }
 
-    @GetMapping("/sermon/categories")
+    @GetMapping("/home/sermon/categories")
     public ResponseEntity<List<String>> getAllSermonCategories() {
         return ResponseEntity.ok(WebServerApplication.database.sermonCategoryDao.getCategories_SearchSelect());
     }
 
-    @GetMapping("/sermon/playlists")
+    @GetMapping("/home/sermon/playlists")
     public ResponseEntity<List<String>> getAllSermonPlaylists() {
         return ResponseEntity.ok(WebServerApplication.database.sermonPlaylistDao.getPlaylists_SearchSelect());
     }
 
-    @PostMapping("/search/studies")
+    @PostMapping("/home/search/studies")
     public ResponseEntity<HttpStatus> searchStudies(@RequestParam()
                                                     String alike_study,
                                                     @RequestParam(required = false)
@@ -90,7 +90,7 @@ public class UserSearchController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/search/songs")
+    @PostMapping("/home/search/songs")
     public ResponseEntity<HttpStatus> searchSongs(@RequestParam()
                                                   String alike_song,
                                                   @RequestParam(required = false)
@@ -110,7 +110,7 @@ public class UserSearchController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/search/sermons")
+    @PostMapping("/home/search/sermons")
     public ResponseEntity<HttpStatus> searchSermons(@RequestParam()
                                                     String alike_sermon,
                                                     @RequestParam(required = false)

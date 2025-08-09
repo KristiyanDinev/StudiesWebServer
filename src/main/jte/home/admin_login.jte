@@ -1,5 +1,5 @@
 <header>
-    @template.layouts._header(title = "Login")
+    @template.layouts._header(title = "Admin Login")
 </header>
 <body class="bg-light">
 <div class="container vh-100 d-flex align-items-center justify-content-center">
@@ -49,5 +49,5 @@
 </div>
 
 @template.layouts._footer()
-<script src="/assets/js/login.js"></script>
+<script src="/assets/home/js/login.js"></script>
 </body>

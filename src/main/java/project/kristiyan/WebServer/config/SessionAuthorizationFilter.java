@@ -19,13 +19,13 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
     // REGEX
     public static List<String> allowedPaths = List.of(
-            "/assets/**",
+            "/assets/home/**",
             "/favicon.ico",
             "/home/**",
-           // "/fonts/**",
             "/file/**"
     );
 
+    private static final String adminLogin = "/home/admin_login";
     private static final AntPathMatcher matcher = new AntPathMatcher();
 
     @Override
@@ -53,9 +53,9 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
 
-        } else {
+        } else if (!path.contains(".")) {
             // Redirect to Login for GET requests
-            response.sendRedirect("/admin_login");
+            response.sendRedirect(adminLogin);
             return;
         }
 
