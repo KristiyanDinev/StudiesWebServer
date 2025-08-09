@@ -142,6 +142,17 @@ docker run --name redis-db -itd -p 6379:6379 -p 8001:8001 redis/redis-stack
 
 5. Download the **Website** artifact by *Clicking* on the name **Website** or the download button on the far right.
 
+#### Step 5 run
+
+```bash
+java -Xms600m -Xmx1024m -jar StudiesWebServer-[version].jar --spring.profiles.active=prod
+```
+
+- Use MAX **1 GB** of RAM
+
+- Use Initial / MIN **600 MB** of RAM
+
+- Use Spring `application-prod.yml` profile to run the website
 
 ### Images
 
