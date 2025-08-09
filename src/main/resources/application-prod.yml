@@ -1,7 +1,6 @@
 gg:
   jte:
-    developmentMode: true
-    templateLocation: src/main/jte
+    developmentMode: false
     usePrecompiledTemplates: true
 
 server:
@@ -25,8 +24,7 @@ spring:
 
   devtools:
     restart:
-      enabled: true
-      additional-paths: src/main/java,src/main/resources,src/main/jte
+      enabled: false
     livereload:
       enabled: false
 
