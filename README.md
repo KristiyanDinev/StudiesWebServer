@@ -141,3 +141,16 @@ docker run --name redis-db -itd -p 6379:6379 -p 8001:8001 redis/redis-stack
 
 
 5. Download the **Website** artifact by *Clicking* on the name **Website** or the download button on the far right.
+
+
+### Images
+
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_1.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_2.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_3.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_4.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_5.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_7.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_8.png">
+<img src="https://raw.githubusercontent.com/KristiyanDinev/StudiesWebServer/refs/heads/main/img_9.png">
