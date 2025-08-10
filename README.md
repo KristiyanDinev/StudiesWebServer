@@ -5,6 +5,13 @@ You can share access to this panel by giving the **TOKEN** away to your friends.
 
 To set that token. Set an environment variable called `WEBAUTH_TOKEN` to that token.
 
+Another option is `WEB_LOGS` in your environment variables:
+
+- `true` -> It will log actions like **Adding**, **Editing**, **Deleting** in the `logs/` folder.
+
+
+- `false` -> No logs.
+
 ## Studies
 
 There a page for uploading a study in **PDF** format.
@@ -56,13 +63,19 @@ Run **Redis** + **Redis Insight WebServer**
 docker run --name redis-db -itd -p 6379:6379 -p 8001:8001 redis/redis-stack
 ```
 
+Run **MySQL** server
+
+```bash
+docker run -itd --name mysql-db -d mysql -e MYSQL_DATABASE=TheDatabaseLibDB -e MYSQL_USER=TheUser -e MYSQL_PASSWORD=YourPasswor
+```
+
 ### How to run
 
 #### Step **1** get the **DatabaseLib** 
 
 *(ONLY DO THIS IF IT IS YOUR FIRST TIME OR YOU ARE UPDATING THE **DATABASE_LIB**)*
 
-1. Go to the **DatabaseLib** private repo.
+1. Go to the **DatabaseLib** private repo. **FORK** it and go to your account repos.
 
 
 2. Go to **Actions**, which is at the top a bit right of the screen.

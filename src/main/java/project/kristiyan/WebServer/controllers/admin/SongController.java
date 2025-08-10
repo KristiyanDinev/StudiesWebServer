@@ -54,6 +54,8 @@ public class SongController {
             WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
             WebServerApplication.database.songPlaylistDao.deleteSongFromAllPlaylists(songEntity.id);
             WebServerApplication.database.songDao.deleteSong(songEntity.id);
+
+            GeneralUtility.logMessage(String.format("Deleted Song %s", song));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
@@ -71,13 +73,17 @@ public class SongController {
         }
 
         WebServerApplication.database.songCategoryDao.deleteAllCategoriesFromSong(songEntity.id);
-        for (String category : categories.split(";")) {
+        String[] allCategories = categories.split(";");
+        for (String category : allCategories) {
             if (category.isEmpty()) {
                 continue;
             }
             WebServerApplication.database.songCategoryDao
                     .addCategoryToSong(songEntity.id, category.replace(" ", "-"));
         }
+
+        GeneralUtility.logMessage(String.format("Edited Song %s with Categories", song,
+                String.join(", ", allCategories)));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -104,13 +110,16 @@ public class SongController {
                 throw new Exception();
             }
 
-            for (String category : songUploadDto.getCategories().split(";")) {
+            String[] allCategories = songUploadDto.getCategories().split(";");
+            for (String category : allCategories) {
                 if (category.isEmpty()) {
                     continue;
                 }
                 WebServerApplication.database.songCategoryDao
                         .addCategoryToSong(songEntity.id, category.replace(" ", "-"));
             }
+            GeneralUtility.logMessage(String.format("Uploaded Song %s with Categories", name,
+                    String.join(", ", allCategories)));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {

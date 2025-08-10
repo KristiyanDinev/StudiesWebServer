@@ -56,6 +56,8 @@ public class SermonController {
             WebServerApplication.database.sermonCategoryDao.deleteAllCategoriesFromSermon(sermonEntity.id);
             WebServerApplication.database.sermonPlaylistDao.deleteSermonFromAllPlaylists(sermonEntity.id);
             WebServerApplication.database.sermonDao.deleteSermon(sermonEntity.id);
+
+            GeneralUtility.logMessage(String.format("Deleted Sermon %s", sermon));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
@@ -73,13 +75,16 @@ public class SermonController {
         }
 
         WebServerApplication.database.sermonCategoryDao.deleteAllCategoriesFromSermon(sermonEntity.id);
-        for (String category : categories.split(";")) {
+        String[] allCategories = categories.split(";");
+        for (String category : allCategories) {
             if (category.isEmpty()) {
                 continue;
             }
             WebServerApplication.database.sermonCategoryDao
-                    .addCategoryToSermon(sermonEntity.id, category.replace(" ", "-"));
+                    .addCategoryToSermon(sermonEntity.id, category.replace(", ", "-"));
         }
+        GeneralUtility.logMessage(String.format("Edited Sermon %s with Categories %s",
+                sermon, String.join(" ", allCategories)));
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -106,13 +111,16 @@ public class SermonController {
                 throw new Exception();
             }
 
-            for (String category : songUploadDto.getCategories().split(";")) {
+            String[] allCategories = songUploadDto.getCategories().split(";");
+            for (String category : allCategories) {
                 if (category.isEmpty()) {
                     continue;
                 }
                 WebServerApplication.database.sermonCategoryDao
                         .addCategoryToSermon(sermonEntity.id, category.replace(" ", "-"));
             }
+            GeneralUtility.logMessage(String.format("Uploaded Sermon %s with Categories",
+                    name, String.join(", ", allCategories)));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {

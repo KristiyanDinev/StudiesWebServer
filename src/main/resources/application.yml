@@ -2,7 +2,7 @@ gg:
   jte:
     developmentMode: true
     templateLocation: src/main/jte
-    usePrecompiledTemplates: true
+    usePrecompiledTemplates: false
 
 server:
   address: 127.0.0.1

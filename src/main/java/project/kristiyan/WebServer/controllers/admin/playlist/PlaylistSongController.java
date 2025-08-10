@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.song.SongEntity;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class PlaylistSongController {
         }
         if (WebServerApplication.database.songPlaylistDao.addSongToPlaylist(
                 songEntity.id, playlist)) {
+            GeneralUtility.logMessage(String.format("Added Song %s to Playlist %s", song, playlist));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -78,6 +80,7 @@ public class PlaylistSongController {
         }
         if (WebServerApplication.database.songPlaylistDao.deleteSongFromPlaylist(
                 songEntity.id, playlist)) {
+            GeneralUtility.logMessage(String.format("Removed Song %s from Playlist %s", song, playlist));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -86,6 +89,7 @@ public class PlaylistSongController {
     @PostMapping("/admin/playlists/song/delete")
     public ResponseEntity<HttpStatus> deletePlaylistDB(@RequestParam String playlist) {
         if (WebServerApplication.database.songPlaylistDao.deletePlaylist(playlist)) {
+            GeneralUtility.logMessage(String.format("Deleted Song Playlist %s", playlist));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();

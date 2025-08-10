@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.kristiyan.WebServer.WebServerApplication;
+import project.kristiyan.WebServer.utilities.GeneralUtility;
 import project.kristiyan.database.entities.study.StudySeriesEntity;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class PlaylistStudySeriesController {
         }
         if (WebServerApplication.database.studySeriesDao
                 .addStudyToSeries(study, series)) {
+            GeneralUtility.logMessage(String.format("Added Study %s to Series %s", study, series));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -68,6 +70,7 @@ public class PlaylistStudySeriesController {
                                                               @RequestParam String series) {
         if (WebServerApplication.database.studySeriesDao
                 .deleteStudyFromSeries(study, series)) {
+            GeneralUtility.logMessage(String.format("Removed Study %s to Series %s", study, series));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
@@ -77,6 +80,7 @@ public class PlaylistStudySeriesController {
     @PostMapping("/admin/playlists/study/delete")
     public ResponseEntity<HttpStatus> removeSeriesDB(@RequestParam String series) {
         if (WebServerApplication.database.studySeriesDao.deleteSeries(series)) {
+            GeneralUtility.logMessage(String.format("Deleted Study Series %s", series));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();

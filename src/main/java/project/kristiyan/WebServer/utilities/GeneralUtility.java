@@ -14,9 +14,14 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class GeneralUtility {
+
+    public static boolean LogsEnabled = Boolean.parseBoolean(System.getenv("WEB_LOGS"));
+
+    private static final Logger _logger = Logger.getLogger("Action Log");
 
     public static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -62,5 +67,11 @@ public class GeneralUtility {
         return stream.sorted((s1, s2) ->
                 s2.uploadedDate.compareTo(s1.uploadedDate)
         );
+    }
+
+    public static void logMessage(String message) {
+        if (LogsEnabled) {
+            _logger.info(message);
+        }
     }
 }

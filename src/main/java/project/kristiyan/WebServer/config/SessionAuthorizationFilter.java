@@ -22,6 +22,7 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
             "/assets/home/**",
             "/favicon.ico",
             "/home/**",
+            "/",
             "/file/**"
     );
 

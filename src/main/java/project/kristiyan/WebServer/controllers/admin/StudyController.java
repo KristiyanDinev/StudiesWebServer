@@ -49,6 +49,7 @@ public class StudyController {
         try {
             file.delete();
             WebServerApplication.database.studySeriesDao.deleteStudy(study);
+            GeneralUtility.logMessage(String.format("Deleted Study %s", study));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {
@@ -74,6 +75,7 @@ public class StudyController {
             if (!WebServerApplication.database.studySeriesDao.addStudyToSeries(name, null)) {
                 throw new Exception();
             }
+            GeneralUtility.logMessage(String.format("Uploaded Study %s", name));
             return ResponseEntity.status(HttpStatus.OK).build();
 
         } catch (Exception ignore) {

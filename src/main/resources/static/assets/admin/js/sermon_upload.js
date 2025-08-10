@@ -127,5 +127,5 @@ uploadBtn.addEventListener('click', async function (e) {
 
                                     error.className = 'alert alert-danger'
                                     error.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i> Can\'t upload your sermon'
-                }'
+                }
 });
