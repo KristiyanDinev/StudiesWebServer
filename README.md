@@ -55,12 +55,12 @@ Keeping in mind that the panel may not be used my many people, but only by few s
 
 Run **Redis** only
 ```bash
-docker run --name redis-db -itd -p 6379:6379 redis
+docker run --name redis-db -e REDIS_ARGS="--requirepass mypassword" -itd -p 6379:6379 redis
 ```
 
 Run **Redis** + **Redis Insight WebServer**
 ```bash
-docker run --name redis-db -itd -p 6379:6379 -p 8001:8001 redis/redis-stack
+docker run --name redis-db -itd -e REDIS_ARGS="--requirepass mypassword" -p 6379:6379 -p 8001:8001 redis/redis-stack
 ```
 
 Run **MySQL** server

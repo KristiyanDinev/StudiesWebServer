@@ -16,10 +16,7 @@ if (!error) {
         error.classList.remove('alert-danger')
     }
 }
-function hideError() {
-    error.classList.add('d-none')
-    error.classList.remove('alert-danger')
-}
+
 var selectedSeries = []
 var selectedCategories = []
 var selectedPlaylists = []
@@ -391,6 +388,23 @@ async function searchSermon() {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
+    if (clearStudyBtn) {
+            await getSeries()
+            clearStudyBtn.addEventListener('click', clearStudySearch)
+            document.getElementById('search-study').addEventListener('click', searchStudy)
+        }
+        if (clearSongBtn) {
+            await getSongCategories()
+            await getSongPlaylists()
+            clearSongBtn.addEventListener('click', clearSongSearch)
+            document.getElementById('search-song').addEventListener('click', searchSong)
+        }
+        if (clearSermonBtn) {
+            await getSermonCategories()
+            await getSermonPlaylists()
+            clearSermonBtn.addEventListener('click', clearSermonSearch)
+            document.getElementById('search-sermon').addEventListener('click', searchSermon)
+        }
     let searchStudyBtn = document.getElementById('search-study')
     if (searchStudyBtn) {
         searchStudyBtn.addEventListener('click', async function() {
@@ -413,22 +427,3 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 })
 
-document.addEventListener('DOMContentLoaded', async function() {
-    if (clearStudyBtn) {
-        await getSeries()
-        clearStudyBtn.addEventListener('click', clearStudySearch)
-        document.getElementById('search-study').addEventListener('click', searchStudy)
-    }
-    if (clearSongBtn) {
-        await getSongCategories()
-        await getSongPlaylists()
-        clearSongBtn.addEventListener('click', clearSongSearch)
-        document.getElementById('search-song').addEventListener('click', searchSong)
-    }
-    if (clearSermonBtn) {
-        await getSermonCategories()
-        await getSermonPlaylists()
-        clearSermonBtn.addEventListener('click', clearSermonSearch)
-        document.getElementById('search-sermon').addEventListener('click', searchSermon)
-    }
-})
