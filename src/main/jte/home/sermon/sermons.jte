@@ -90,7 +90,7 @@
                         <div class="mb-3">
                             <h6 class="text-muted mb-2 fw-semibold">
                                 <i class="bi bi-collection me-1"></i>
-                                Series
+                                Categories
                             </h6>
                             @if(sermon.sermonCategoryEntities.isEmpty())
                                 <span class="badge bg-secondary">
@@ -111,7 +111,7 @@
                         <div class="mb-3">
                             <h6 class="text-muted mb-2 fw-semibold">
                                 <i class="bi bi-collection me-1"></i>
-                                Series
+                                Playlists
                             </h6>
                             @if(sermon.sermonPlaylistEntities.isEmpty())
                                 <span class="badge bg-secondary">
@@ -140,7 +140,7 @@
                     <!-- Card Footer -->
                     <div class="card-footer bg-transparent border-0">
                         <div class="d-grid">
-                            <a href="/file/sermon/${sermon.sermonEntity.name}?download=true"
+                            <a href="/file/sermon/download/${sermon.sermonEntity.name}"
                                class="btn btn-success btn-lg">
                                 <i class="bi bi-cloud-arrow-down-fill me-2"></i>
                                 Download

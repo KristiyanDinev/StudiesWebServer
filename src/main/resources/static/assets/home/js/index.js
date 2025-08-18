@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('search-study')) {
         document.querySelectorAll('.page-row').forEach(item => {
                 item.addEventListener('click', function() {
-                    window.open(`/file/study/${item.id}?download=false`, '_blank')
+                    window.open(`/file/study/${item.id}`, '_blank')
                 })
             })
     }
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('search-song')) {
             document.querySelectorAll('.page-row').forEach(item => {
                     item.addEventListener('click', function() {
-                        window.open(`/file/song/${item.id}?download=false`, '_blank')
+                        window.open(`/file/song/${item.id}`, '_blank')
                     })
                 })
     }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('search-sermon')) {
                 document.querySelectorAll('.page-row').forEach(item => {
                         item.addEventListener('click', function() {
-                            window.open(`/file/sermon/${item.id}?download=false`, '_blank')
+                            window.open(`/file/sermon/${item.id}`, '_blank')
                         })
                     })
      }

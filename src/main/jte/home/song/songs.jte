@@ -140,7 +140,7 @@
                     <!-- Card Footer -->
                     <div class="card-footer bg-transparent border-0">
                         <div class="d-grid">
-                            <a href="/file/song/${song.songEntity.name}?download=true"
+                            <a href="/file/song/download/${song.songEntity.name}"
                                class="btn btn-success btn-lg">
                                 <i class="bi bi-cloud-arrow-down-fill me-2"></i>
                                 Download
