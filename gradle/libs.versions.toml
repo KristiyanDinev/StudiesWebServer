@@ -2,7 +2,7 @@
 jte = "3.2.1"
 jaudiotagger = "3.0.1"
 springBootSessions = "3.5.1"
-spingStarterDataRedis = "3.5.4"
+spingStarterDataRedis = "3.5.5"
 
 [libraries]
 springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
