@@ -1,7 +1,7 @@
 [versions]
 jte = "3.2.1"
 jaudiotagger = "3.0.1"
-springBootSessions = "3.5.1"
+springBootSessions = "3.5.2"
 spingStarterDataRedis = "3.5.4"
 
 [libraries]
