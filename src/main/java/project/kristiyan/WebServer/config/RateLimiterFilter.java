@@ -58,18 +58,15 @@ public class RateLimiterFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        String clientIp = getClientIp(httpRequest);
+        String clientIp = getClientIp(request);
 
         SlidingWindow window = clientWindows.computeIfAbsent(clientIp, k -> new SlidingWindow());
 
         if (!window.tryAcquire(maxRequests, windowSizeMs)) {
             // Rate limit exceeded
-            httpResponse.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-            httpResponse.setContentType("application/json");
-            httpResponse.getWriter().write(
+            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
+            response.setContentType("application/json");
+            response.getWriter().write(
                     "{\"error\":\"Rate limit exceeded\"}"
             );
             return;

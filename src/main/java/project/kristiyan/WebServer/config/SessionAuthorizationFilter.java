@@ -25,8 +25,6 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
             "/",
             "/file/**"
     );
-
-    private static final String adminLogin = "/home/admin_login";
     private static final AntPathMatcher matcher = new AntPathMatcher();
 
     @Override
@@ -56,7 +54,7 @@ public class SessionAuthorizationFilter extends OncePerRequestFilter {
 
         } else if (!path.contains(".")) {
             // Redirect to Login for GET requests
-            response.sendRedirect(adminLogin);
+            response.sendRedirect("/");
             return;
         }
 

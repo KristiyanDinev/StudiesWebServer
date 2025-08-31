@@ -1,13 +1,13 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.5.5'
+	id 'org.springframework.boot' version '4.0.0-M2'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id 'gg.jte.gradle' version '3.2.1'
-	id 'com.gradleup.shadow' version '9.0.1'
+	id 'com.gradleup.shadow' version '9.1.0'
 }
 
 group = 'project.kristiyan.WebServer'
-version = '1.0.0'
+version = '1.1.0'
 
 java {
 	manifest {
