@@ -5,7 +5,6 @@ spingStarterDataRedis = "4.0.0-M2"
 springBootSessions = "4.0.0-M2"
 
 [libraries]
-springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
 springBootStarterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
 jte = { module = "gg.jte:jte-spring-boot-starter-3", version.ref = "jte" }
 

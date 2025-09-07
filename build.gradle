@@ -48,7 +48,6 @@ repositories {
 }
 
 dependencies {
-	implementation libs.springBootStarterSecurity
 	implementation libs.springBootStarterWeb
 	implementation libs.spingStarterDataRedis
 	implementation libs.jte
